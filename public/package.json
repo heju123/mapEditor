@@ -4,7 +4,8 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "webpack"
+    "build": "webpack",
+    "dev": "webpack --progress --watch"
   },
   "author": "HEJU",
   "license": "ISC",
