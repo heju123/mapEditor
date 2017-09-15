@@ -1,0 +1,212 @@
+/**
+ * Created by heju on 2017/2/9.
+ */
+import React from 'react';
+import commonUtil from "./common/utils/commonUtil.js";
+import httpUtil from "./common/utils/httpUtil.js";
+import globalUtil from "./common/utils/globalUtil.js";
+
+require("../css/base.scss");
+require("../css/index.scss");
+
+export default class Index extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+        };
+    }
+
+    componentDidMount(){
+        commonUtil.asyncLoadScript("lib/echarts/echarts.simple.min.js", ()=>{
+            this.initEChart();
+        });
+
+        this.queryCollection();
+    }
+
+    queryCollection(){
+        httpUtil.get(globalUtil.baseServerPath + "/dashboard/collect", undefined, (data)=>{
+            if (data.code == 1)
+            {
+                this.setState({
+                    captureCount : data.captureCount,
+                    alarmCount : data.alarmCount
+                });
+            }
+        });
+    }
+
+    initEChart(){
+        let myChart = window.echarts.init(this.refs.chartArea);
+        let option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['加速','人员徘徊','越界','压线','超员','区域滞留']
+            },
+            series: [
+                {
+                    name:'访问来源',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'加速'},
+                        {value:310, name:'人员徘徊'},
+                        {value:234, name:'越界'},
+                        {value:135, name:'压线'},
+                        {value:1548, name:'超员'},
+                        {value:257, name:'区域滞留'}
+                    ],
+                    color:['#6ddbdb','#267db3','#68c182','#fad55c','#ed6647','#8561c8']
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    render(){
+        return (
+            <div className="main-content" ref="mainContent">
+                <div className="index-box index-box1 index-layout-tile-2x2 fl">
+                    <div className="index-top-bg"></div>
+                    <div className="index-title" style={{"margin-top" : "20px","padding-left":"20px"}}>实时分析概览</div>
+                    <div className="of-hidden">
+                        <div className="hj-sm-3 fl">
+                            <div className="index-box1-sta1">
+                                <div className="sta1-top-icon sta-icon-1"></div>
+                                <div className="sta1-label">抓拍总数</div>
+                                <div className="sta1-num">{this.state.captureCount}</div>
+                            </div>
+                        </div>
+                        <div className="hj-sm-3 fl">
+                            <div className="index-box1-sta1">
+                                <div className="sta1-top-icon sta-icon-2"></div>
+                                <div className="sta1-label">报警总数</div>
+                                <div className="sta1-num">{this.state.alarmCount}</div>
+                            </div>
+                        </div>
+                        <div className="index-box1-sta2-outer hj-sm-6 fl">
+                            <div className="index-box1-sta2">
+                                <span className="sta2-label">人脸识别</span>
+                                <span className="sta2-num">0</span>
+                            </div>
+                            <div className="index-box1-sta2">
+                                <span className="sta2-label">白名单</span>
+                                <span className="sta2-num">0</span>
+                            </div>
+                            <div className="index-box1-sta2 index-box1-sta2-nob">
+                                <span className="sta2-label">黑名单</span>
+                                <span className="sta2-num">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="index-box1-bottom">当前服务状态</div>
+                </div>
+
+                <div className="index-box index-layout-tile-1x1 fl">
+                    <div className="index-title" style={{"margin-top" : "20px","padding-left":"20px",color : "#647277"}}>报警通知</div>
+                    <div className="of-hidden">
+                        <div className="index-box2-sta1">
+                            <span className="sta1-dot sta1-bg-green"></span>
+                            <span className="sta1-label">已收到</span>
+                            <span className="sta1-num sta1-color-green">0</span>
+                        </div>
+                        <div className="index-box2-sta1">
+                            <span className="sta1-dot sta1-bg-blue"></span>
+                            <span className="sta1-label">未处理</span>
+                            <span className="sta1-num sta1-color-blue">0</span>
+                        </div>
+                        <div className="index-box2-sta1">
+                            <span className="sta1-dot sta1-bg-red"></span>
+                            <span className="sta1-label">误报</span>
+                            <span className="sta1-num sta1-color-red">0</span>
+                        </div>
+                    </div>
+                    <div className="index-box2-bottom">2017-02-16 08:39:17</div>
+                </div>
+
+                <div className="index-box index-layout-tile-2x1 fl" style={{"background-color" : "#d5e7c7"}}>
+                    <div className="index-title" style={{"margin-top" : "10px","margin-bottom" : "10px","padding-left":"20px",color : "#647277"}}>已识别行为</div>
+                    <div className="of-hidden">
+                        <div className="index-box3-sta1">
+                            <div className="hj-col hj-sm-4 sta1-label">人员徘徊</div>
+                            <div className="hj-col hj-sm-2 sta1-num">50</div>
+                            <div className="hj-col hj-sm-6">
+                                <div className="sta1-prog">
+                                    <div className="sta1-prog-val" style={{width : "60%"}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="index-box3-sta1">
+                            <div className="hj-col hj-sm-4 sta1-label">越界</div>
+                            <div className="hj-col hj-sm-2 sta1-num">40</div>
+                            <div className="hj-col hj-sm-6">
+                                <div className="sta1-prog">
+                                    <div className="sta1-prog-val" style={{width : "40%"}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="index-box3-sta1">
+                            <div className="hj-col hj-sm-4 sta1-label">压线</div>
+                            <div className="hj-col hj-sm-2 sta1-num">50</div>
+                            <div className="hj-col hj-sm-6">
+                                <div className="sta1-prog">
+                                    <div className="sta1-prog-val" style={{width : "60%"}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="index-box3-sta1">
+                            <div className="hj-col hj-sm-4 sta1-label">超员</div>
+                            <div className="hj-col hj-sm-2 sta1-num">50</div>
+                            <div className="hj-col hj-sm-6">
+                                <div className="sta1-prog">
+                                    <div className="sta1-prog-val" style={{width : "60%"}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="index-box3-sta1">
+                            <div className="hj-col hj-sm-4 sta1-label">区域滞留</div>
+                            <div className="hj-col hj-sm-2 sta1-num">50</div>
+                            <div className="hj-col hj-sm-6">
+                                <div className="sta1-prog">
+                                    <div className="sta1-prog-val" style={{width : "60%"}}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="index-box1-bottom" style={{"background-color" : "#abd193",color : "#333333"}}>行为分析汇总</div>
+                </div>
+
+                <div className="index-box index-layout-tile-1x1 fl">
+                    <div className="index-title" style={{"margin-top" : "20px","padding-left":"20px",color : "#647277"}}>行为分析图</div>
+                    <div ref="chartArea" className="index-box4-chart of-hidden">
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}

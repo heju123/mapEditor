@@ -1,0 +1,19 @@
+{
+  "name": "MapEditor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "webpack"
+  },
+  "author": "HEJU",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-preset-es2015": "*",
+    "clean-webpack-plugin": "*",
+    "uglify-js-plugin": "*",
+    "webpack": "*"
+  }
+}

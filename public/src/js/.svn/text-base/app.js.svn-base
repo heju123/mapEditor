@@ -1,0 +1,42 @@
+/**
+ * Created by heju on 2017/2/9.
+ */
+import React from 'react';
+import $ from 'jQuery';
+import commonUtil from './common/utils/commonUtil.js';
+
+import Header from './header.js';
+
+require("../css/base.scss");
+
+export default class App extends React.Component{
+    constructor(){
+        super();
+    }
+
+    componentDidMount(){
+        //popMsg关闭
+        $("#popMsgWin").children(".close").click(function(){
+            commonUtil.closePopMsgWin();
+        });
+        //popMsg hover
+        $("#popMsgWin").mouseenter(function(){
+            commonUtil.clearPopMsgHideTimeout(true);
+        });
+        //popMsg hover out
+        $("#popMsgWin").mouseleave(function(){
+            commonUtil.clearPopMsgHideTimeout(false);
+        });
+    }
+
+    render(){
+        return (
+            <div className="main" ref="mainBody">
+                <Header ref="header"></Header>
+                <div className="main-content" ref="mainContent">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+}
