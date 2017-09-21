@@ -343,7 +343,7 @@ var Rect = function (_Component) {
                 } else {
                     ctx.rect(this.getRealX() + this.style.borderWidth / 2, this.getRealY() + this.style.borderWidth / 2, this.getWidth() - this.style.borderWidth, this.getHeight() - this.style.borderWidth);
                 }
-                ctx.stroke();
+                ctx.stroke(); //调用stroke后得到的图形宽高会增大lineWidth个像素，fill则不会
                 ctx.closePath();
             }
             ctx.restore();
@@ -1624,6 +1624,8 @@ var Component = function () {
 
             this.text = this.getTextForRows(cfg.text);
 
+            this.active = cfg.active === undefined ? true : false;
+
             //事件绑定配置
             if (cfg.events) {
                 var eventInfo = void 0;
@@ -1671,41 +1673,47 @@ var Component = function () {
             }
         }
     }, {
-        key: "produceChildrenByCfg",
-        value: function produceChildrenByCfg(chiCfg) {
+        key: "newComByType",
+        value: function newComByType(type) {
             var Panel = __webpack_require__(3).default;
             var Rect = __webpack_require__(2).default;
             var Input = __webpack_require__(5).default;
             var Button = __webpack_require__(11).default;
             var Scrollbar = __webpack_require__(6).default;
             var Sprite = __webpack_require__(12).default;
-
+            var com = void 0;
+            switch (type) {
+                case "panel":
+                    com = new Panel(this);
+                    break;
+                case "rect":
+                    com = new Rect(this);
+                    break;
+                case "input":
+                    com = new Input(this);
+                    break;
+                case "button":
+                    com = new Button(this);
+                    break;
+                case "scrollbar":
+                    com = new Scrollbar(this);
+                    break;
+                case "sprite":
+                    com = new Sprite(this);
+                default:
+                    break;
+            }
+            return com;
+        }
+    }, {
+        key: "produceChildrenByCfg",
+        value: function produceChildrenByCfg(chiCfg) {
             var childCom = void 0;
             if (typeof chiCfg === "function") //异步加载view
                 {
                     return chiCfg(this.asyncGetView.bind(this));
                 } else {
-                switch (chiCfg.type) {
-                    case "panel":
-                        childCom = new Panel(this);
-                        break;
-                    case "rect":
-                        childCom = new Rect(this);
-                        break;
-                    case "input":
-                        childCom = new Input(this);
-                        break;
-                    case "button":
-                        childCom = new Button(this);
-                        break;
-                    case "scrollbar":
-                        childCom = new Scrollbar(this);
-                        break;
-                    case "sprite":
-                        childCom = new Sprite(this);
-                    default:
-                        break;
-                }
+                childCom = this.newComByType(chiCfg.type);
                 childCom.initCfg(chiCfg);
                 this.appendChildren(childCom);
                 return childCom;
@@ -1714,12 +1722,11 @@ var Component = function () {
     }, {
         key: "asyncGetView",
         value: function asyncGetView(viewCfg, resolve, reject) {
-            var Panel = __webpack_require__(3).default;
-            var panel = new Panel(this);
-            panel.initCfg(viewCfg);
-            this.appendChildren(panel);
+            var childCom = this.newComByType(viewCfg.type);
+            childCom.initCfg(viewCfg);
+            this.appendChildren(childCom);
             if (resolve) {
-                resolve(panel);
+                resolve(childCom);
             }
         }
     }, {
@@ -2233,6 +2240,10 @@ var Component = function () {
         key: "destroy",
         value: function destroy() {
             this.removeAllEvent();
+
+            if (this.controller && this.controller.destroy && typeof this.controller.destroy === "function") {
+                this.controller.destroy();
+            }
 
             this.getChildren().forEach(function (child) {
                 child.destroy();

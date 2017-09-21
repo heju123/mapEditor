@@ -1,8 +1,10 @@
 import MainController from "../controller/mainController.js";
+import fileView from "./dropdown/fileView.js";
 
 let TOP_HEIGHT = 30;
 
 export default {
+    id : "mainView",
     controller : MainController,
     type : "panel",
     style : {
@@ -27,7 +29,7 @@ export default {
                 {
                     type : "rect",
                     style : {
-                        x : 0,
+                        x : 10,
                         y : 0,
                         autoWidth : true,
                         height : "100%",
@@ -42,14 +44,18 @@ export default {
                             style : {
                                 autoWidth : true,
                                 height : "100%",
-                                backgroundColor : "#616161"
+                                backgroundColor : "#ddd"
                             },
-                            text : "文件"
+                            text : "文件",
+                            events : {
+                                "click" : "showFileView"
+                            }
                         }
                     ]
                 }
             ]
         },
+        fileView(TOP_HEIGHT),
         //编辑区域
         {
             id : "edit_area",

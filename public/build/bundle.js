@@ -140,11 +140,16 @@ var _mainController = __webpack_require__(3);
 
 var _mainController2 = _interopRequireDefault(_mainController);
 
+var _fileView = __webpack_require__(4);
+
+var _fileView2 = _interopRequireDefault(_fileView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TOP_HEIGHT = 30;
 
 exports.default = {
+    id: "mainView",
     controller: _mainController2.default,
     type: "panel",
     style: {
@@ -168,7 +173,7 @@ exports.default = {
         children: [{
             type: "rect",
             style: {
-                x: 0,
+                x: 10,
                 y: 0,
                 autoWidth: true,
                 height: "100%",
@@ -182,12 +187,15 @@ exports.default = {
                 style: {
                     autoWidth: true,
                     height: "100%",
-                    backgroundColor: "#616161"
+                    backgroundColor: "#ddd"
                 },
-                text: "文件"
+                text: "文件",
+                events: {
+                    "click": "showFileView"
+                }
             }]
         }]
-    },
+    }, (0, _fileView2.default)(TOP_HEIGHT),
     //编辑区域
     {
         id: "edit_area",
@@ -215,6 +223,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -230,13 +240,104 @@ var MainController = function (_window$Monk$Controll) {
     function MainController(panel) {
         _classCallCheck(this, MainController);
 
-        return _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, panel));
+        var _this = _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, panel));
+
+        _this.onClickRootBind = _this.onClickRoot.bind(_this);
+        setTimeout(function () {
+            var mainView = _this.viewState.getComponentById("mainView");
+            mainView.registerEvent("click", _this.onClickRootBind);
+        }, 1000);
+        return _this;
     }
+
+    _createClass(MainController, [{
+        key: "showFileView",
+        value: function showFileView(e) {
+            var fileView = this.viewState.getComponentById("fileView");
+            fileView.active = !fileView.active;
+            e.stopPropagation();
+        }
+    }, {
+        key: "onClickRoot",
+        value: function onClickRoot() {
+            var fileView = this.viewState.getComponentById("fileView");
+            fileView.active = false;
+        }
+    }, {
+        key: "destory",
+        value: function destory() {
+            var mainView = this.viewState.getComponentById("mainView");
+            mainView.removeEvent("click", this.onClickRootBind);
+        }
+    }]);
 
     return MainController;
 }(window.Monk.Controller);
 
 exports.default = MainController;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (TOP_HEIGHT) {
+    return {
+        id: "fileView",
+        type: "rect",
+        style: {
+            x: 10,
+            y: TOP_HEIGHT,
+            width: 100,
+            autoHeight: true,
+            backgroundColor: "#DCDCDC",
+            borderWidth: 1,
+            borderColor: "#ABABAB",
+            layout: {
+                type: "linearLayout",
+                orientation: "vertical"
+            },
+            zIndex: 2
+        },
+        active: false,
+        children: [{
+            type: "button",
+            style: {
+                width: "100%",
+                height: 35,
+                backgroundColor: "#DCDCDC",
+                hover: {
+                    backgroundColor: "#E9E9E9"
+                }
+            },
+            text: "新建地图"
+        }, {
+            type: "rect",
+            style: {
+                width: "100%",
+                height: 1,
+                backgroundColor: "#ABABAB"
+            }
+        }, {
+            type: "button",
+            style: {
+                width: "100%",
+                height: 35,
+                backgroundColor: "#DCDCDC",
+                hover: {
+                    backgroundColor: "#E9E9E9"
+                }
+            },
+            text: "加载地图"
+        }]
+    };
+};
 
 /***/ })
 /******/ ]);
