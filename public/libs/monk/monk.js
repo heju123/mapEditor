@@ -367,20 +367,6 @@ var Rect = function (_Component) {
             return true;
         }
 
-        /** 设置后避免超出parent范围 */
-
-    }, {
-        key: "setParentClip",
-        value: function setParentClip(ctx) {
-            if (this.parent) {
-                if (this.parent.style.borderRadius) {
-                    this.getRectRadiusPath(this.parent, ctx, this.parent.style.borderRadius, -(this.parent.style.borderWidth || 0)); //边框也要切掉
-                } else {
-                    ctx.rect(this.getRealXRecursion(this.parent) + (this.parent.style.borderWidth || 0), this.getRealYRecursion(this.parent) + (this.parent.style.borderWidth || 0), this.parent.getInnerWidth(), this.parent.getInnerHeight());
-                }
-                ctx.clip();
-            }
-        }
         /** 设置后避免超出当前组件范围 */
 
     }, {
@@ -389,7 +375,7 @@ var Rect = function (_Component) {
             if (this.style.borderRadius) {
                 this.getRectRadiusPath(this, ctx, this.style.borderRadius, -(this.style.borderWidth || 0));
             } else {
-                ctx.rect(this.getRealX() + (this.style.borderWidth || 0), this.getRealY() + (this.style.borderWidth || 0), this.getInnerWidth(), this.getInnerHeight());
+                ctx.rect(this.getRealX() + (this.style.borderWidth || 0) - 0.5, this.getRealY() + (this.style.borderWidth || 0) - 0.5, this.getInnerWidth() + 1, this.getInnerHeight() + 1); //clip后矩形会整体缩小1个像素
             }
             ctx.clip();
         }
@@ -538,84 +524,6 @@ var Panel = function (_Rect) {
             }
             _get(Panel.prototype.__proto__ || Object.getPrototypeOf(Panel.prototype), "initCfg", this).call(this, cfg);
         }
-    }, {
-        key: "appendChildren",
-        value: function appendChildren(child) {
-            _get(Panel.prototype.__proto__ || Object.getPrototypeOf(Panel.prototype), "appendChildren", this).call(this, child);
-
-            this.propagationDoLayout(this);
-        }
-
-        /** 获取所有的权值 */
-
-    }, {
-        key: "getAllWeight",
-        value: function getAllWeight() {
-            var allWeight = 0;
-            this.children.forEach(function (child, index) {
-                if (child.style.layout && child.style.layout.layoutWeight) {
-                    allWeight += child.style.layout.layoutWeight;
-                } else {
-                    allWeight += 1;
-                }
-            });
-            return allWeight;
-        }
-    }, {
-        key: "doLayout",
-        value: function doLayout() {
-            var _this2 = this;
-
-            if (this.style.layout && this.style.layout.type && this.children.length > 0) {
-                switch (this.style.layout.type) {
-                    case "linearLayout":
-                        var fixByWeight = this.style.layout.fixByWeight || false;
-                        var allWeight = 0;
-                        if (fixByWeight) {
-                            allWeight = this.getAllWeight(); //总权值
-                        }
-                        var allWH = 0; //记录高宽，确定x和y坐标
-                        this.children.forEach(function (child, index) {
-                            var weight = 1;
-                            if (child.style.layout && child.style.layout.layoutWeight) {
-                                weight = child.style.layout.layoutWeight;
-                            }
-                            if (!_this2.style.layout.orientation || _this2.style.layout.orientation === "horizontal") {
-                                var width = void 0;
-                                if (fixByWeight) {
-                                    width = _this2.getInnerWidth() * (weight / allWeight);
-                                } else {
-                                    width = child.getWidth();
-                                }
-                                child.setX(allWH);
-                                child.setY(0);
-                                child.setWidth(width);
-                                allWH += width;
-                            } else if (_this2.style.layout.orientation === "vertical") {
-                                var height = void 0;
-                                if (fixByWeight) {
-                                    height = _this2.getInnerHeight() * (weight / allWeight);
-                                } else {
-                                    height = child.getHeight();
-                                }
-                                child.setY(allWH);
-                                child.setX(0);
-                                child.setHeight(height);
-                                allWH += height;
-                            }
-                        });
-                        //自适应高宽
-                        if ((!this.style.layout.orientation || this.style.layout.orientation === "horizontal") && this.style.autoWidth) {
-                            this.setWidth(allWH);
-                        } else if (this.style.layout.orientation === "vertical" && this.style.autoHeight) {
-                            this.setHeight(allWH);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }]);
 
     return Panel;
@@ -725,8 +633,11 @@ var Input = function (_Scrollbar) {
 
         _this.showTextCursor = true;
         _this.showTextCursorInterval = 0;
-        _this.multiLine = false;
-        _this.scrollText = true;
+
+        _this.setStyle({
+            multiLine: false,
+            scrollText: true
+        });
         return _this;
     }
 
@@ -829,7 +740,7 @@ var Input = function (_Scrollbar) {
         key: "getTextRealY",
         value: function getTextRealY() {
             var oriY = _get(Input.prototype.__proto__ || Object.getPrototypeOf(Input.prototype), "getTextRealY", this).call(this);
-            if (this.multiLine) {
+            if (this.style.multiLine) {
                 return oriY;
             } else {
                 return oriY + this.getHeight() / 2 - this.style.lineHeight / 2;
@@ -887,7 +798,7 @@ var Scrollbar = function (_Rect) {
 
         var _this = _possibleConstructorReturn(this, (Scrollbar.__proto__ || Object.getPrototypeOf(Scrollbar)).call(this, parent));
 
-        if (!_this.scrollText) {
+        if (!_this.style.scrollText) {
             _this.setX(0);
             _this.setY(0);
             if (!parent) //最顶层
@@ -1045,7 +956,7 @@ var Scrollbar = function (_Rect) {
         value: function setScrollX() {
             var _this2 = this;
 
-            if (this.scrollText) {
+            if (this.style.scrollText) {
                 this.setStyle("textScrollX", this.style.contentScrollX);
             } else {
                 this.children.forEach(function (child) {
@@ -1060,7 +971,7 @@ var Scrollbar = function (_Rect) {
         value: function setScrollY() {
             var _this3 = this;
 
-            if (this.scrollText) {
+            if (this.style.scrollText) {
                 this.setStyle("textScrollY", this.style.contentScrollY);
             } else {
                 this.children.forEach(function (child) {
@@ -1119,7 +1030,7 @@ var Scrollbar = function (_Rect) {
 
             var maxWidth = 0;
             var maxHeight = 0;
-            if (this.scrollText && this.text) {
+            if (this.style.scrollText && this.text) {
                 maxHeight = this.getTextHeight();
                 maxWidth = this.getTextWidth();
             } else {
@@ -1186,7 +1097,7 @@ var _fps = __webpack_require__(8);
 
 var _fps2 = _interopRequireDefault(_fps);
 
-var _httpUtil = __webpack_require__(21);
+var _httpUtil = __webpack_require__(22);
 
 var _httpUtil2 = _interopRequireDefault(_httpUtil);
 
@@ -1198,7 +1109,7 @@ var _globalUtil = __webpack_require__(0);
 
 var _globalUtil2 = _interopRequireDefault(_globalUtil);
 
-var _controller = __webpack_require__(22);
+var _controller = __webpack_require__(23);
 
 var _controller2 = _interopRequireDefault(_controller);
 
@@ -1275,7 +1186,7 @@ var _viewState = __webpack_require__(9);
 
 var _viewState2 = _interopRequireDefault(_viewState);
 
-var _eventBus = __webpack_require__(13);
+var _eventBus = __webpack_require__(14);
 
 var _eventBus2 = _interopRequireDefault(_eventBus);
 
@@ -1407,7 +1318,7 @@ var _panel = __webpack_require__(3);
 
 var _panel2 = _interopRequireDefault(_panel);
 
-var _router = __webpack_require__(12);
+var _router = __webpack_require__(13);
 
 var _router2 = _interopRequireDefault(_router);
 
@@ -1437,9 +1348,17 @@ var ViewState = function () {
         this.registerEvent("mousedown", function (e) {
             if (_globalUtil2.default.action.hoverComponent) {
                 _globalUtil2.default.action.focusComponent = _globalUtil2.default.action.hoverComponent;
-                _globalUtil2.default.action.activeComponent = _globalUtil2.default.action.hoverComponent;
                 if (_globalUtil2.default.action.focusComponent.onFocus && typeof _globalUtil2.default.action.focusComponent.onFocus === "function") {
                     _globalUtil2.default.action.focusComponent.onFocus(e.pageX, e.pageY);
+                }
+                _globalUtil2.default.action.activeComponent = _globalUtil2.default.action.hoverComponent;
+                //是否支持拖动
+                _globalUtil2.default.action.dragComponent = _globalUtil2.default.action.hoverComponent.getDragComponent(_globalUtil2.default.action.hoverComponent);
+                if (_globalUtil2.default.action.dragComponent) {
+                    _globalUtil2.default.action.dragOffset = {
+                        x: e.pageX - _globalUtil2.default.action.dragComponent.getRealX(),
+                        y: e.pageY - _globalUtil2.default.action.dragComponent.getRealY()
+                    };
                 }
             }
         });
@@ -1448,10 +1367,20 @@ var ViewState = function () {
             if (_globalUtil2.default.action.activeComponent) {
                 _globalUtil2.default.action.activeComponent = undefined;
             }
+            if (_globalUtil2.default.action.dragComponent) {
+                _globalUtil2.default.action.dragComponent = undefined;
+                _globalUtil2.default.action.dragOffset = undefined;
+            }
         });
         this.registerEvent("mousemove", function (e) {
             _this.ctx.mouseAction.mx = e.pageX;
             _this.ctx.mouseAction.my = e.pageY;
+
+            if (_globalUtil2.default.action.dragComponent) //拖动
+                {
+                    _globalUtil2.default.action.dragComponent.setRealX(e.pageX - _globalUtil2.default.action.dragOffset.x);
+                    _globalUtil2.default.action.dragComponent.setRealY(e.pageY - _globalUtil2.default.action.dragOffset.y);
+                }
         });
 
         //输入框事件
@@ -1639,12 +1568,11 @@ var Component = function () {
         this.setStyle({
             fontFamily: _globalUtil2.default.viewState.defaultFontFamily,
             fontSize: _globalUtil2.default.viewState.defaultFontSize,
-            zIndex: 1
+            zIndex: 1,
+            multiLine: true, //是否多行文本
+            autoLine: true //是否自动换行
         });
         this.setStyle("lineHeight", parseInt(this.style.fontSize, 10));
-
-        this.multiLine = true; //是否多行文本
-        this.autoLine = true; //是否自动换行
     }
 
     _createClass(Component, [{
@@ -1695,9 +1623,6 @@ var Component = function () {
             this.initCfgStyle(cfg.style, this.style);
 
             this.text = this.getTextForRows(cfg.text);
-            this.multiLine = cfg.multiLine || this.multiLine;
-
-            this.scrollText = cfg.scrollText || this.scrollText; //是否文字滚动
 
             //事件绑定配置
             if (cfg.events) {
@@ -1753,7 +1678,7 @@ var Component = function () {
             var Input = __webpack_require__(5).default;
             var Button = __webpack_require__(11).default;
             var Scrollbar = __webpack_require__(6).default;
-            var Sprite = __webpack_require__(23).default;
+            var Sprite = __webpack_require__(12).default;
 
             var childCom = void 0;
             if (typeof chiCfg === "function") //异步加载view
@@ -1814,7 +1739,7 @@ var Component = function () {
 
             //判断鼠标是否在组件范围内
             //防止鼠标指向子组件超出父组件的范围部分而hover到这个子组件上
-            if (ctx.mouseAction.mx && ctx.mouseAction.my && this.isPointInComponent(ctx.mouseAction.mx, ctx.mouseAction.my) && (!this.parent || this.parent === ctx.mouseAction.hoverCom || this.parent === ctx.mouseAction.hoverCom.parent)) {
+            if (ctx.mouseAction.mx && ctx.mouseAction.my && this.isPointInComponent(ctx.mouseAction.mx, ctx.mouseAction.my) && (!this.parent || this.parent === ctx.mouseAction.hoverCom || this.parent === ctx.mouseAction.hoverCom.parent || this.parent.parentOf(ctx.mouseAction.hoverCom))) {
                 ctx.mouseAction.hoverCom = this;
             }
 
@@ -1834,6 +1759,8 @@ var Component = function () {
         key: "appendChildren",
         value: function appendChildren(child) {
             this.children.push(child);
+
+            this.propagationDoLayout(this);
         }
 
         /** 设置通用样式，所有组件在绘制前都应该设置 */
@@ -1910,6 +1837,77 @@ var Component = function () {
             }
         }
 
+        /** 获取所有的权值 */
+
+    }, {
+        key: "getAllWeight",
+        value: function getAllWeight() {
+            var allWeight = 0;
+            this.children.forEach(function (child, index) {
+                if (child.style.layout && child.style.layout.layoutWeight) {
+                    allWeight += child.style.layout.layoutWeight;
+                } else {
+                    allWeight += 1;
+                }
+            });
+            return allWeight;
+        }
+    }, {
+        key: "doLayout",
+        value: function doLayout() {
+            var _this2 = this;
+
+            if (this.style.layout && this.style.layout.type && this.children.length > 0) {
+                switch (this.style.layout.type) {
+                    case "linearLayout":
+                        var fixByWeight = this.style.layout.fixByWeight || false;
+                        var allWeight = 0;
+                        if (fixByWeight) {
+                            allWeight = this.getAllWeight(); //总权值
+                        }
+                        var allWH = 0; //记录高宽，确定x和y坐标
+                        this.children.forEach(function (child, index) {
+                            var weight = 1;
+                            if (child.style.layout && child.style.layout.layoutWeight) {
+                                weight = child.style.layout.layoutWeight;
+                            }
+                            if (!_this2.style.layout.orientation || _this2.style.layout.orientation === "horizontal") {
+                                var width = void 0;
+                                if (fixByWeight) {
+                                    width = _this2.getInnerWidth() * (weight / allWeight);
+                                } else {
+                                    width = child.getWidth();
+                                }
+                                child.setX(allWH);
+                                child.setY(0);
+                                child.setWidth(width);
+                                allWH += width;
+                            } else if (_this2.style.layout.orientation === "vertical") {
+                                var height = void 0;
+                                if (fixByWeight) {
+                                    height = _this2.getInnerHeight() * (weight / allWeight);
+                                } else {
+                                    height = child.getHeight();
+                                }
+                                child.setY(allWH);
+                                child.setX(0);
+                                child.setHeight(height);
+                                allWH += height;
+                            }
+                        });
+                        //自适应高宽
+                        if ((!this.style.layout.orientation || this.style.layout.orientation === "horizontal") && this.style.autoWidth) {
+                            this.setWidth(allWH);
+                        } else if (this.style.layout.orientation === "vertical" && this.style.autoHeight) {
+                            this.setHeight(allWH);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         /** this是否是com的父亲 */
 
     }, {
@@ -1980,6 +1978,27 @@ var Component = function () {
         key: "getY",
         value: function getY() {
             return this.style.y - (this.style.scrollY || 0);
+        }
+
+        //设置真实坐标，传入真实坐标,会转换成x或y
+
+    }, {
+        key: "setRealX",
+        value: function setRealX(rx) {
+            if (this.parent) {
+                this.setX(rx - this.getRealXRecursion(this.parent));
+            } else {
+                this.setX(rx);
+            }
+        }
+    }, {
+        key: "setRealY",
+        value: function setRealY(ry) {
+            if (this.parent) {
+                this.setY(ry - this.getRealYRecursion(this.parent));
+            } else {
+                this.setY(ry);
+            }
         }
 
         //获取显示在界面上真实的x坐标，加上父级坐标
@@ -2054,7 +2073,7 @@ var Component = function () {
             }
             if (this.style.width.toString().indexOf("%") > -1) //百分比
                 {
-                    var maxWidth = this.parent.getWidth() - (this.parent ? (this.parent.style.borderWidth || 0) * 2 : 0);
+                    var maxWidth = this.parent.getInnerWidth();
                     return maxWidth * (this.style.width.substring(0, this.style.width.length - 1) / 100);
                 }
             return this.style.width;
@@ -2066,7 +2085,7 @@ var Component = function () {
                 return undefined;
             }
             if (this.style.height.toString().indexOf("%") > -1) {
-                var maxHeight = this.parent.getHeight() - (this.parent ? (this.parent.style.borderWidth || 0) * 2 : 0);
+                var maxHeight = this.parent.getInnerHeight();
                 return maxHeight * (this.style.height.substring(0, this.style.height.length - 1) / 100);
             }
             return this.style.height;
@@ -2093,11 +2112,11 @@ var Component = function () {
                 return undefined;
             }
             var rowsStr = void 0;
-            if (!this.multiLine) //单行
+            if (!this.style.multiLine) //单行
                 {
                     rowsStr = [text];
                 } else {
-                if (this.autoLine) //如果自动换行
+                if (this.style.autoLine) //如果自动换行
                     {
                         var index = 0;
                         var charWidth = 0;
@@ -2160,14 +2179,14 @@ var Component = function () {
     }, {
         key: "getTextWidth",
         value: function getTextWidth() {
-            var _this2 = this;
+            var _this3 = this;
 
             if (!this.text) {
                 return 0;
             }
             var allWidth = 0;
             this.text.forEach(function (row, index) {
-                allWidth = Math.max(allWidth, row.length * parseInt(_this2.style.fontSize, 10));
+                allWidth = Math.max(allWidth, row.length * parseInt(_this3.style.fontSize, 10));
             });
             return allWidth;
         }
@@ -2195,6 +2214,20 @@ var Component = function () {
         key: "addEventNotify",
         value: function addEventNotify(eventNotify) {
             this.eventNotifys.push(eventNotify);
+        }
+
+        //是否支持拖动
+
+    }, {
+        key: "getDragComponent",
+        value: function getDragComponent(com) {
+            if (com.style.draggable) {
+                return com;
+            } else if (!com.parent) {
+                return undefined;
+            } else {
+                return com.getDragComponent(com.parent);
+            }
         }
     }, {
         key: "destroy",
@@ -2270,6 +2303,54 @@ exports.default = Button;
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _rect = __webpack_require__(2);
+
+var _rect2 = _interopRequireDefault(_rect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Sprite = function (_Rect) {
+    _inherits(Sprite, _Rect);
+
+    function Sprite(parent) {
+        _classCallCheck(this, Sprite);
+
+        return _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, parent));
+    }
+
+    _createClass(Sprite, [{
+        key: "initCfg",
+        value: function initCfg(cfg) {
+            _get(Sprite.prototype.__proto__ || Object.getPrototypeOf(Sprite.prototype), "initCfg", this).call(this, cfg);
+        }
+    }]);
+
+    return Sprite;
+}(_rect2.default);
+
+exports.default = Sprite;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2433,7 +2514,7 @@ var Router = function (_Rect) {
 exports.default = Router;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2448,31 +2529,31 @@ var _createClass = function () { function defineProperties(target, props) { for 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
 
 
-var _eventListener = __webpack_require__(14);
+var _eventListener = __webpack_require__(15);
 
 var _eventListener2 = _interopRequireDefault(_eventListener);
 
-var _clickEvent = __webpack_require__(15);
+var _clickEvent = __webpack_require__(16);
 
 var _clickEvent2 = _interopRequireDefault(_clickEvent);
 
-var _mouseEvent = __webpack_require__(16);
+var _mouseEvent = __webpack_require__(17);
 
 var _mouseEvent2 = _interopRequireDefault(_mouseEvent);
 
-var _keyEvent = __webpack_require__(17);
+var _keyEvent = __webpack_require__(18);
 
 var _keyEvent2 = _interopRequireDefault(_keyEvent);
 
-var _wheelEvent = __webpack_require__(18);
+var _wheelEvent = __webpack_require__(19);
 
 var _wheelEvent2 = _interopRequireDefault(_wheelEvent);
 
-var _stack = __webpack_require__(19);
+var _stack = __webpack_require__(20);
 
 var _stack2 = _interopRequireDefault(_stack);
 
-var _eventNotify = __webpack_require__(20);
+var _eventNotify = __webpack_require__(21);
 
 var _eventNotify2 = _interopRequireDefault(_eventNotify);
 
@@ -2793,7 +2874,7 @@ var EventBus = function () {
 exports.default = EventBus;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2834,7 +2915,7 @@ var EventListener = function () {
 exports.default = EventListener;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2874,7 +2955,7 @@ var ClickEvent = function (_Event) {
 exports.default = ClickEvent;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2938,7 +3019,7 @@ var MouseEvent = function (_Event) {
 exports.default = MouseEvent;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2996,7 +3077,7 @@ var KeyEvent = function (_Event) {
 exports.default = KeyEvent;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3045,7 +3126,7 @@ var WheelEvent = function (_Event) {
 exports.default = WheelEvent;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3111,7 +3192,7 @@ var Stack = function () {
 exports.default = Stack;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3156,7 +3237,7 @@ var EventNotify = function () {
 exports.default = EventNotify;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3230,7 +3311,7 @@ var httpUtil = {
 exports.default = httpUtil;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3259,54 +3340,6 @@ var Controller = function Controller(panel) {
 };
 
 exports.default = Controller;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _rect = __webpack_require__(2);
-
-var _rect2 = _interopRequireDefault(_rect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Sprite = function (_Rect) {
-    _inherits(Sprite, _Rect);
-
-    function Sprite(parent) {
-        _classCallCheck(this, Sprite);
-
-        return _possibleConstructorReturn(this, (Sprite.__proto__ || Object.getPrototypeOf(Sprite)).call(this, parent));
-    }
-
-    _createClass(Sprite, [{
-        key: "initCfg",
-        value: function initCfg(cfg) {
-            _get(Sprite.prototype.__proto__ || Object.getPrototypeOf(Sprite.prototype), "initCfg", this).call(this, cfg);
-        }
-    }]);
-
-    return Sprite;
-}(_rect2.default);
-
-exports.default = Sprite;
 
 /***/ })
 /******/ ]);
