@@ -242,32 +242,25 @@ var MainController = function (_window$Monk$Controll) {
 
         var _this = _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, panel));
 
-        _this.onClickRootBind = _this.onClickRoot.bind(_this);
-        setTimeout(function () {
+        _this.registerEvent("$onViewLoaded", function () {
+            _this.fileView = _this.viewState.getComponentById("fileView");
+
             var mainView = _this.viewState.getComponentById("mainView");
-            mainView.registerEvent("click", _this.onClickRootBind);
-        }, 1000);
+            mainView.registerEvent("click", _this.onClickRoot.bind(_this));
+        });
         return _this;
     }
 
     _createClass(MainController, [{
         key: "showFileView",
         value: function showFileView(e) {
-            var fileView = this.viewState.getComponentById("fileView");
-            fileView.active = !fileView.active;
+            this.fileView.active = !this.fileView.active;
             e.stopPropagation();
         }
     }, {
         key: "onClickRoot",
         value: function onClickRoot() {
-            var fileView = this.viewState.getComponentById("fileView");
-            fileView.active = false;
-        }
-    }, {
-        key: "destory",
-        value: function destory() {
-            var mainView = this.viewState.getComponentById("mainView");
-            mainView.removeEvent("click", this.onClickRootBind);
+            this.fileView.active = false;
         }
     }]);
 

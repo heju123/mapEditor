@@ -5,26 +5,20 @@ export default class MainController extends window.Monk.Controller{
     constructor(panel) {
         super(panel);
 
-        this.onClickRootBind = this.onClickRoot.bind(this);
-        setTimeout(()=>{
+        this.registerEvent("$onViewLoaded", ()=>{
+            this.fileView = this.viewState.getComponentById("fileView");
+
             let mainView = this.viewState.getComponentById("mainView");
-            mainView.registerEvent("click", this.onClickRootBind);
-        }, 1000);
+            mainView.registerEvent("click", this.onClickRoot.bind(this));
+        });
     }
 
     showFileView(e){
-        let fileView = this.viewState.getComponentById("fileView");
-        fileView.active = !fileView.active;
+        this.fileView.active = !this.fileView.active;
         e.stopPropagation();
     }
 
     onClickRoot(){
-        let fileView = this.viewState.getComponentById("fileView");
-        fileView.active = false;
-    }
-
-    destory(){
-        let mainView = this.viewState.getComponentById("mainView");
-        mainView.removeEvent("click", this.onClickRootBind);
+        this.fileView.active = false;
     }
 }

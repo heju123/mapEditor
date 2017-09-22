@@ -490,60 +490,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _rect = __webpack_require__(2);
-
-var _rect2 = _interopRequireDefault(_rect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by heju on 2017/7/20.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var Panel = function (_Rect) {
-    _inherits(Panel, _Rect);
-
-    function Panel(parent) {
-        _classCallCheck(this, Panel);
-
-        return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).call(this, parent));
-    }
-
-    _createClass(Panel, [{
-        key: "initCfg",
-        value: function initCfg(cfg) {
-            if (cfg.controller && typeof cfg.controller == "function") {
-                this.controller = new cfg.controller(this);
-            }
-            _get(Panel.prototype.__proto__ || Object.getPrototypeOf(Panel.prototype), "initCfg", this).call(this, cfg);
-        }
-    }]);
-
-    return Panel;
-}(_rect2.default);
-
-exports.default = Panel;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
@@ -584,6 +530,60 @@ var Event = function () {
 }();
 
 exports.default = Event;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _rect = __webpack_require__(2);
+
+var _rect2 = _interopRequireDefault(_rect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by heju on 2017/7/20.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var Panel = function (_Rect) {
+    _inherits(Panel, _Rect);
+
+    function Panel(parent) {
+        _classCallCheck(this, Panel);
+
+        return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).call(this, parent));
+    }
+
+    _createClass(Panel, [{
+        key: "initCfg",
+        value: function initCfg(cfg) {
+            if (cfg.controller && typeof cfg.controller == "function") {
+                this.controller = new cfg.controller(this);
+            }
+            _get(Panel.prototype.__proto__ || Object.getPrototypeOf(Panel.prototype), "initCfg", this).call(this, cfg);
+        }
+    }]);
+
+    return Panel;
+}(_rect2.default);
+
+exports.default = Panel;
 
 /***/ }),
 /* 5 */
@@ -1314,7 +1314,7 @@ var _commonUtil = __webpack_require__(1);
 
 var _commonUtil2 = _interopRequireDefault(_commonUtil);
 
-var _panel = __webpack_require__(3);
+var _panel = __webpack_require__(4);
 
 var _panel2 = _interopRequireDefault(_panel);
 
@@ -1411,6 +1411,8 @@ var ViewState = function () {
                 this.rootPanel = new _router2.default();
                 this.rootPanel.initCfg(viewCfg);
             }
+
+            _globalUtil2.default.eventBus.broadcastEvent("$onViewLoaded"); //view加载完成事件
         }
 
         /** 绘制前 */
@@ -1675,7 +1677,7 @@ var Component = function () {
     }, {
         key: "newComByType",
         value: function newComByType(type) {
-            var Panel = __webpack_require__(3).default;
+            var Panel = __webpack_require__(4).default;
             var Rect = __webpack_require__(2).default;
             var Input = __webpack_require__(5).default;
             var Button = __webpack_require__(11).default;
@@ -1956,7 +1958,7 @@ var Component = function () {
     }, {
         key: "getController",
         value: function getController(com) {
-            var Panel = __webpack_require__(3).default;
+            var Panel = __webpack_require__(4).default;
             if (!com.parent) {
                 return com.controller;
             }
@@ -2586,15 +2588,7 @@ var EventBus = function () {
 
         this.canvas = canvas;
         //注册事件列表
-        this.eventListeners = {
-            "click": [],
-            "mousedown": [],
-            "mousemove": [],
-            "mouseup": [],
-            "keydown": [],
-            "keyup": [],
-            "mousewheel": []
-        };
+        this.eventListeners = {};
         //事件通知队列
         this.eventNotifyQueue = [];
         //事件冒泡执行队列
@@ -2667,6 +2661,9 @@ var EventBus = function () {
         value: function createEventNotify(e, type) {
             var _this2 = this;
 
+            if (!this.eventListeners[type]) {
+                return;
+            }
             e = e || window.event;
             var px = e.pageX;
             var py = e.pageY;
@@ -2685,9 +2682,9 @@ var EventBus = function () {
                                 type: 1,
                                 px: px,
                                 py: py,
+                                sourceEvent: e,
                                 listener: listener
                             });
-                            listener.setSourceEvent(e);
                             listener.target.addEventNotify(eventNotify);
                         }
                     }
@@ -2699,6 +2696,9 @@ var EventBus = function () {
         value: function createOtherEventNotify(e, type, ntype) {
             var _this3 = this;
 
+            if (!this.eventListeners[type]) {
+                return;
+            }
             e = e || window.event;
             var batchNo = this.createPropagationStack();
             var eventNotify = void 0;
@@ -2709,9 +2709,9 @@ var EventBus = function () {
                         eventNotify.set({
                             batchNo: batchNo,
                             type: ntype,
+                            sourceEvent: e,
                             listener: listener
                         });
-                        listener.setSourceEvent(e);
                         listener.target.addEventNotify(eventNotify);
                     }
                 });
@@ -2739,7 +2739,7 @@ var EventBus = function () {
             if (!this.propagationEventQueue[eventNotify.batchNo]) {
                 return;
             }
-            this.propagationEventQueue[eventNotify.batchNo].push(eventNotify.listener);
+            this.propagationEventQueue[eventNotify.batchNo].push(eventNotify);
         }
 
         /**
@@ -2749,7 +2749,7 @@ var EventBus = function () {
     }, {
         key: "propagationEvent",
         value: function propagationEvent() {
-            var listener = void 0;
+            var eventNotify = void 0;
             var bubble = void 0; //上一个冒泡节点
             var target = void 0;
             var event = void 0;
@@ -2762,19 +2762,19 @@ var EventBus = function () {
                 top = this.propagationEventQueue[key].getTop();
                 if (top) //获取target，第一个冒泡节点的target
                     {
-                        target = top.target;
+                        target = top.listener.target;
                     }
-                while (listener = this.propagationEventQueue[key].pop()) {
-                    if (listener.target.isViewState || !bubble //viewstate节点或第一个节点
-                    || event && event.immediatePropagation && bubble === listener.target //自己
-                    || event && event.propagation && listener.target.parentOf(bubble)) //parent
+                while (eventNotify = this.propagationEventQueue[key].pop()) {
+                    if (eventNotify.listener.target.isViewState || !bubble //viewstate节点或第一个节点
+                    || event && event.immediatePropagation && bubble === eventNotify.listener.target //自己
+                    || event && event.propagation && eventNotify.listener.target.parentOf(bubble)) //parent
                         {
-                            event = this.getEvent(listener);
+                            event = this.getEvent(eventNotify);
                             event.setTarget(target);
-                            if (listener.callback && typeof listener.callback === "function") {
-                                listener.callback(event);
+                            if (eventNotify.listener.callback && typeof eventNotify.listener.callback === "function") {
+                                eventNotify.listener.callback(event);
                             }
-                            bubble = listener.target;
+                            bubble = eventNotify.listener.target;
                         }
                 }
                 delete this.propagationEventQueue[key];
@@ -2782,54 +2782,69 @@ var EventBus = function () {
         }
     }, {
         key: "getEvent",
-        value: function getEvent(listener) {
+        value: function getEvent(eventNotify) {
             var event = void 0;
-            switch (listener.type) {
+            switch (eventNotify.listener.type) {
                 case "click":
-                    event = new _clickEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
+                    event = new _clickEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
                     break;
                 case "mousedown":
-                    event = new _mouseEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setButton(listener.sourceEvent.button);
-                    event.setPageX(listener.sourceEvent.pageX);
-                    event.setPageY(listener.sourceEvent.pageY);
+                    event = new _mouseEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setButton(eventNotify.sourceEvent.button);
+                    event.setPageX(eventNotify.sourceEvent.pageX);
+                    event.setPageY(eventNotify.sourceEvent.pageY);
                     break;
                 case "mousemove":
-                    event = new _mouseEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setPageX(listener.sourceEvent.pageX);
-                    event.setPageY(listener.sourceEvent.pageY);
+                    event = new _mouseEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setPageX(eventNotify.sourceEvent.pageX);
+                    event.setPageY(eventNotify.sourceEvent.pageY);
                     break;
                 case "mouseup":
-                    event = new _mouseEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setButton(listener.sourceEvent.button);
-                    event.setPageX(listener.sourceEvent.pageX);
-                    event.setPageY(listener.sourceEvent.pageY);
+                    event = new _mouseEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setButton(eventNotify.sourceEvent.button);
+                    event.setPageX(eventNotify.sourceEvent.pageX);
+                    event.setPageY(eventNotify.sourceEvent.pageY);
                     break;
                 case "keydown":
-                    event = new _keyEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setKey(listener.sourceEvent.key);
-                    event.setKeyCode(listener.sourceEvent.keyCode);
+                    event = new _keyEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setKey(eventNotify.sourceEvent.key);
+                    event.setKeyCode(eventNotify.sourceEvent.keyCode);
                     break;
                 case "keyup":
-                    event = new _keyEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setKey(listener.sourceEvent.key);
-                    event.setKeyCode(listener.sourceEvent.keyCode);
+                    event = new _keyEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setKey(eventNotify.sourceEvent.key);
+                    event.setKeyCode(eventNotify.sourceEvent.keyCode);
                     break;
                 case "mousewheel":
-                    event = new _wheelEvent2.default(listener.type);
-                    event.setCurrentTarget(listener.target);
-                    event.setWheelDelta(listener.sourceEvent.wheelDelta || -listener.sourceEvent.detail);
+                    event = new _wheelEvent2.default(eventNotify.listener.type);
+                    event.setCurrentTarget(eventNotify.listener.target);
+                    event.setWheelDelta(eventNotify.sourceEvent.wheelDelta || -eventNotify.sourceEvent.detail);
                     break;
                 default:
                     break;
             }
             return event;
+        }
+
+        /** 广播事件 */
+
+    }, {
+        key: "broadcastEvent",
+        value: function broadcastEvent(type, event) {
+            if (!this.eventListeners[type]) {
+                return;
+            }
+            this.eventListeners[type].forEach(function (listener) {
+                if (listener.callback && typeof listener.callback === "function") {
+                    listener.callback(event);
+                }
+            });
         }
 
         /** 注册事件 */
@@ -2838,6 +2853,9 @@ var EventBus = function () {
         key: "registerEvent",
         value: function registerEvent(com, type, callback) {
             var listener = this.getEventListener(com, type, callback);
+            if (!this.eventListeners[type]) {
+                this.eventListeners[type] = [];
+            }
             this.eventListeners[type].push(listener);
             return listener;
         }
@@ -2851,7 +2869,7 @@ var EventBus = function () {
     }, {
         key: "removeEvent",
         value: function removeEvent(com, type, callback) {
-            if (!com || !type) {
+            if (!com || !type || !this.eventListeners[type]) {
                 return;
             }
             var listener = void 0;
@@ -2862,6 +2880,10 @@ var EventBus = function () {
                     i--;
                 }
             }
+            if (this.eventListeners[type].length === 0) //监听列表为空，则清掉避免浪费空间
+                {
+                    delete this.eventListeners[type];
+                }
         }
     }, {
         key: "removeAllEvent",
@@ -2913,11 +2935,6 @@ var EventListener = function () {
         value: function setTarget(target) {
             this.target = target;
         }
-    }, {
-        key: "setSourceEvent",
-        value: function setSourceEvent(sourceEvent) {
-            this.sourceEvent = sourceEvent;
-        }
     }]);
 
     return EventListener;
@@ -2936,7 +2953,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _event = __webpack_require__(4);
+var _event = __webpack_require__(3);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -2978,7 +2995,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _event = __webpack_require__(4);
+var _event = __webpack_require__(3);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -3042,7 +3059,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _event = __webpack_require__(4);
+var _event = __webpack_require__(3);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -3100,7 +3117,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _event = __webpack_require__(4);
+var _event = __webpack_require__(3);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -3238,6 +3255,7 @@ var EventNotify = function () {
             this.type = obj.type; //1：鼠标相关事件；2：键盘事件
             this.px = obj.px;
             this.py = obj.py;
+            this.sourceEvent = obj.sourceEvent;
             this.listener = obj.listener;
         }
     }]);
@@ -3332,23 +3350,51 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by heju on 2017/7/21.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
 var _globalUtil = __webpack_require__(0);
 
 var _globalUtil2 = _interopRequireDefault(_globalUtil);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } /**
-                                                                                                                                                           * Created by heju on 2017/7/21.
-                                                                                                                                                           */
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var Controller = function () {
+    function Controller(panel) {
+        _classCallCheck(this, Controller);
 
-var Controller = function Controller(panel) {
-    _classCallCheck(this, Controller);
+        this.panel = panel;
+        this.viewState = _globalUtil2.default.viewState;
+    }
 
-    this.panel = panel;
-    this.viewState = _globalUtil2.default.viewState;
-};
+    _createClass(Controller, [{
+        key: "registerEvent",
+        value: function registerEvent(eventType, callback) {
+            _globalUtil2.default.eventBus.registerEvent(this, eventType, callback);
+        }
+    }, {
+        key: "removeEvent",
+        value: function removeEvent(eventType, callback) {
+            _globalUtil2.default.eventBus.removeEvent(this, eventType, callback);
+        }
+    }, {
+        key: "removeAllEvent",
+        value: function removeAllEvent() {
+            _globalUtil2.default.eventBus.removeAllEvent(this);
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            this.removeAllEvent();
+        }
+    }]);
+
+    return Controller;
+}();
 
 exports.default = Controller;
 
