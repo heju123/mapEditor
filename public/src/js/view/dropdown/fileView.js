@@ -1,4 +1,4 @@
-import baseStyle from "../style/base.js";
+import {navItemStyle} from "../style/base.js";
 
 export default (TOP_HEIGHT)=>{
     return {
@@ -22,15 +22,9 @@ export default (TOP_HEIGHT)=>{
         children : [
             {
                 type : "button",
-                style : {
-                    width : "100%",
-                    height : 35,
-                    backgroundColor: "#DCDCDC",
-                    hover : {
-                        backgroundColor : "#E9E9E9"
-                    }
-                },
-                text : "新建地图"
+                style : navItemStyle.style,
+                text : "新建地图",
+                animation : navItemStyle.animation
             },
             {
                 type: "rect",
@@ -42,15 +36,9 @@ export default (TOP_HEIGHT)=>{
             },
             {
                 type : "button",
-                style : {
-                    width : "100%",
-                    height : 35,
-                    backgroundColor: "#DCDCDC",
-                    hover : {
-                        backgroundColor : "#E9E9E9"
-                    }
-                },
-                text : "加载地图"
+                style : navItemStyle.style,
+                text : "加载地图",
+                animation : navItemStyle.animation
             }
         ]
     };

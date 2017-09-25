@@ -95,6 +95,28 @@ var navButtonStyle = exports.navButtonStyle = {
     }
 };
 
+var navItemStyle = exports.navItemStyle = {
+    style: {
+        width: "100%",
+        height: 35,
+        backgroundColor: "#DCDCDC",
+        hover: {
+            backgroundColor: "#E9E9E9"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
+};
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -313,10 +335,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _base = __webpack_require__(0);
 
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 exports.default = function (TOP_HEIGHT) {
     return {
         id: "fileView",
@@ -338,15 +356,9 @@ exports.default = function (TOP_HEIGHT) {
         active: false,
         children: [{
             type: "button",
-            style: {
-                width: "100%",
-                height: 35,
-                backgroundColor: "#DCDCDC",
-                hover: {
-                    backgroundColor: "#E9E9E9"
-                }
-            },
-            text: "新建地图"
+            style: _base.navItemStyle.style,
+            text: "新建地图",
+            animation: _base.navItemStyle.animation
         }, {
             type: "rect",
             style: {
@@ -356,15 +368,9 @@ exports.default = function (TOP_HEIGHT) {
             }
         }, {
             type: "button",
-            style: {
-                width: "100%",
-                height: 35,
-                backgroundColor: "#DCDCDC",
-                hover: {
-                    backgroundColor: "#E9E9E9"
-                }
-            },
-            text: "加载地图"
+            style: _base.navItemStyle.style,
+            text: "加载地图",
+            animation: _base.navItemStyle.animation
         }]
     };
 };
