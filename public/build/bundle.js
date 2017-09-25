@@ -73,6 +73,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//顶部工具栏按钮
 var navButtonStyle = exports.navButtonStyle = {
     style: {
         autoWidth: true,
@@ -95,6 +96,16 @@ var navButtonStyle = exports.navButtonStyle = {
     }
 };
 
+//顶部工具栏下拉分割线
+var navDivider = exports.navDivider = {
+    style: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#ABABAB"
+    }
+};
+
+//顶部工具栏下拉选项按钮
 var navItemStyle = exports.navItemStyle = {
     style: {
         width: "100%",
@@ -361,11 +372,7 @@ exports.default = function (TOP_HEIGHT) {
             animation: _base.navItemStyle.animation
         }, {
             type: "rect",
-            style: {
-                width: "100%",
-                height: 1,
-                backgroundColor: "#ABABAB"
-            }
+            style: _base.navDivider.style
         }, {
             type: "button",
             style: _base.navItemStyle.style,

@@ -1,4 +1,4 @@
-import {navItemStyle} from "../style/base.js";
+import {navItemStyle,navDivider} from "../style/base.js";
 
 export default (TOP_HEIGHT)=>{
     return {
@@ -28,11 +28,7 @@ export default (TOP_HEIGHT)=>{
             },
             {
                 type: "rect",
-                style: {
-                    width : "100%",
-                    height : 1,
-                    backgroundColor: "#ABABAB"
-                }
+                style: navDivider.style
             },
             {
                 type : "button",
