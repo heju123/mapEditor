@@ -1,3 +1,5 @@
+import baseStyle from "../style/base.js";
+
 export default (TOP_HEIGHT)=>{
     return {
         id : "fileView",

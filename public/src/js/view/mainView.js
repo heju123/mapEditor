@@ -1,5 +1,6 @@
 import MainController from "../controller/mainController.js";
 import fileView from "./dropdown/fileView.js";
+import {navButtonStyle} from "./style/base.js";
 
 let TOP_HEIGHT = 30;
 
@@ -41,12 +42,9 @@ export default {
                     children : [
                         {
                             type : "button",
-                            style : {
-                                autoWidth : true,
-                                height : "100%",
-                                backgroundColor : "#ddd"
-                            },
+                            style : navButtonStyle.style,
                             text : "文件",
+                            animation : navButtonStyle.animation,
                             events : {
                                 "click" : "showFileView"
                             }

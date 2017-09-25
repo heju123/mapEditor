@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/build/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,39 @@
 "use strict";
 
 
-var _route = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var navButtonStyle = exports.navButtonStyle = {
+    style: {
+        autoWidth: true,
+        height: "100%",
+        backgroundColor: "#ddd",
+        hover: {
+            backgroundColor: "#f1f1f1"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _route = __webpack_require__(2);
 
 var _route2 = _interopRequireDefault(_route);
 
@@ -96,7 +128,7 @@ var Main = function Main() {
 var main = new Main();
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106,7 +138,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mainView = __webpack_require__(2);
+var _mainView = __webpack_require__(3);
 
 var _mainView2 = _interopRequireDefault(_mainView);
 
@@ -126,7 +158,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -136,13 +168,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mainController = __webpack_require__(3);
+var _mainController = __webpack_require__(4);
 
 var _mainController2 = _interopRequireDefault(_mainController);
 
-var _fileView = __webpack_require__(4);
+var _fileView = __webpack_require__(5);
 
 var _fileView2 = _interopRequireDefault(_fileView);
+
+var _base = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -184,12 +218,9 @@ exports.default = {
             },
             children: [{
                 type: "button",
-                style: {
-                    autoWidth: true,
-                    height: "100%",
-                    backgroundColor: "#ddd"
-                },
+                style: _base.navButtonStyle.style,
                 text: "文件",
+                animation: _base.navButtonStyle.animation,
                 events: {
                     "click": "showFileView"
                 }
@@ -213,7 +244,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -270,7 +301,7 @@ var MainController = function (_window$Monk$Controll) {
 exports.default = MainController;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -279,6 +310,12 @@ exports.default = MainController;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _base = __webpack_require__(0);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (TOP_HEIGHT) {
     return {
