@@ -1,7 +1,7 @@
 /**
  * Created by heju on 2017/7/19.
  */
-import route from "./view/route.js";
+import route from "./main/view/route.js";
 
 class Main {
     constructor(){

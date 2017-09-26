@@ -1,6 +1,36 @@
 /******/ (function(modules) { // webpackBootstrap
+/******/ 	// install a JSONP callback for chunk loading
+/******/ 	var parentJsonpFunction = window["webpackJsonp"];
+/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
+/******/ 		// add "moreModules" to the modules object,
+/******/ 		// then flag all "chunkIds" as loaded and fire callback
+/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
+/******/ 		for(;i < chunkIds.length; i++) {
+/******/ 			chunkId = chunkIds[i];
+/******/ 			if(installedChunks[chunkId]) {
+/******/ 				resolves.push(installedChunks[chunkId][0]);
+/******/ 			}
+/******/ 			installedChunks[chunkId] = 0;
+/******/ 		}
+/******/ 		for(moduleId in moreModules) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 		}
+/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
+/******/ 		while(resolves.length) {
+/******/ 			resolves.shift()();
+/******/ 		}
+/******/
+/******/ 	};
+/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
+/******/
+/******/ 	// objects to store loaded and loading chunks
+/******/ 	var installedChunks = {
+/******/ 		0: 0
+/******/ 	};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -26,6 +56,55 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		var installedChunkData = installedChunks[chunkId];
+/******/ 		if(installedChunkData === 0) {
+/******/ 			return new Promise(function(resolve) { resolve(); });
+/******/ 		}
+/******/
+/******/ 		// a Promise means "currently loading".
+/******/ 		if(installedChunkData) {
+/******/ 			return installedChunkData[2];
+/******/ 		}
+/******/
+/******/ 		// setup Promise in chunk cache
+/******/ 		var promise = new Promise(function(resolve, reject) {
+/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
+/******/ 		});
+/******/ 		installedChunkData[2] = promise;
+/******/
+/******/ 		// start chunk loading
+/******/ 		var head = document.getElementsByTagName('head')[0];
+/******/ 		var script = document.createElement('script');
+/******/ 		script.type = 'text/javascript';
+/******/ 		script.charset = 'utf-8';
+/******/ 		script.async = true;
+/******/ 		script.timeout = 120000;
+/******/
+/******/ 		if (__webpack_require__.nc) {
+/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
+/******/ 		}
+/******/ 		script.src = __webpack_require__.p + "" + ({"1":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
+/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
+/******/ 		script.onerror = script.onload = onScriptComplete;
+/******/ 		function onScriptComplete() {
+/******/ 			// avoid mem leaks in IE.
+/******/ 			script.onerror = script.onload = null;
+/******/ 			clearTimeout(timeout);
+/******/ 			var chunk = installedChunks[chunkId];
+/******/ 			if(chunk !== 0) {
+/******/ 				if(chunk) {
+/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
+/******/ 				}
+/******/ 				installedChunks[chunkId] = undefined;
+/******/ 			}
+/******/ 		};
+/******/ 		head.appendChild(script);
+/******/
+/******/ 		return promise;
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -59,76 +138,15 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/build/";
 /******/
+/******/ 	// on error function for async loading
+/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//顶部工具栏按钮
-var navButtonStyle = exports.navButtonStyle = {
-    style: {
-        autoWidth: true,
-        height: "100%",
-        backgroundColor: "#ddd",
-        hover: {
-            backgroundColor: "#f1f1f1"
-        },
-        active: {
-            backgroundColor: "#FF8501",
-            fontColor: "#ffffff"
-        }
-    },
-    animation: {
-        backgroundColor: {
-            duration: "300ms",
-            easeType: "Linear",
-            easing: "ease"
-        }
-    }
-};
-
-//顶部工具栏下拉分割线
-var navDivider = exports.navDivider = {
-    style: {
-        width: "100%",
-        height: 1,
-        backgroundColor: "#ABABAB"
-    }
-};
-
-//顶部工具栏下拉选项按钮
-var navItemStyle = exports.navItemStyle = {
-    style: {
-        width: "100%",
-        height: 35,
-        backgroundColor: "#DCDCDC",
-        hover: {
-            backgroundColor: "#E9E9E9"
-        },
-        active: {
-            backgroundColor: "#FF8501",
-            fontColor: "#ffffff"
-        }
-    },
-    animation: {
-        backgroundColor: {
-            duration: "300ms",
-            easeType: "Linear",
-            easing: "ease"
-        }
-    }
-};
-
-/***/ }),
+/* 0 */,
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -209,7 +227,7 @@ var _fileView = __webpack_require__(5);
 
 var _fileView2 = _interopRequireDefault(_fileView);
 
-var _base = __webpack_require__(0);
+var _nav = __webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -251,9 +269,9 @@ exports.default = {
             },
             children: [{
                 type: "button",
-                style: _base.navButtonStyle.style,
+                style: _nav.navButtonStyle.style,
                 text: "文件",
-                animation: _base.navButtonStyle.animation,
+                animation: _nav.navButtonStyle.animation,
                 events: {
                     "click": "showFileView"
                 }
@@ -273,6 +291,12 @@ exports.default = {
             },
             backgroundColor: "#f4f4f4"
         }
+    }, function (get) {
+        return new Promise(function (resolve, reject) {
+            __webpack_require__.e/* require.ensure */(1).then((function (require) {
+                get(__webpack_require__(7).default, resolve, reject);
+            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+        });
     }]
 };
 
@@ -326,6 +350,9 @@ var MainController = function (_window$Monk$Controll) {
         value: function onClickRoot() {
             this.fileView.active = false;
         }
+    }, {
+        key: "openNewMapDlg",
+        value: function openNewMapDlg(e) {}
     }]);
 
     return MainController;
@@ -344,7 +371,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _base = __webpack_require__(0);
+var _nav = __webpack_require__(9);
 
 exports.default = function (TOP_HEIGHT) {
     return {
@@ -367,19 +394,90 @@ exports.default = function (TOP_HEIGHT) {
         active: false,
         children: [{
             type: "button",
-            style: _base.navItemStyle.style,
+            style: _nav.navItemStyle.style,
             text: "新建地图",
-            animation: _base.navItemStyle.animation
+            animation: _nav.navItemStyle.animation,
+            events: {
+                "click": "openNewMapDlg"
+            }
         }, {
             type: "rect",
-            style: _base.navDivider.style
+            style: _nav.navDivider.style
         }, {
             type: "button",
-            style: _base.navItemStyle.style,
+            style: _nav.navItemStyle.style,
             text: "加载地图",
-            animation: _base.navItemStyle.animation
+            animation: _nav.navItemStyle.animation
         }]
     };
+};
+
+/***/ }),
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//顶部工具栏按钮
+var navButtonStyle = exports.navButtonStyle = {
+    style: {
+        autoWidth: true,
+        height: "100%",
+        backgroundColor: "#ddd",
+        hover: {
+            backgroundColor: "#f1f1f1"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
+};
+
+//顶部工具栏下拉分割线
+var navDivider = exports.navDivider = {
+    style: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#ABABAB"
+    }
+};
+
+//顶部工具栏下拉选项按钮
+var navItemStyle = exports.navItemStyle = {
+    style: {
+        width: "100%",
+        height: 35,
+        backgroundColor: "#DCDCDC",
+        hover: {
+            backgroundColor: "#E9E9E9"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
 };
 
 /***/ })

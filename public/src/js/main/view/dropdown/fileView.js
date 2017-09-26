@@ -1,4 +1,4 @@
-import {navItemStyle,navDivider} from "../style/base.js";
+import {navItemStyle,navDivider} from "../../style/nav.js";
 
 export default (TOP_HEIGHT)=>{
     return {
@@ -24,7 +24,10 @@ export default (TOP_HEIGHT)=>{
                 type : "button",
                 style : navItemStyle.style,
                 text : "新建地图",
-                animation : navItemStyle.animation
+                animation : navItemStyle.animation,
+                events : {
+                    "click" : "openNewMapDlg"
+                }
             },
             {
                 type: "rect",

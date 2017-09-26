@@ -1,8 +1,8 @@
 import MainController from "../controller/mainController.js";
 import fileView from "./dropdown/fileView.js";
-import {navButtonStyle} from "./style/base.js";
+import {navButtonStyle} from "../style/nav.js";
 
-let TOP_HEIGHT = 30;
+const TOP_HEIGHT = 30;
 
 export default {
     id : "mainView",
@@ -67,6 +67,13 @@ export default {
                 },
                 backgroundColor : "#f4f4f4"
             }
+        },
+        (get) => {
+            return new Promise((resolve, reject)=>{
+                require.ensure([], require => {
+                    get(require("../../window/newMap/view/newMapView.js").default, resolve, reject);
+                },'newMapView');
+            });
         }
     ]
 };

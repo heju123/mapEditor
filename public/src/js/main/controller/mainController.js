@@ -21,4 +21,7 @@ export default class MainController extends window.Monk.Controller{
     onClickRoot(){
         this.fileView.active = false;
     }
+
+    openNewMapDlg(e){
+    }
 }
