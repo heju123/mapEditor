@@ -1709,6 +1709,11 @@ var Component = function () {
 
             this.animation = cfg.animation;
 
+            //自适应宽度
+            if (!this.style.width && this.style.autoWidth) {
+                this.setStyle("width", this.getTextWidth());
+            }
+
             //事件绑定配置
             if (cfg.events) {
                 var eventInfo = void 0;
@@ -1906,6 +1911,9 @@ var Component = function () {
             //删掉多余样式
             _commonUtil2.default.removeExtraAttr(this.style, this.originalStyle, "hover,active,focus");
         }
+
+        /** 将样式恢复成active或hover或focus或original */
+
     }, {
         key: "restoreStyle",
         value: function restoreStyle() {
@@ -4946,8 +4954,9 @@ var Button = function (_Rect) {
         value: function initCfg(cfg) {
             _get(Button.prototype.__proto__ || Object.getPrototypeOf(Button.prototype), "initCfg", this).call(this, cfg);
             this.setStyle("lineHeight", this.getHeight());
+
             //自适应宽度
-            if (this.style.autoWidth) {
+            if (!this.style.width && this.style.autoWidth) {
                 this.setStyle("width", this.getTextWidth() + 20);
             }
         }

@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		0: 0
+/******/ 		1: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({"1":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -146,7 +146,71 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//顶部工具栏按钮
+var navButtonStyle = exports.navButtonStyle = {
+    style: {
+        autoWidth: true,
+        height: "100%",
+        backgroundColor: "#ddd",
+        hover: {
+            backgroundColor: "#f1f1f1"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
+};
+
+//顶部工具栏下拉分割线
+var navDivider = exports.navDivider = {
+    style: {
+        width: "100%",
+        height: 1,
+        backgroundColor: "#ABABAB"
+    }
+};
+
+//顶部工具栏下拉选项按钮
+var navItemStyle = exports.navItemStyle = {
+    style: {
+        width: "100%",
+        height: 35,
+        backgroundColor: "#DCDCDC",
+        hover: {
+            backgroundColor: "#E9E9E9"
+        },
+        active: {
+            backgroundColor: "#FF8501",
+            fontColor: "#ffffff"
+        }
+    },
+    animation: {
+        backgroundColor: {
+            duration: "300ms",
+            easeType: "Linear",
+            easing: "ease"
+        }
+    }
+};
+
+/***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -227,7 +291,7 @@ var _fileView = __webpack_require__(5);
 
 var _fileView2 = _interopRequireDefault(_fileView);
 
-var _nav = __webpack_require__(9);
+var _nav = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -293,8 +357,8 @@ exports.default = {
         }
     }, function (get) {
         return new Promise(function (resolve, reject) {
-            __webpack_require__.e/* require.ensure */(1).then((function (require) {
-                get(__webpack_require__(7).default, resolve, reject);
+            __webpack_require__.e/* require.ensure */(0).then((function (require) {
+                get(__webpack_require__(6).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }]
@@ -371,7 +435,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _nav = __webpack_require__(9);
+var _nav = __webpack_require__(0);
 
 exports.default = function (TOP_HEIGHT) {
     return {
@@ -410,74 +474,6 @@ exports.default = function (TOP_HEIGHT) {
             animation: _nav.navItemStyle.animation
         }]
     };
-};
-
-/***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-//顶部工具栏按钮
-var navButtonStyle = exports.navButtonStyle = {
-    style: {
-        autoWidth: true,
-        height: "100%",
-        backgroundColor: "#ddd",
-        hover: {
-            backgroundColor: "#f1f1f1"
-        },
-        active: {
-            backgroundColor: "#FF8501",
-            fontColor: "#ffffff"
-        }
-    },
-    animation: {
-        backgroundColor: {
-            duration: "300ms",
-            easeType: "Linear",
-            easing: "ease"
-        }
-    }
-};
-
-//顶部工具栏下拉分割线
-var navDivider = exports.navDivider = {
-    style: {
-        width: "100%",
-        height: 1,
-        backgroundColor: "#ABABAB"
-    }
-};
-
-//顶部工具栏下拉选项按钮
-var navItemStyle = exports.navItemStyle = {
-    style: {
-        width: "100%",
-        height: 35,
-        backgroundColor: "#DCDCDC",
-        hover: {
-            backgroundColor: "#E9E9E9"
-        },
-        active: {
-            backgroundColor: "#FF8501",
-            fontColor: "#ffffff"
-        }
-    },
-    animation: {
-        backgroundColor: {
-            duration: "300ms",
-            easeType: "Linear",
-            easing: "ease"
-        }
-    }
 };
 
 /***/ })

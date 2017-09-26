@@ -1,51 +1,6 @@
-webpackJsonp([1],{
+webpackJsonp([0],{
 
-/***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    header: {
-        style: function style(headHeight) {
-            return {
-                type: "rect",
-                style: {
-                    x: 0,
-                    y: 0,
-                    width: "100%",
-                    height: headHeight,
-                    backgroundColor: "#3D3D3D"
-                }
-            };
-        }
-    },
-    content: {
-        style: function style(headHeight, content) {
-            return {
-                type: "rect",
-                style: {
-                    x: 0,
-                    y: headHeight,
-                    width: "100%",
-                    height: function height() {
-                        return this.parent.getInnerHeight() - headHeight;
-                    },
-                    backgroundColor: "#ffffff"
-                },
-                children: [content]
-            };
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 7:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55,19 +10,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _newMapController = __webpack_require__(8);
+var _newMapController = __webpack_require__(7);
 
 var _newMapController2 = _interopRequireDefault(_newMapController);
 
-var _window = __webpack_require__(10);
+var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HEAD_HEIGHT = 45;
-
-var content = {
+var contentStyle = {
     type: "rect",
     style: {
         x: 0,
@@ -78,26 +31,18 @@ var content = {
     text: "123"
 };
 
-exports.default = {
-    controller: _newMapController2.default,
-    type: "panel",
-    style: {
-        x: 10,
-        y: 10,
-        width: 400,
-        height: 300,
-        backgroundColor: "#dfdfdf",
-        borderColor: "#3D3D3D",
-        borderWidth: 1,
-        borderRadius: 5,
-        zIndex: 9999
-    },
-    children: [_window2.default.header.style(HEAD_HEIGHT), _window2.default.content.style(HEAD_HEIGHT, content)]
-};
+exports.default = (0, _window2.default)(_newMapController2.default, {
+    title: "新建地图",
+    x: 10,
+    y: 10,
+    width: 400,
+    height: 300,
+    contentStyle: contentStyle
+});
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -129,6 +74,81 @@ var newMapController = function (_window$Monk$Controll) {
 }(window.Monk.Controller);
 
 exports.default = newMapController;
+
+/***/ }),
+
+/***/ 8:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var HEAD_HEIGHT = 50;
+
+var getHeader = function getHeader(title) {
+    return {
+        type: "rect",
+        style: {
+            x: 0,
+            y: 0,
+            width: "100%",
+            height: HEAD_HEIGHT,
+            backgroundColor: "#3D3D3D"
+        },
+        children: [{
+            type: "rect",
+            style: {
+                x: 10,
+                y: 0,
+                autoWidth: true,
+                height: "100%",
+                lineHeight: HEAD_HEIGHT,
+                fontColor: "#919191",
+                fontSize: "18px"
+            },
+            text: title
+        }]
+    };
+};
+
+var getContent = function getContent(content) {
+    return {
+        type: "rect",
+        style: {
+            x: 0,
+            y: HEAD_HEIGHT,
+            width: "100%",
+            height: function height() {
+                return this.parent.getInnerHeight() - HEAD_HEIGHT;
+            },
+            backgroundColor: "#ffffff"
+        },
+        children: [content]
+    };
+};
+
+exports.default = function (controller, opts) {
+    return {
+        controller: controller,
+        type: "panel",
+        style: {
+            x: opts.x,
+            y: opts.y,
+            width: opts.width,
+            height: opts.height,
+            backgroundColor: "#dfdfdf",
+            borderColor: "#3D3D3D",
+            borderWidth: 1,
+            borderRadius: 5,
+            zIndex: 9999,
+            alpha: 0.1
+        },
+        children: [getHeader(opts.title), getContent(opts.contentStyle)]
+    };
+};
 
 /***/ })
 
