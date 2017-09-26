@@ -1659,6 +1659,12 @@ var Component = function () {
         key: "init",
         value: function init() {
             var $this = this;
+
+            //自适应宽度
+            if (this.style.autoWidth) {
+                this.setStyle("width", this.getTextWidth());
+            }
+
             if (this.style.backgroundImage) {
                 var img = new Image();
                 img.onload = function () {
@@ -1678,15 +1684,14 @@ var Component = function () {
 
     }, {
         key: "initCfgStyle",
-        value: function initCfgStyle(cfgStyle, current) {
+        value: function initCfgStyle(cfgStyle) {
             for (var key in cfgStyle) {
-                if (typeof cfgStyle[key] === "function") {
-                    current[key] = cfgStyle[key].apply(this, []);
-                } else if (_typeof(cfgStyle[key]) === "object") {
-                    current[key] = {};
-                    this.initCfgStyle(cfgStyle[key], current[key]);
+                if (key === "hover" || key === "active" || key === "focus") {
+                    this.style[key] = cfgStyle[key];
+                } else if (typeof cfgStyle[key] === "function") {
+                    this.setStyle(key, cfgStyle[key].apply(this, []));
                 } else {
-                    current[key] = cfgStyle[key];
+                    this.setStyle(key, cfgStyle[key]);
                 }
             }
         }
@@ -1700,19 +1705,13 @@ var Component = function () {
                 this.name = cfg.name;
             }
 
-            this.initCfgStyle(cfg.style, this.style);
-            _commonUtil2.default.copyObject(this.style, this.originalStyle, true);
+            this.initCfgStyle(cfg.style);
 
             this.text = this.getTextForRows(cfg.text);
 
             this.active = cfg.active === undefined ? true : false;
 
             this.animation = cfg.animation;
-
-            //自适应宽度
-            if (!this.style.width && this.style.autoWidth) {
-                this.setStyle("width", this.getTextWidth());
-            }
 
             //事件绑定配置
             if (cfg.events) {
@@ -1823,23 +1822,23 @@ var Component = function () {
     }, {
         key: "setDefaultStyle",
         value: function setDefaultStyle() {
-            if (!this.style.fontFamily) {
+            if (this.style.fontFamily === undefined) {
                 this.setStyle("fontFamily", _globalUtil2.default.viewState.defaultFontFamily);
             }
-            if (!this.style.fontSize) {
+            if (this.style.fontSize === undefined) {
                 this.setStyle("fontSize", _globalUtil2.default.viewState.defaultFontSize);
             }
-            if (!this.style.fontColor) {
+            if (this.style.fontColor === undefined) {
                 this.setStyle("fontColor", _globalUtil2.default.viewState.defaultFontColor);
             }
-            if (!this.style.zIndex) {
+            if (this.style.zIndex === undefined) {
                 this.setStyle("zIndex", 1);
             }
-            if (!this.style.multiLine) //是否多行文本
+            if (this.style.multiLine === undefined) //是否多行文本
                 {
                     this.setStyle("multiLine", true);
                 }
-            if (!this.style.autoLine) //是否自动换行
+            if (this.style.autoLine === undefined) //是否自动换行
                 {
                     this.setStyle("autoLine", true);
                 }
@@ -4956,7 +4955,7 @@ var Button = function (_Rect) {
             this.setStyle("lineHeight", this.getHeight());
 
             //自适应宽度
-            if (!this.style.width && this.style.autoWidth) {
+            if (this.style.autoWidth) {
                 this.setStyle("width", this.getTextWidth() + 20);
             }
         }
