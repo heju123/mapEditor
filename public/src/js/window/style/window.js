@@ -48,23 +48,53 @@ let getContent = (content)=>{
 
 export default (controller, opts)=>{
     return {
-        controller: controller,
-        type: "panel",
+        type : "rect",
+        active : false,
         style: {
-            x: opts.x,
-            y: opts.y,
-            width: opts.width,
-            height: opts.height,
-            backgroundColor: "#dfdfdf",
-            borderColor : "#3D3D3D",
-            borderWidth : 1,
-            borderRadius : 5,
-            zIndex : 9999,
-            alpha : 0.2
+            x: 0,
+            y: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#000000",
+            zIndex : 9998,
+            alpha : 0
         },
-        children: [
-            getHeader(opts.title),
-            getContent(opts.contentStyle)
+        animation : {
+            alpha : {
+                duration : "500ms",
+                easeType : "Linear",
+                easing : "ease"
+            }
+        },
+        children : [
+            {
+                id : opts.id,
+                controller: controller,
+                type: "panel",
+                style: {
+                    x: opts.x,
+                    y: opts.y,
+                    width: opts.width,
+                    height: opts.height,
+                    backgroundColor: "#dfdfdf",
+                    borderColor : "#3D3D3D",
+                    borderWidth : 1,
+                    borderRadius : 5,
+                    zIndex : 9999,
+                    alpha : 0
+                },
+                animation : {
+                    alpha : {
+                        duration : "500ms",
+                        easeType : "Linear",
+                        easing : "ease"
+                    }
+                },
+                children: [
+                    getHeader(opts.title),
+                    getContent(opts.contentStyle)
+                ]
+            }
         ]
     }
 };

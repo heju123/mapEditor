@@ -1,4 +1,4 @@
-import newMapController from "../controller/newMapController.js";
+import NewMapController from "../controller/newMapController.js";
 import window from "../../style/window.js";
 
 let contentStyle = {
@@ -12,7 +12,8 @@ let contentStyle = {
     text : "123"
 };
 
-export default window(newMapController, {
+export default window(NewMapController, {
+    id : "new_map_window",
     title : "新建地图",
     x : 10,
     y : 10,

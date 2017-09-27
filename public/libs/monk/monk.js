@@ -1498,7 +1498,6 @@ var ViewState = function () {
             _globalUtil2.default.eventBus.doNotifyEvent();
 
             ctx.mouseAction.hoverCom = undefined;
-            ctx.lastAlphaCom = undefined; //设置alpha会影响到子组件，所以需要此变量
         }
 
         /** 绘制后 */
@@ -1889,14 +1888,9 @@ var Component = function () {
         value: function setCommonStyle(ctx) {
             this.setDefaultStyle(); //如果样式丢失，则使用默认样式
             //半透明
-            if (this.style.alpha !== undefined) {
-                ctx.globalAlpha = this.style.alpha;
-                //lastAlphaCom只将alpha值传给自己的子组件
-                if (ctx.lastAlphaCom === undefined || !ctx.lastAlphaCom.parentOf(this)) {
-                    ctx.lastAlphaCom = this; //记录当前有alpha值的组件
-                }
-            } else if (ctx.lastAlphaCom !== undefined && ctx.lastAlphaCom.parentOf(this)) {
-                ctx.globalAlpha = ctx.lastAlphaCom.style.alpha;
+            var alpha = this.getAlpha();
+            if (alpha) {
+                ctx.globalAlpha = alpha;
             }
             //缩放
             if (this.style.scale !== undefined) {
@@ -2302,6 +2296,18 @@ var Component = function () {
         key: "getInnerHeight",
         value: function getInnerHeight() {
             return this.getHeight() - (this.style.borderWidth || 0) * 2;
+        }
+
+        /** 获取alpha值，如果当前组件无alpha，则取父节点的 */
+
+    }, {
+        key: "getAlpha",
+        value: function getAlpha() {
+            if (this.style.alpha === undefined && this.parent) {
+                return this.parent.getAlpha();
+            } else {
+                return this.style.alpha;
+            }
         }
 
         /** 用\n分隔string，实现换行 */
