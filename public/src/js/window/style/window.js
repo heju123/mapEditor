@@ -72,8 +72,8 @@ export default (controller, opts)=>{
                 controller: controller,
                 type: "panel",
                 style: {
-                    x: opts.x,
-                    y: opts.y,
+                    x: opts.x || 0,
+                    y: opts.y || 0,
                     width: opts.width,
                     height: opts.height,
                     backgroundColor: "#dfdfdf",

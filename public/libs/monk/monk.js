@@ -1710,7 +1710,7 @@ var Component = function () {
 
             this.text = this.getTextForRows(cfg.text);
 
-            this.active = cfg.active === undefined ? true : false;
+            this.active = cfg.active === undefined || cfg.active === true ? true : false;
 
             this.animation = cfg.animation;
 

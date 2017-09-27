@@ -24,6 +24,6 @@ export default class MainController extends window.Monk.Controller{
 
     openNewMapDlg(e){
         let newMapWindow = this.viewState.getComponentById("new_map_window");
-        newMapWindow.controller.openWindow();
+        newMapWindow.controller.openWindow().center();
     }
 }

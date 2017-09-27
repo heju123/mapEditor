@@ -39,8 +39,6 @@ var contentStyle = {
 exports.default = (0, _window2.default)(_newMapController2.default, {
     id: "new_map_window",
     title: "新建地图",
-    x: 10,
-    y: 10,
     width: 400,
     height: 300,
     contentStyle: contentStyle
@@ -120,6 +118,16 @@ var BaseWindowController = function (_window$Monk$Controll) {
             this.panel.parent.active = true;
             this.panel.parent.setStyle("alpha", 0.4);
             this.panel.setStyle("alpha", 1);
+            return this;
+        }
+    }, {
+        key: "center",
+        value: function center() {
+            this.panel.setStyle({
+                x: this.panel.parent.getInnerWidth() / 2 - this.panel.getWidth() / 2,
+                y: this.panel.parent.getInnerHeight() / 2 - this.panel.getHeight() / 2
+            });
+            return this;
         }
     }]);
 
@@ -207,8 +215,8 @@ exports.default = function (controller, opts) {
             controller: controller,
             type: "panel",
             style: {
-                x: opts.x,
-                y: opts.y,
+                x: opts.x || 0,
+                y: opts.y || 0,
                 width: opts.width,
                 height: opts.height,
                 backgroundColor: "#dfdfdf",

@@ -15,8 +15,6 @@ let contentStyle = {
 export default window(NewMapController, {
     id : "new_map_window",
     title : "新建地图",
-    x : 10,
-    y : 10,
     width : 400,
     height : 300,
     contentStyle : contentStyle
