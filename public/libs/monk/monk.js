@@ -2167,11 +2167,21 @@ var Component = function () {
     }, {
         key: "getX",
         value: function getX() {
+            if (this.style.x && this.style.x.toString().indexOf("%") > -1) //百分比
+                {
+                    var maxX = this.parent.getInnerWidth();
+                    return maxX * (this.style.x.substring(0, this.style.x.length - 1) / 100);
+                }
             return this.style.x - (this.style.scrollX || 0); //要减去滚动的长度
         }
     }, {
         key: "getY",
         value: function getY() {
+            if (this.style.y && this.style.y.toString().indexOf("%") > -1) //百分比
+                {
+                    var maxY = this.parent.getInnerHeight();
+                    return maxY * (this.style.y.substring(0, this.style.y.length - 1) / 100);
+                }
             return this.style.y - (this.style.scrollY || 0);
         }
 

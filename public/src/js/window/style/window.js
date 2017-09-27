@@ -73,7 +73,7 @@ export default (controller, opts)=>{
                 type: "panel",
                 style: {
                     x: opts.x || 0,
-                    y: opts.y || 0,
+                    y: opts.y || "20%",
                     width: opts.width,
                     height: opts.height,
                     backgroundColor: "#dfdfdf",
@@ -86,6 +86,11 @@ export default (controller, opts)=>{
                 animation : {
                     alpha : {
                         duration : "500ms",
+                        easeType : "Linear",
+                        easing : "ease"
+                    },
+                    y : {
+                        duration : "300ms",
                         easeType : "Linear",
                         easing : "ease"
                     }
