@@ -144,7 +144,7 @@ exports.default = function (controller, opts) {
             borderWidth: 1,
             borderRadius: 5,
             zIndex: 9999,
-            alpha: 0.1
+            alpha: 0.2
         },
         children: [getHeader(opts.title), getContent(opts.contentStyle)]
     };

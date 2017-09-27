@@ -1498,6 +1498,7 @@ var ViewState = function () {
             _globalUtil2.default.eventBus.doNotifyEvent();
 
             ctx.mouseAction.hoverCom = undefined;
+            ctx.lastAlphaCom = undefined; //设置alpha会影响到子组件，所以需要此变量
         }
 
         /** 绘制后 */
@@ -1509,6 +1510,7 @@ var ViewState = function () {
 
             //全部绘制完后检查hover的组件，并且上一次hover的组件和这一次的不能相同
             if (ctx.mouseAction.hoverCom) {
+                //这一次hover的组件不等于上一次hover的组件，则表示上一次hover的组件hoverout了
                 if (_globalUtil2.default.action.hoverComponent !== ctx.mouseAction.hoverCom) {
                     if (_globalUtil2.default.action.hoverComponent) {
                         _globalUtil2.default.action.hoverComponent.onHoverout();
@@ -1889,6 +1891,12 @@ var Component = function () {
             //半透明
             if (this.style.alpha !== undefined) {
                 ctx.globalAlpha = this.style.alpha;
+                //lastAlphaCom只将alpha值传给自己的子组件
+                if (ctx.lastAlphaCom === undefined || !ctx.lastAlphaCom.parentOf(this)) {
+                    ctx.lastAlphaCom = this; //记录当前有alpha值的组件
+                }
+            } else if (ctx.lastAlphaCom !== undefined && ctx.lastAlphaCom.parentOf(this)) {
+                ctx.globalAlpha = ctx.lastAlphaCom.style.alpha;
             }
             //缩放
             if (this.style.scale !== undefined) {
@@ -1972,7 +1980,7 @@ var Component = function () {
         key: "checkEvent",
         value: function checkEvent(eventNotify) {
             if (eventNotify.type) {
-                if (eventNotify.type === 1 && this.isPointInComponent(eventNotify.px, eventNotify.py)) //判断鼠标是否在控件范围内
+                if (eventNotify.type === 1 && (_globalUtil2.default.action.hoverComponent === this || this.parentOf(_globalUtil2.default.action.hoverComponent))) //判断鼠标是否在控件范围内,type等于1表示鼠标事件
                     {
                         _globalUtil2.default.eventBus.captureEvent(eventNotify);
                     } else if (eventNotify.type === 2 && _globalUtil2.default.action.focusComponent === this) //键盘事件
@@ -5308,6 +5316,9 @@ var EventBus = function () {
             this.propagationEventQueue[batchNo] = new _stack2.default();
             return batchNo;
         }
+
+        /** 创建鼠标事件通知 */
+
     }, {
         key: "createEventNotify",
         value: function createEventNotify(e, type) {
@@ -5343,6 +5354,9 @@ var EventBus = function () {
                 }
             });
         }
+
+        /** 创建非鼠标事件通知 */
+
     }, {
         key: "createOtherEventNotify",
         value: function createOtherEventNotify(e, type, ntype) {
