@@ -25,6 +25,9 @@ var _window2 = _interopRequireDefault(_window);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var FORM_ROW_HEIGHT = 40;
+var FORM_LABEL_WIDTH = 100;
+var FORM_INPUT_PADDING = 5;
 var contentStyle = {
     type: "rect",
     style: {
@@ -33,7 +36,69 @@ var contentStyle = {
         width: "100%",
         height: "100%"
     },
-    text: "123"
+    children: [{
+        name: "form1",
+        type: "rect",
+        style: {
+            x: 0,
+            y: 0,
+            width: "100%",
+            autoHeight: true,
+            layout: {
+                type: "linearLayout",
+                orientation: "vertical"
+            }
+        },
+        children: [{
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal"
+                }
+            },
+            children: [{
+                name: "input_label",
+                type: "rect",
+                style: {
+                    width: FORM_LABEL_WIDTH,
+                    height: "100%",
+                    lineHeight: FORM_ROW_HEIGHT,
+                    textAlign: "center"
+                },
+                text: "地图名称："
+            }, {
+                name: "input_area",
+                type: "rect",
+                style: {
+                    width: function width() {
+                        return this.parent.getInnerWidth() - FORM_LABEL_WIDTH;
+                    },
+                    height: "100%"
+                },
+                children: [{
+                    name: "input",
+                    type: "input",
+                    style: {
+                        x: FORM_INPUT_PADDING,
+                        y: FORM_INPUT_PADDING,
+                        width: function width() {
+                            return this.parent.getInnerWidth() - FORM_INPUT_PADDING * 2;
+                        },
+                        height: function height() {
+                            return this.parent.getInnerHeight() - FORM_INPUT_PADDING * 2;
+                        },
+                        borderWidth: 1,
+                        borderColor: "#dfdfdf",
+                        borderRadius: 3
+                    }
+                }]
+            }]
+        }]
+    }]
 };
 
 exports.default = (0, _window2.default)(_newMapController2.default, {

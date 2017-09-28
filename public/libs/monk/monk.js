@@ -2127,6 +2127,14 @@ var Component = function () {
     }, {
         key: "setStyle_kv",
         value: function setStyle_kv(key, value) {
+            //以下值不允许出现小数
+            if (key === "x" || key === "y" || key === "width" || key === "height") {
+                if (value && value.toString().indexOf("%") === -1) //非百分比
+                    {
+                        value = Math.round(value);
+                    }
+            }
+
             if (this.animation && this.animation[key]) {
                 this.doStyleAnimation(key, value);
             } else {
@@ -2444,6 +2452,15 @@ var Component = function () {
                 return undefined;
             } else {
                 return com.getDragComponent(com.parent);
+            }
+        }
+    }, {
+        key: "getComponentById",
+        value: function getComponentById(id) {
+            if (this.id && this.id === id) {
+                return this;
+            } else {
+                return _globalUtil2.default.viewState.getComponentInChildrenByKey("id", id, this);
             }
         }
     }, {
