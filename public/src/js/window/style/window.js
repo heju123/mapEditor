@@ -70,7 +70,7 @@ export default (controller, opts)=>{
             {
                 id : opts.id,
                 controller: controller,
-                type: "panel",
+                type: "rect",
                 style: {
                     x: opts.x || 0,
                     y: opts.y || "20%",

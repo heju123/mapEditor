@@ -135,10 +135,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NewMapController = function (_BaseWindowController) {
     _inherits(NewMapController, _BaseWindowController);
 
-    function NewMapController(panel) {
+    function NewMapController(component) {
         _classCallCheck(this, NewMapController);
 
-        var _this = _possibleConstructorReturn(this, (NewMapController.__proto__ || Object.getPrototypeOf(NewMapController)).call(this, panel));
+        var _this = _possibleConstructorReturn(this, (NewMapController.__proto__ || Object.getPrototypeOf(NewMapController)).call(this, component));
 
         _this.registerEvent("$onViewLoaded", function () {});
         return _this;
@@ -171,26 +171,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BaseWindowController = function (_window$Monk$Controll) {
     _inherits(BaseWindowController, _window$Monk$Controll);
 
-    function BaseWindowController(panel) {
+    function BaseWindowController(component) {
         _classCallCheck(this, BaseWindowController);
 
-        return _possibleConstructorReturn(this, (BaseWindowController.__proto__ || Object.getPrototypeOf(BaseWindowController)).call(this, panel));
+        return _possibleConstructorReturn(this, (BaseWindowController.__proto__ || Object.getPrototypeOf(BaseWindowController)).call(this, component));
     }
 
     _createClass(BaseWindowController, [{
         key: "openWindow",
         value: function openWindow() {
-            this.panel.parent.active = true;
-            this.panel.parent.setStyle("alpha", 0.4);
-            this.panel.setStyle("alpha", 1);
+            this.component.parent.active = true;
+            this.component.parent.setStyle("alpha", 0.4);
+            this.component.setStyle("alpha", 1);
             return this;
         }
     }, {
         key: "center",
         value: function center() {
-            this.panel.setStyle({
-                x: this.panel.parent.getInnerWidth() / 2 - this.panel.getWidth() / 2,
-                y: this.panel.parent.getInnerHeight() / 2 - this.panel.getHeight() / 2
+            this.component.setStyle({
+                x: this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
+                y: this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
             });
             return this;
         }
@@ -278,7 +278,7 @@ exports.default = function (controller, opts) {
         children: [{
             id: opts.id,
             controller: controller,
-            type: "panel",
+            type: "rect",
             style: {
                 x: opts.x || 0,
                 y: opts.y || "20%",

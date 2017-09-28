@@ -1,8 +1,8 @@
 import BaseWindowController from "../../baseWindowController.js";
 
 export default class NewMapController extends BaseWindowController{
-    constructor(panel) {
-        super(panel);
+    constructor(component) {
+        super(component);
 
         this.registerEvent("$onViewLoaded", ()=>{
         });

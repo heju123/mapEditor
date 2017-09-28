@@ -1,19 +1,19 @@
 export default class BaseWindowController extends window.Monk.Controller{
-    constructor(panel) {
-        super(panel);
+    constructor(component) {
+        super(component);
     }
 
     openWindow(){
-        this.panel.parent.active = true;
-        this.panel.parent.setStyle("alpha", 0.4);
-        this.panel.setStyle("alpha", 1);
+        this.component.parent.active = true;
+        this.component.parent.setStyle("alpha", 0.4);
+        this.component.setStyle("alpha", 1);
         return this;
     }
 
     center(){
-        this.panel.setStyle({
-            x : this.panel.parent.getInnerWidth() / 2 - this.panel.getWidth() / 2,
-            y : this.panel.parent.getInnerHeight() / 2 - this.panel.getHeight() / 2
+        this.component.setStyle({
+            x : this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
+            y : this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
         });
         return this;
     }

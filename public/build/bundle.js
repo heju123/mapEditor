@@ -300,7 +300,7 @@ var TOP_HEIGHT = 30;
 exports.default = {
     id: "mainView",
     controller: _mainController2.default,
-    type: "panel",
+    type: "rect",
     style: {
         x: 0,
         y: 0,
@@ -389,10 +389,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MainController = function (_window$Monk$Controll) {
     _inherits(MainController, _window$Monk$Controll);
 
-    function MainController(panel) {
+    function MainController(component) {
         _classCallCheck(this, MainController);
 
-        var _this = _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, panel));
+        var _this = _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, component));
 
         _this.registerEvent("$onViewLoaded", function () {
             _this.fileView = _this.viewState.getComponentById("fileView");

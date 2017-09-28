@@ -7,7 +7,7 @@ const TOP_HEIGHT = 30;
 export default {
     id : "mainView",
     controller : MainController,
-    type : "panel",
+    type : "rect",
     style : {
         x : 0,
         y : 0,
