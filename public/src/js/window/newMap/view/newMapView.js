@@ -1,6 +1,7 @@
 import NewMapController from "../controller/newMapController.js";
 import window from "../../style/window.js";
-import {formInputStyle,buttonStyle} from "../../../style/form.js";
+import {buttonStyle} from "../../../style/common.js";
+import {formInputStyle} from "../../../style/form.js";
 
 const FORM_ROW_HEIGHT = 60;
 const FORM_LABEL_WIDTH = 100;
@@ -95,6 +96,19 @@ let contentStyle = {
                     ]
                 },
                 {
+                    name: "input_row_blank",
+                    type: "rect",
+                    style: {
+                        width: "100%",
+                        height: 20,
+                        layout: {
+                            type: "linearLayout",
+                            orientation: "horizontal",
+                            contentAlign: "center"
+                        }
+                    }
+                },
+                {
                     name: "input_row",
                     type: "rect",
                     style: {
@@ -112,7 +126,10 @@ let contentStyle = {
                                 return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
                             },
                             autoWidth : true,
-                            height : FORM_BUTTON_HEIGHT
+                            height : FORM_BUTTON_HEIGHT,
+                            events : {
+                                click : "onOk"
+                            }
                         }),
                         {
                             name: "button_div",
@@ -127,7 +144,10 @@ let contentStyle = {
                                 return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
                             },
                             autoWidth : true,
-                            height : FORM_BUTTON_HEIGHT
+                            height : FORM_BUTTON_HEIGHT,
+                            events : {
+                                click : "onCancel"
+                            }
                         })
                     ]
                 }

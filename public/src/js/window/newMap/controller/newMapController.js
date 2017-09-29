@@ -7,4 +7,11 @@ export default class NewMapController extends BaseWindowController{
         this.registerEvent("$onViewLoaded", ()=>{
         });
     }
+
+    onOk(){
+    }
+
+    onCancel(){
+        this.closeWindow();
+    }
 }

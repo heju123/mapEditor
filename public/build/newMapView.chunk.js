@@ -23,7 +23,9 @@ var _window = __webpack_require__(9);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _form = __webpack_require__(10);
+var _common = __webpack_require__(10);
+
+var _form = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -113,6 +115,18 @@ var contentStyle = {
                 })
             }]
         }, {
+            name: "input_row_blank",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: 20,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal",
+                    contentAlign: "center"
+                }
+            }
+        }, {
             name: "input_row",
             type: "rect",
             style: {
@@ -124,12 +138,15 @@ var contentStyle = {
                     contentAlign: "center"
                 }
             },
-            children: [(0, _form.buttonStyle)("确定", {
+            children: [(0, _common.buttonStyle)("确定", {
                 y: function y() {
                     return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
                 },
                 autoWidth: true,
-                height: FORM_BUTTON_HEIGHT
+                height: FORM_BUTTON_HEIGHT,
+                events: {
+                    click: "onOk"
+                }
             }), {
                 name: "button_div",
                 type: "rect",
@@ -137,12 +154,15 @@ var contentStyle = {
                     width: "20",
                     height: FORM_ROW_HEIGHT
                 }
-            }, (0, _form.buttonStyle)("取消", {
+            }, (0, _common.buttonStyle)("取消", {
                 y: function y() {
                     return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
                 },
                 autoWidth: true,
-                height: FORM_BUTTON_HEIGHT
+                height: FORM_BUTTON_HEIGHT,
+                events: {
+                    click: "onCancel"
+                }
             })]
         }]
     }]
@@ -167,6 +187,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _baseWindowController = __webpack_require__(8);
 
 var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
@@ -190,6 +212,16 @@ var NewMapController = function (_BaseWindowController) {
         _this.registerEvent("$onViewLoaded", function () {});
         return _this;
     }
+
+    _createClass(NewMapController, [{
+        key: "onOk",
+        value: function onOk() {}
+    }, {
+        key: "onCancel",
+        value: function onCancel() {
+            this.closeWindow();
+        }
+    }]);
 
     return NewMapController;
 }(_baseWindowController2.default);
@@ -227,6 +259,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
     _createClass(BaseWindowController, [{
         key: "openWindow",
         value: function openWindow() {
+            console.log("open");
             this.component.parent.active = true;
             this.component.parent.setStyle("alpha", 0.4);
             this.component.setStyle("alpha", 1);
@@ -240,6 +273,29 @@ var BaseWindowController = function (_window$Monk$Controll) {
                 y: this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
             });
             return this;
+        }
+    }, {
+        key: "closeWindow",
+        value: function closeWindow() {
+            var _this2 = this;
+
+            var allPromise = [];
+            var promise1 = this.component.parent.setStyle("alpha", 0);
+            var promise2 = this.component.setStyle({
+                "alpha": 0,
+                "y": "70%"
+            });
+            if (promise1) {
+                allPromise.push(promise1);
+            }
+            if (promise2) {
+                allPromise.push(promise2);
+            }
+            if (allPromise.length > 0) {
+                Promise.all(allPromise).then(function () {
+                    _this2.component.parent.active = false;
+                });
+            }
         }
     }]);
 
@@ -365,6 +421,50 @@ exports.default = function (controller, opts) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//按钮
+var buttonStyle = exports.buttonStyle = function buttonStyle(text, opts) {
+    var style = {};
+    style.x = opts.x;
+    style.y = opts.y;
+    if (opts.width !== undefined) {
+        style.width = opts.width;
+    } else {
+        style.autoWidth = true;
+    }
+    style.height = opts.height;
+    style.borderWidth = 1;
+    style.borderColor = "#dfdfdf";
+    style.backgroundColor = "#ffffff";
+    style.hover = {
+        backgroundColor: "#337ab7",
+        borderColor: "#337ab7",
+        fontColor: "#fff"
+    };
+    style.active = {
+        backgroundColor: "#3170AB",
+        borderColor: "#3170AB",
+        fontColor: "#fff"
+    };
+
+    return {
+        name: "button",
+        type: "button",
+        style: style,
+        text: text,
+        events: opts.events
+    };
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 //表单输入框
 var formInputStyle = exports.formInputStyle = function formInputStyle(id, title, opts) {
     return [{
@@ -405,29 +505,6 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, title,
             }
         }]
     }];
-};
-
-//按钮
-var buttonStyle = exports.buttonStyle = function buttonStyle(text, opts) {
-    var style = {};
-    style.x = opts.x;
-    style.y = opts.y;
-    if (opts.width !== undefined) {
-        style.width = opts.width;
-    } else {
-        style.autoWidth = true;
-    }
-    style.height = opts.height;
-    style.borderWidth = 1;
-    style.borderColor = "#dfdfdf";
-    style.backgroundColor = "#ffffff";
-
-    return {
-        name: "button",
-        type: "button",
-        style: style,
-        text: text
-    };
 };
 
 /***/ })

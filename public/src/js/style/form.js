@@ -44,29 +44,3 @@ export let formInputStyle = function(id, title, opts){
         }
     ];
 };
-
-//按钮
-export let buttonStyle = function(text, opts){
-    let style = {};
-    style.x = opts.x;
-    style.y = opts.y;
-    if (opts.width !== undefined)
-    {
-        style.width = opts.width;
-    }
-    else
-    {
-        style.autoWidth = true;
-    }
-    style.height = opts.height;
-    style.borderWidth = 1;
-    style.borderColor = "#dfdfdf";
-    style.backgroundColor = "#ffffff";
-
-    return {
-        name : "button",
-        type : "button",
-        style : style,
-        text : text
-    };
-}
