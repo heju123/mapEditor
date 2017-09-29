@@ -259,7 +259,6 @@ var BaseWindowController = function (_window$Monk$Controll) {
     _createClass(BaseWindowController, [{
         key: "openWindow",
         value: function openWindow() {
-            console.log("open");
             this.component.parent.active = true;
             this.component.parent.setStyle("alpha", 0.4);
             this.component.setStyle("alpha", 1);
@@ -268,6 +267,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
     }, {
         key: "center",
         value: function center() {
+            this.component.setStyle("y", this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2 - 200, false);
             this.component.setStyle({
                 x: this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
                 y: this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
@@ -279,23 +279,14 @@ var BaseWindowController = function (_window$Monk$Controll) {
         value: function closeWindow() {
             var _this2 = this;
 
-            var allPromise = [];
             var promise1 = this.component.parent.setStyle("alpha", 0);
             var promise2 = this.component.setStyle({
                 "alpha": 0,
-                "y": "70%"
+                "y": this.component.getY() + 200
             });
-            if (promise1) {
-                allPromise.push(promise1);
-            }
-            if (promise2) {
-                allPromise.push(promise2);
-            }
-            if (allPromise.length > 0) {
-                Promise.all(allPromise).then(function () {
-                    _this2.component.parent.active = false;
-                });
-            }
+            Promise.all([promise1, promise2]).then(function () {
+                _this2.component.parent.active = false;
+            });
         }
     }]);
 
