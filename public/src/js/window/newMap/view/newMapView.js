@@ -1,9 +1,11 @@
 import NewMapController from "../controller/newMapController.js";
 import window from "../../style/window.js";
+import {formInputStyle,buttonStyle} from "../../../style/form.js";
 
-const FORM_ROW_HEIGHT = 40;
+const FORM_ROW_HEIGHT = 60;
 const FORM_LABEL_WIDTH = 100;
-const FORM_INPUT_PADDING = 5;
+const FORM_INPUT_PADDING = 15;
+const FORM_BUTTON_HEIGHT = 30;
 let contentStyle = {
     type : "rect",
     style : {
@@ -38,47 +40,95 @@ let contentStyle = {
                             orientation : "horizontal"
                         }
                     },
+                    children : formInputStyle("mapName", "地图名称：", {
+                        formRowHeight : FORM_ROW_HEIGHT,
+                        formLabelWidth : FORM_LABEL_WIDTH,
+                        formInputPadding : FORM_INPUT_PADDING
+                    })
+                },
+                {
+                    name : "input_row",
+                    type : "rect",
+                    style : {
+                        width : "100%",
+                        height : FORM_ROW_HEIGHT,
+                        layout : {
+                            type : "linearLayout",
+                            orientation : "horizontal"
+                        }
+                    },
                     children : [
                         {
-                            name : "input_label",
+                            name : "input_50p",
                             type : "rect",
                             style : {
-                                width : FORM_LABEL_WIDTH,
+                                width : "50%",
                                 height : "100%",
-                                lineHeight : FORM_ROW_HEIGHT,
-                                textAlign : "center"
+                                layout : {
+                                    type : "linearLayout",
+                                    orientation : "horizontal"
+                                }
                             },
-                            text : "地图名称："
+                            children : formInputStyle("mapWidth", "宽：", {
+                                formRowHeight : FORM_ROW_HEIGHT,
+                                formLabelWidth : FORM_LABEL_WIDTH,
+                                formInputPadding : FORM_INPUT_PADDING
+                            })
                         },
                         {
-                            name : "input_area",
+                            name : "input_50p",
                             type : "rect",
                             style : {
-                                width : function(){
-                                    return this.parent.getInnerWidth() - FORM_LABEL_WIDTH;
-                                },
-                                height : "100%"
-                            },
-                            children : [
-                                {
-                                    name : "input",
-                                    type : "input",
-                                    style : {
-                                        x : FORM_INPUT_PADDING,
-                                        y : FORM_INPUT_PADDING,
-                                        width : function(){
-                                            return this.parent.getInnerWidth() - FORM_INPUT_PADDING * 2;
-                                        },
-                                        height : function(){
-                                            return this.parent.getInnerHeight() - FORM_INPUT_PADDING * 2;
-                                        },
-                                        borderWidth : 1,
-                                        borderColor : "#dfdfdf",
-                                        borderRadius : 3
-                                    }
+                                width : "50%",
+                                height : "100%",
+                                layout : {
+                                    type : "linearLayout",
+                                    orientation : "horizontal"
                                 }
-                            ]
+                            },
+                            children : formInputStyle("mapHeight", "高：", {
+                                formRowHeight : FORM_ROW_HEIGHT,
+                                formLabelWidth : FORM_LABEL_WIDTH,
+                                formInputPadding : FORM_INPUT_PADDING
+                            })
                         }
+                    ]
+                },
+                {
+                    name: "input_row",
+                    type: "rect",
+                    style: {
+                        width: "100%",
+                        height: FORM_ROW_HEIGHT,
+                        layout : {
+                            type : "linearLayout",
+                            orientation : "horizontal",
+                            contentAlign : "center"
+                        }
+                    },
+                    children : [
+                        buttonStyle("确定", {
+                            y : function(){
+                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
+                            },
+                            autoWidth : true,
+                            height : FORM_BUTTON_HEIGHT
+                        }),
+                        {
+                            name: "button_div",
+                            type: "rect",
+                            style: {
+                                width: "20",
+                                height: FORM_ROW_HEIGHT
+                            }
+                        },
+                        buttonStyle("取消", {
+                            y : function(){
+                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
+                            },
+                            autoWidth : true,
+                            height : FORM_BUTTON_HEIGHT
+                        })
                     ]
                 }
             ]

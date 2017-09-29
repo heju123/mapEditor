@@ -1,1 +1,435 @@
-webpackJsonp([0],[,,,,,,function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var o=n(7),i=r(o),a=n(9),u=r(a),c={type:"rect",style:{x:0,y:0,width:"100%",height:"100%"},children:[{name:"form1",type:"rect",style:{x:0,y:0,width:"100%",autoHeight:!0,layout:{type:"linearLayout",orientation:"vertical"}},children:[{name:"input_row",type:"rect",style:{width:"100%",height:40,layout:{type:"linearLayout",orientation:"horizontal"}},children:[{name:"input_label",type:"rect",style:{width:100,height:"100%",lineHeight:40,textAlign:"center"},text:"地图名称："},{name:"input_area",type:"rect",style:{width:function(){return this.parent.getInnerWidth()-100},height:"100%"},children:[{name:"input",type:"input",style:{x:5,y:5,width:function(){return this.parent.getInnerWidth()-10},height:function(){return this.parent.getInnerHeight()-10},borderWidth:1,borderColor:"#dfdfdf",borderRadius:3}}]}]}]}]};t.default=(0,u.default)(i.default,{id:"new_map_window",title:"新建地图",width:400,height:300,contentStyle:c})},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function o(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function i(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var a=n(8),u=function(e){return e&&e.__esModule?e:{default:e}}(a),c=function(e){function t(e){r(this,t);var n=o(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e));return n.registerEvent("$onViewLoaded",function(){}),n}return i(t,e),t}(u.default);t.default=c},function(e,t,n){"use strict";function r(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function o(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function i(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}Object.defineProperty(t,"__esModule",{value:!0});var a=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),u=function(e){function t(e){return r(this,t),o(this,(t.__proto__||Object.getPrototypeOf(t)).call(this,e))}return i(t,e),a(t,[{key:"openWindow",value:function(){return this.component.parent.active=!0,this.component.parent.setStyle("alpha",.4),this.component.setStyle("alpha",1),this}},{key:"center",value:function(){return this.component.setStyle({x:this.component.parent.getInnerWidth()/2-this.component.getWidth()/2,y:this.component.parent.getInnerHeight()/2-this.component.getHeight()/2}),this}}]),t}(window.Monk.Controller);t.default=u},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=function(e){return{type:"rect",style:{x:0,y:0,width:"100%",height:50,backgroundColor:"#3D3D3D"},children:[{type:"rect",style:{x:10,y:0,autoWidth:!0,height:"100%",lineHeight:50,fontColor:"#919191",fontSize:"18px"},text:e}]}},o=function(e){return{type:"rect",style:{x:0,y:50,width:"100%",height:function(){return this.parent.getInnerHeight()-50},backgroundColor:"#ffffff"},children:[e]}};t.default=function(e,t){return{type:"rect",active:!1,style:{x:0,y:0,width:"100%",height:"100%",backgroundColor:"#000000",zIndex:9998,alpha:0},animation:{alpha:{duration:"500ms",easeType:"Linear",easing:"ease"}},children:[{id:t.id,controller:e,type:"rect",style:{x:t.x||0,y:t.y||"20%",width:t.width,height:t.height,backgroundColor:"#dfdfdf",borderColor:"#3D3D3D",borderWidth:1,borderRadius:5,zIndex:9999,alpha:0},animation:{alpha:{duration:"500ms",easeType:"Linear",easing:"ease"},y:{duration:"300ms",easeType:"Linear",easing:"ease"}},children:[r(t.title),o(t.contentStyle)]}]}}}]);
+webpackJsonp([0],[
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _newMapController = __webpack_require__(7);
+
+var _newMapController2 = _interopRequireDefault(_newMapController);
+
+var _window = __webpack_require__(9);
+
+var _window2 = _interopRequireDefault(_window);
+
+var _form = __webpack_require__(10);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FORM_ROW_HEIGHT = 60;
+var FORM_LABEL_WIDTH = 100;
+var FORM_INPUT_PADDING = 15;
+var FORM_BUTTON_HEIGHT = 30;
+var contentStyle = {
+    type: "rect",
+    style: {
+        x: 0,
+        y: 0,
+        width: "100%",
+        height: "100%"
+    },
+    children: [{
+        name: "form1",
+        type: "rect",
+        style: {
+            x: 0,
+            y: 0,
+            width: "100%",
+            autoHeight: true,
+            layout: {
+                type: "linearLayout",
+                orientation: "vertical"
+            }
+        },
+        children: [{
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal"
+                }
+            },
+            children: (0, _form.formInputStyle)("mapName", "地图名称：", {
+                formRowHeight: FORM_ROW_HEIGHT,
+                formLabelWidth: FORM_LABEL_WIDTH,
+                formInputPadding: FORM_INPUT_PADDING
+            })
+        }, {
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal"
+                }
+            },
+            children: [{
+                name: "input_50p",
+                type: "rect",
+                style: {
+                    width: "50%",
+                    height: "100%",
+                    layout: {
+                        type: "linearLayout",
+                        orientation: "horizontal"
+                    }
+                },
+                children: (0, _form.formInputStyle)("mapWidth", "宽：", {
+                    formRowHeight: FORM_ROW_HEIGHT,
+                    formLabelWidth: FORM_LABEL_WIDTH,
+                    formInputPadding: FORM_INPUT_PADDING
+                })
+            }, {
+                name: "input_50p",
+                type: "rect",
+                style: {
+                    width: "50%",
+                    height: "100%",
+                    layout: {
+                        type: "linearLayout",
+                        orientation: "horizontal"
+                    }
+                },
+                children: (0, _form.formInputStyle)("mapHeight", "高：", {
+                    formRowHeight: FORM_ROW_HEIGHT,
+                    formLabelWidth: FORM_LABEL_WIDTH,
+                    formInputPadding: FORM_INPUT_PADDING
+                })
+            }]
+        }, {
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal",
+                    contentAlign: "center"
+                }
+            },
+            children: [(0, _form.buttonStyle)("确定", {
+                y: function y() {
+                    return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
+                },
+                autoWidth: true,
+                height: FORM_BUTTON_HEIGHT
+            }), {
+                name: "button_div",
+                type: "rect",
+                style: {
+                    width: "20",
+                    height: FORM_ROW_HEIGHT
+                }
+            }, (0, _form.buttonStyle)("取消", {
+                y: function y() {
+                    return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
+                },
+                autoWidth: true,
+                height: FORM_BUTTON_HEIGHT
+            })]
+        }]
+    }]
+};
+
+exports.default = (0, _window2.default)(_newMapController2.default, {
+    id: "new_map_window",
+    title: "新建地图",
+    width: 400,
+    height: 300,
+    contentStyle: contentStyle
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _baseWindowController = __webpack_require__(8);
+
+var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NewMapController = function (_BaseWindowController) {
+    _inherits(NewMapController, _BaseWindowController);
+
+    function NewMapController(component) {
+        _classCallCheck(this, NewMapController);
+
+        var _this = _possibleConstructorReturn(this, (NewMapController.__proto__ || Object.getPrototypeOf(NewMapController)).call(this, component));
+
+        _this.registerEvent("$onViewLoaded", function () {});
+        return _this;
+    }
+
+    return NewMapController;
+}(_baseWindowController2.default);
+
+exports.default = NewMapController;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BaseWindowController = function (_window$Monk$Controll) {
+    _inherits(BaseWindowController, _window$Monk$Controll);
+
+    function BaseWindowController(component) {
+        _classCallCheck(this, BaseWindowController);
+
+        return _possibleConstructorReturn(this, (BaseWindowController.__proto__ || Object.getPrototypeOf(BaseWindowController)).call(this, component));
+    }
+
+    _createClass(BaseWindowController, [{
+        key: "openWindow",
+        value: function openWindow() {
+            this.component.parent.active = true;
+            this.component.parent.setStyle("alpha", 0.4);
+            this.component.setStyle("alpha", 1);
+            return this;
+        }
+    }, {
+        key: "center",
+        value: function center() {
+            this.component.setStyle({
+                x: this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
+                y: this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
+            });
+            return this;
+        }
+    }]);
+
+    return BaseWindowController;
+}(window.Monk.Controller);
+
+exports.default = BaseWindowController;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var HEAD_HEIGHT = 50;
+
+var getHeader = function getHeader(title) {
+    return {
+        type: "rect",
+        style: {
+            x: 0,
+            y: 0,
+            width: "100%",
+            height: HEAD_HEIGHT,
+            backgroundColor: "#3D3D3D"
+        },
+        children: [{
+            type: "rect",
+            style: {
+                x: 10,
+                y: 0,
+                autoWidth: true,
+                height: "100%",
+                lineHeight: HEAD_HEIGHT,
+                fontColor: "#919191",
+                fontSize: "18px"
+            },
+            text: title
+        }]
+    };
+};
+
+var getContent = function getContent(content) {
+    return {
+        type: "rect",
+        style: {
+            x: 0,
+            y: HEAD_HEIGHT,
+            width: "100%",
+            height: function height() {
+                return this.parent.getInnerHeight() - HEAD_HEIGHT;
+            },
+            backgroundColor: "#ffffff"
+        },
+        children: [content]
+    };
+};
+
+exports.default = function (controller, opts) {
+    return {
+        type: "rect",
+        active: false,
+        style: {
+            x: 0,
+            y: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#000000",
+            zIndex: 9998,
+            alpha: 0
+        },
+        animation: {
+            alpha: {
+                duration: "500ms",
+                easeType: "Linear",
+                easing: "ease"
+            }
+        },
+        children: [{
+            id: opts.id,
+            controller: controller,
+            type: "rect",
+            style: {
+                x: opts.x || 0,
+                y: opts.y || "20%",
+                width: opts.width,
+                height: opts.height,
+                backgroundColor: "#dfdfdf",
+                borderColor: "#3D3D3D",
+                borderWidth: 1,
+                borderRadius: 5,
+                zIndex: 9999,
+                alpha: 0
+            },
+            animation: {
+                alpha: {
+                    duration: "500ms",
+                    easeType: "Linear",
+                    easing: "ease"
+                },
+                y: {
+                    duration: "300ms",
+                    easeType: "Linear",
+                    easing: "ease"
+                }
+            },
+            children: [getHeader(opts.title), getContent(opts.contentStyle)]
+        }]
+    };
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//表单输入框
+var formInputStyle = exports.formInputStyle = function formInputStyle(id, title, opts) {
+    return [{
+        name: "input_label",
+        type: "rect",
+        style: {
+            width: opts.formLabelWidth,
+            height: "100%",
+            lineHeight: opts.formRowHeight,
+            textAlign: "center"
+        },
+        text: title
+    }, {
+        name: "input_area",
+        type: "rect",
+        style: {
+            width: function width() {
+                return this.parent.getInnerWidth() - opts.formLabelWidth;
+            },
+            height: "100%"
+        },
+        children: [{
+            id: id,
+            name: "input",
+            type: "input",
+            style: {
+                x: opts.formInputPadding,
+                y: opts.formInputPadding,
+                width: function width() {
+                    return this.parent.getInnerWidth() - opts.formInputPadding * 2;
+                },
+                height: function height() {
+                    return this.parent.getInnerHeight() - opts.formInputPadding * 2;
+                },
+                borderWidth: 1,
+                borderColor: "#dfdfdf",
+                borderRadius: 3
+            }
+        }]
+    }];
+};
+
+//按钮
+var buttonStyle = exports.buttonStyle = function buttonStyle(text, opts) {
+    var style = {};
+    style.x = opts.x;
+    style.y = opts.y;
+    if (opts.width !== undefined) {
+        style.width = opts.width;
+    } else {
+        style.autoWidth = true;
+    }
+    style.height = opts.height;
+    style.borderWidth = 1;
+    style.borderColor = "#dfdfdf";
+    style.backgroundColor = "#ffffff";
+
+    return {
+        name: "button",
+        type: "button",
+        style: style,
+        text: text
+    };
+};
+
+/***/ })
+]);
+//# sourceMappingURL=newMapView.chunk.js.map
