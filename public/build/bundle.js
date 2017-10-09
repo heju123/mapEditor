@@ -429,11 +429,9 @@ var MainController = function (_window$Monk$Controll) {
             newMapWindow.controller.clearForm();
             newMapWindow.controller.openWindow({
                 okCallback: function okCallback(data) {
-                    console.log(data);
-
                     var parent = _this2.component.getComponentById("edit_area");
                     var mapRect = new window.Monk.components.Rect(parent);
-                    mapRect.initCfg((0, _mapView2.default)());
+                    mapRect.initCfg((0, _mapView2.default)(data));
                     parent.appendChildren(mapRect);
                 }
             }).center();
@@ -462,16 +460,17 @@ var _mapController2 = _interopRequireDefault(_mapController);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+exports.default = function (data) {
     return {
         name: "mapCom",
         controller: _mapController2.default,
+        controllerParam: data,
         type: "rect",
         style: {
             x: 0,
             y: 0,
-            width: 100,
-            height: 100,
+            width: 0,
+            height: 0,
             backgroundColor: "#c8c8c8"
         }
     };
@@ -497,10 +496,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MapController = function (_window$Monk$Controll) {
     _inherits(MapController, _window$Monk$Controll);
 
-    function MapController(component) {
+    function MapController(component, data) {
         _classCallCheck(this, MapController);
 
-        return _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, component));
+        var _this = _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, component));
+
+        console.log(data);
+        return _this;
     }
 
     return MapController;

@@ -29,11 +29,9 @@ export default class MainController extends window.Monk.Controller{
         newMapWindow.controller.clearForm();
         newMapWindow.controller.openWindow({
             okCallback : (data)=>{
-                console.log(data);
-
                 let parent = this.component.getComponentById("edit_area");
                 let mapRect = new window.Monk.components.Rect(parent);
-                mapRect.initCfg(mapView());
+                mapRect.initCfg(mapView(data));
                 parent.appendChildren(mapRect);
             }
         }).center();
