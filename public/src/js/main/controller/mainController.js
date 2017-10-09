@@ -27,13 +27,13 @@ export default class MainController extends window.Monk.Controller{
     openNewMapDlg(e){
         let newMapWindow = this.viewState.getComponentById("new_map_window");
         newMapWindow.controller.clearForm();
-        newMapWindow.controller.openWindow({
+        newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
                 let mapRect = new window.Monk.components.Rect(parent);
                 mapRect.initCfg(mapView(data));
                 parent.appendChildren(mapRect);
             }
-        }).center();
+        });
     }
 }

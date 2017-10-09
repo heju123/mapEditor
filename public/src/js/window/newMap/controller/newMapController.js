@@ -10,22 +10,26 @@ export default class NewMapController extends BaseWindowController{
 
     clearForm(){
         let mapNameCom = this.component.getComponentById("mapName");
-        let mapWidthCom = this.component.getComponentById("mapWidth");
-        let mapHeightCom = this.component.getComponentById("mapHeight");
+        let widthCom = this.component.getComponentById("width");
+        let heightCom = this.component.getComponentById("height");
+        let sizeCom = this.component.getComponentById("size");
 
         mapNameCom.setText("");
-        mapWidthCom.setText("");
-        mapHeightCom.setText("");
+        widthCom.setText("");
+        heightCom.setText("");
+        sizeCom.setText("");
     }
 
     onOk(){
         let mapNameCom = this.component.getComponentById("mapName");
-        let mapWidthCom = this.component.getComponentById("mapWidth");
-        let mapHeightCom = this.component.getComponentById("mapHeight");
+        let widthCom = this.component.getComponentById("width");
+        let heightCom = this.component.getComponentById("height");
+        let sizeCom = this.component.getComponentById("size");
         this.closeWindow({
             mapName : mapNameCom.getText(),
-            mapWidth : mapWidthCom.getText(),
-            mapHeight : mapHeightCom.getText()
+            width : widthCom.getText(),
+            height : heightCom.getText(),
+            size : sizeCom.getText()
         });
     }
 

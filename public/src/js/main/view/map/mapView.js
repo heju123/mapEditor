@@ -11,7 +11,8 @@ export default (data)=>{
             y : 0,
             width : 0,
             height : 0,
-            backgroundColor : "#c8c8c8"
+            backgroundColor : "#c8c8c8",
+            draggable : true
         }
     };
 }

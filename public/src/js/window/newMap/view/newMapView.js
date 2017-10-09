@@ -70,7 +70,7 @@ let contentStyle = {
                                     orientation : "horizontal"
                                 }
                             },
-                            children : formInputStyle("mapWidth", "宽：", {
+                            children : formInputStyle("width", "宽：", {
                                 formRowHeight : FORM_ROW_HEIGHT,
                                 formLabelWidth : FORM_LABEL_WIDTH,
                                 formInputPadding : FORM_INPUT_PADDING
@@ -87,7 +87,38 @@ let contentStyle = {
                                     orientation : "horizontal"
                                 }
                             },
-                            children : formInputStyle("mapHeight", "高：", {
+                            children : formInputStyle("height", "高：", {
+                                formRowHeight : FORM_ROW_HEIGHT,
+                                formLabelWidth : FORM_LABEL_WIDTH,
+                                formInputPadding : FORM_INPUT_PADDING
+                            })
+                        }
+                    ]
+                },
+                {
+                    name : "input_row",
+                    type : "rect",
+                    style : {
+                        width : "100%",
+                        height : FORM_ROW_HEIGHT,
+                        layout : {
+                            type : "linearLayout",
+                            orientation : "horizontal"
+                        }
+                    },
+                    children : [
+                        {
+                            name : "input_50p",
+                            type : "rect",
+                            style : {
+                                width : "50%",
+                                height : "100%",
+                                layout : {
+                                    type : "linearLayout",
+                                    orientation : "horizontal"
+                                }
+                            },
+                            children : formInputStyle("size", "格子大小：", {
                                 formRowHeight : FORM_ROW_HEIGHT,
                                 formLabelWidth : FORM_LABEL_WIDTH,
                                 formInputPadding : FORM_INPUT_PADDING

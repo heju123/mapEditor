@@ -6,17 +6,19 @@ export default class BaseWindowController extends window.Monk.Controller{
     openWindow(opts){
         this.opts = opts;
         this.component.parent.active = true;
+        let y = this.component.getY();
+        this.component.setStyle("y", y - 200, false);
+        this.component.setStyle("y", y);
         this.component.parent.setStyle("alpha", 0.4);
         this.component.setStyle("alpha", 1);
         return this;
     }
 
     center(){
-        this.component.setStyle("y", this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2 - 200, false);
         this.component.setStyle({
             x : this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
             y : this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
-        });
+        }, false);
         return this;
     }
 

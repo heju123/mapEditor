@@ -94,7 +94,7 @@ var contentStyle = {
                         orientation: "horizontal"
                     }
                 },
-                children: (0, _form.formInputStyle)("mapWidth", "宽：", {
+                children: (0, _form.formInputStyle)("width", "宽：", {
                     formRowHeight: FORM_ROW_HEIGHT,
                     formLabelWidth: FORM_LABEL_WIDTH,
                     formInputPadding: FORM_INPUT_PADDING
@@ -110,7 +110,35 @@ var contentStyle = {
                         orientation: "horizontal"
                     }
                 },
-                children: (0, _form.formInputStyle)("mapHeight", "高：", {
+                children: (0, _form.formInputStyle)("height", "高：", {
+                    formRowHeight: FORM_ROW_HEIGHT,
+                    formLabelWidth: FORM_LABEL_WIDTH,
+                    formInputPadding: FORM_INPUT_PADDING
+                })
+            }]
+        }, {
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal"
+                }
+            },
+            children: [{
+                name: "input_50p",
+                type: "rect",
+                style: {
+                    width: "50%",
+                    height: "100%",
+                    layout: {
+                        type: "linearLayout",
+                        orientation: "horizontal"
+                    }
+                },
+                children: (0, _form.formInputStyle)("size", "格子大小：", {
                     formRowHeight: FORM_ROW_HEIGHT,
                     formLabelWidth: FORM_LABEL_WIDTH,
                     formInputPadding: FORM_INPUT_PADDING
@@ -219,23 +247,27 @@ var NewMapController = function (_BaseWindowController) {
         key: "clearForm",
         value: function clearForm() {
             var mapNameCom = this.component.getComponentById("mapName");
-            var mapWidthCom = this.component.getComponentById("mapWidth");
-            var mapHeightCom = this.component.getComponentById("mapHeight");
+            var widthCom = this.component.getComponentById("width");
+            var heightCom = this.component.getComponentById("height");
+            var sizeCom = this.component.getComponentById("size");
 
             mapNameCom.setText("");
-            mapWidthCom.setText("");
-            mapHeightCom.setText("");
+            widthCom.setText("");
+            heightCom.setText("");
+            sizeCom.setText("");
         }
     }, {
         key: "onOk",
         value: function onOk() {
             var mapNameCom = this.component.getComponentById("mapName");
-            var mapWidthCom = this.component.getComponentById("mapWidth");
-            var mapHeightCom = this.component.getComponentById("mapHeight");
+            var widthCom = this.component.getComponentById("width");
+            var heightCom = this.component.getComponentById("height");
+            var sizeCom = this.component.getComponentById("size");
             this.closeWindow({
                 mapName: mapNameCom.getText(),
-                mapWidth: mapWidthCom.getText(),
-                mapHeight: mapHeightCom.getText()
+                width: widthCom.getText(),
+                height: heightCom.getText(),
+                size: sizeCom.getText()
             });
         }
     }, {
@@ -283,6 +315,9 @@ var BaseWindowController = function (_window$Monk$Controll) {
         value: function openWindow(opts) {
             this.opts = opts;
             this.component.parent.active = true;
+            var y = this.component.getY();
+            this.component.setStyle("y", y - 200, false);
+            this.component.setStyle("y", y);
             this.component.parent.setStyle("alpha", 0.4);
             this.component.setStyle("alpha", 1);
             return this;
@@ -290,11 +325,10 @@ var BaseWindowController = function (_window$Monk$Controll) {
     }, {
         key: "center",
         value: function center() {
-            this.component.setStyle("y", this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2 - 200, false);
             this.component.setStyle({
                 x: this.component.parent.getInnerWidth() / 2 - this.component.getWidth() / 2,
                 y: this.component.parent.getInnerHeight() / 2 - this.component.getHeight() / 2
-            });
+            }, false);
             return this;
         }
     }, {
