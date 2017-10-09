@@ -5,7 +5,9 @@ webpackJsonp([0],[
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */,
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15,17 +17,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _newMapController = __webpack_require__(7);
+var _newMapController = __webpack_require__(9);
 
 var _newMapController2 = _interopRequireDefault(_newMapController);
 
-var _window = __webpack_require__(9);
+var _window = __webpack_require__(11);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _common = __webpack_require__(10);
+var _common = __webpack_require__(12);
 
-var _form = __webpack_require__(11);
+var _form = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -177,7 +179,7 @@ exports.default = (0, _window2.default)(_newMapController2.default, {
 });
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -189,7 +191,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _baseWindowController = __webpack_require__(8);
+var _baseWindowController = __webpack_require__(10);
 
 var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
 
@@ -214,6 +216,17 @@ var NewMapController = function (_BaseWindowController) {
     }
 
     _createClass(NewMapController, [{
+        key: "clearForm",
+        value: function clearForm() {
+            var mapNameCom = this.component.getComponentById("mapName");
+            var mapWidthCom = this.component.getComponentById("mapWidth");
+            var mapHeightCom = this.component.getComponentById("mapHeight");
+
+            mapNameCom.setText("");
+            mapWidthCom.setText("");
+            mapHeightCom.setText("");
+        }
+    }, {
         key: "onOk",
         value: function onOk() {
             var mapNameCom = this.component.getComponentById("mapName");
@@ -238,7 +251,7 @@ var NewMapController = function (_BaseWindowController) {
 exports.default = NewMapController;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -298,7 +311,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
                 _this2.component.parent.active = false;
 
                 if (_this2.opts && _this2.opts.okCallback && typeof _this2.opts.okCallback === "function") {
-                    _this2.opts.okCallback(data);
+                    _this2.opts.okCallback.apply(_this2, [data]);
                 }
             });
         }
@@ -310,7 +323,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
 exports.default = BaseWindowController;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -417,7 +430,7 @@ exports.default = function (controller, opts) {
 };
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -461,7 +474,7 @@ var buttonStyle = exports.buttonStyle = function buttonStyle(text, opts) {
 };
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

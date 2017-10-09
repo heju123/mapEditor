@@ -287,7 +287,7 @@ var _mainController = __webpack_require__(4);
 
 var _mainController2 = _interopRequireDefault(_mainController);
 
-var _fileView = __webpack_require__(5);
+var _fileView = __webpack_require__(7);
 
 var _fileView2 = _interopRequireDefault(_fileView);
 
@@ -358,7 +358,7 @@ exports.default = {
     }, function (get) {
         return new Promise(function (resolve, reject) {
             __webpack_require__.e/* require.ensure */(0).then((function (require) {
-                get(__webpack_require__(6).default, resolve, reject);
+                get(__webpack_require__(8).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }]
@@ -377,15 +377,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _mapView = __webpack_require__(5);
+
+var _mapView2 = _interopRequireDefault(_mapView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by heju on 2017/7/14.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-/**
- * Created by heju on 2017/7/14.
- */
+
 var MainController = function (_window$Monk$Controll) {
     _inherits(MainController, _window$Monk$Controll);
 
@@ -417,10 +423,18 @@ var MainController = function (_window$Monk$Controll) {
     }, {
         key: "openNewMapDlg",
         value: function openNewMapDlg(e) {
+            var _this2 = this;
+
             var newMapWindow = this.viewState.getComponentById("new_map_window");
+            newMapWindow.controller.clearForm();
             newMapWindow.controller.openWindow({
                 okCallback: function okCallback(data) {
                     console.log(data);
+
+                    var parent = _this2.component.getComponentById("edit_area");
+                    var mapRect = new window.Monk.components.Rect(parent);
+                    mapRect.initCfg((0, _mapView2.default)());
+                    parent.appendChildren(mapRect);
                 }
             }).center();
         }
@@ -433,6 +447,69 @@ exports.default = MainController;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _mapController = __webpack_require__(6);
+
+var _mapController2 = _interopRequireDefault(_mapController);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    return {
+        name: "mapCom",
+        controller: _mapController2.default,
+        type: "rect",
+        style: {
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
+            backgroundColor: "#c8c8c8"
+        }
+    };
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MapController = function (_window$Monk$Controll) {
+    _inherits(MapController, _window$Monk$Controll);
+
+    function MapController(component) {
+        _classCallCheck(this, MapController);
+
+        return _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, component));
+    }
+
+    return MapController;
+}(window.Monk.Controller);
+
+exports.default = MapController;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

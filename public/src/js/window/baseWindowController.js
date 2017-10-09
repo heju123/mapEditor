@@ -31,7 +31,7 @@ export default class BaseWindowController extends window.Monk.Controller{
 
             if (this.opts && this.opts.okCallback && typeof(this.opts.okCallback) === "function")
             {
-                this.opts.okCallback(data);
+                this.opts.okCallback.apply(this, [data]);
             }
         });
     }
