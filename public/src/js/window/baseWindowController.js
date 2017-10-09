@@ -3,7 +3,8 @@ export default class BaseWindowController extends window.Monk.Controller{
         super(component);
     }
 
-    openWindow(){
+    openWindow(opts){
+        this.opts = opts;
         this.component.parent.active = true;
         this.component.parent.setStyle("alpha", 0.4);
         this.component.setStyle("alpha", 1);
@@ -19,7 +20,7 @@ export default class BaseWindowController extends window.Monk.Controller{
         return this;
     }
 
-    closeWindow(){
+    closeWindow(data){
         let promise1 = this.component.parent.setStyle("alpha", 0);
         let promise2 = this.component.setStyle({
             "alpha" : 0,
@@ -27,6 +28,11 @@ export default class BaseWindowController extends window.Monk.Controller{
         });
         Promise.all([promise1,promise2]).then(()=>{
             this.component.parent.active = false;
+
+            if (this.opts && this.opts.okCallback && typeof(this.opts.okCallback) === "function")
+            {
+                this.opts.okCallback(data);
+            }
         });
     }
 }

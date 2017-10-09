@@ -9,6 +9,14 @@ export default class NewMapController extends BaseWindowController{
     }
 
     onOk(){
+        let mapNameCom = this.component.getComponentById("mapName");
+        let mapWidthCom = this.component.getComponentById("mapWidth");
+        let mapHeightCom = this.component.getComponentById("mapHeight");
+        this.closeWindow({
+            mapName : mapNameCom.getText(),
+            mapWidth : mapWidthCom.getText(),
+            mapHeight : mapHeightCom.getText()
+        });
     }
 
     onCancel(){

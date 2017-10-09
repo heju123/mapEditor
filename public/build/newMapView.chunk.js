@@ -215,7 +215,16 @@ var NewMapController = function (_BaseWindowController) {
 
     _createClass(NewMapController, [{
         key: "onOk",
-        value: function onOk() {}
+        value: function onOk() {
+            var mapNameCom = this.component.getComponentById("mapName");
+            var mapWidthCom = this.component.getComponentById("mapWidth");
+            var mapHeightCom = this.component.getComponentById("mapHeight");
+            this.closeWindow({
+                mapName: mapNameCom.getText(),
+                mapWidth: mapWidthCom.getText(),
+                mapHeight: mapHeightCom.getText()
+            });
+        }
     }, {
         key: "onCancel",
         value: function onCancel() {
@@ -258,7 +267,8 @@ var BaseWindowController = function (_window$Monk$Controll) {
 
     _createClass(BaseWindowController, [{
         key: "openWindow",
-        value: function openWindow() {
+        value: function openWindow(opts) {
+            this.opts = opts;
             this.component.parent.active = true;
             this.component.parent.setStyle("alpha", 0.4);
             this.component.setStyle("alpha", 1);
@@ -276,7 +286,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
         }
     }, {
         key: "closeWindow",
-        value: function closeWindow() {
+        value: function closeWindow(data) {
             var _this2 = this;
 
             var promise1 = this.component.parent.setStyle("alpha", 0);
@@ -286,6 +296,10 @@ var BaseWindowController = function (_window$Monk$Controll) {
             });
             Promise.all([promise1, promise2]).then(function () {
                 _this2.component.parent.active = false;
+
+                if (_this2.opts && _this2.opts.okCallback && typeof _this2.opts.okCallback === "function") {
+                    _this2.opts.okCallback(data);
+                }
             });
         }
     }]);

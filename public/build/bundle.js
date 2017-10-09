@@ -418,7 +418,11 @@ var MainController = function (_window$Monk$Controll) {
         key: "openNewMapDlg",
         value: function openNewMapDlg(e) {
             var newMapWindow = this.viewState.getComponentById("new_map_window");
-            newMapWindow.controller.openWindow().center();
+            newMapWindow.controller.openWindow({
+                okCallback: function okCallback(data) {
+                    console.log(data);
+                }
+            }).center();
         }
     }]);
 
