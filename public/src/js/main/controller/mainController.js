@@ -3,7 +3,7 @@
  */
 import mapView from "../view/map/mapView.js";
 
-export default class MainController extends window.Monk.Controller{
+export default class MainController extends window.monk.Controller{
     constructor(component) {
         super(component);
 
@@ -30,7 +30,7 @@ export default class MainController extends window.Monk.Controller{
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
-                let mapRect = new window.Monk.components.Rect(parent);
+                let mapRect = new window.monk.components.Rect(parent);
                 mapRect.initCfg(mapView(data));
                 parent.appendChildren(mapRect);
             }

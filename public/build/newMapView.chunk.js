@@ -301,8 +301,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BaseWindowController = function (_window$Monk$Controll) {
-    _inherits(BaseWindowController, _window$Monk$Controll);
+var BaseWindowController = function (_window$monk$Controll) {
+    _inherits(BaseWindowController, _window$monk$Controll);
 
     function BaseWindowController(component) {
         _classCallCheck(this, BaseWindowController);
@@ -352,7 +352,7 @@ var BaseWindowController = function (_window$Monk$Controll) {
     }]);
 
     return BaseWindowController;
-}(window.Monk.Controller);
+}(window.monk.Controller);
 
 exports.default = BaseWindowController;
 

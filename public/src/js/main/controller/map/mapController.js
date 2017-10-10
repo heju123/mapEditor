@@ -1,4 +1,4 @@
-export default class MapController extends window.Monk.Controller {
+export default class MapController extends window.monk.Controller {
     constructor(component, data) {
         super(component);
 

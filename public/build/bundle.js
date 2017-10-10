@@ -235,7 +235,7 @@ var Main = function Main() {
     mainBox.style.width = window.innerWidth + "px";
     mainBox.style.height = window.innerHeight + "px";
 
-    var monk = new window.Monk.Main("mainBox");
+    var monk = new window.monk.Main("mainBox");
 
     monk.run(_route2.default);
 };
@@ -392,8 +392,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 
-var MainController = function (_window$Monk$Controll) {
-    _inherits(MainController, _window$Monk$Controll);
+var MainController = function (_window$monk$Controll) {
+    _inherits(MainController, _window$monk$Controll);
 
     function MainController(component) {
         _classCallCheck(this, MainController);
@@ -430,7 +430,7 @@ var MainController = function (_window$Monk$Controll) {
             newMapWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
                     var parent = _this2.component.getComponentById("edit_area");
-                    var mapRect = new window.Monk.components.Rect(parent);
+                    var mapRect = new window.monk.components.Rect(parent);
                     mapRect.initCfg((0, _mapView2.default)(data));
                     parent.appendChildren(mapRect);
                 }
@@ -439,7 +439,7 @@ var MainController = function (_window$Monk$Controll) {
     }]);
 
     return MainController;
-}(window.Monk.Controller);
+}(window.monk.Controller);
 
 exports.default = MainController;
 
@@ -496,8 +496,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MapController = function (_window$Monk$Controll) {
-    _inherits(MapController, _window$Monk$Controll);
+var MapController = function (_window$monk$Controll) {
+    _inherits(MapController, _window$monk$Controll);
 
     function MapController(component, data) {
         _classCallCheck(this, MapController);
@@ -579,7 +579,7 @@ var MapController = function (_window$Monk$Controll) {
     }]);
 
     return MapController;
-}(window.Monk.Controller);
+}(window.monk.Controller);
 
 exports.default = MapController;
 

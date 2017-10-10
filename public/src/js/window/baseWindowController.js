@@ -1,4 +1,4 @@
-export default class BaseWindowController extends window.Monk.Controller{
+export default class BaseWindowController extends window.monk.Controller{
     constructor(component) {
         super(component);
     }
