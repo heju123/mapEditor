@@ -508,21 +508,71 @@ var MapController = function (_window$Monk$Controll) {
         _this.height = data.height;
         _this.size = data.size;
 
+        _this.initMapData();
+
         _this.component.setStyle({
             width: _this.width * _this.size,
             height: _this.height * _this.size
         });
+
+        _this.component.registerEvent("mouseup", function (e) {
+            if (e.button === 2) //右键点击
+                {
+                    //鼠标相对于面板的x,y值
+                    var mx = e.pageX - _this.component.getRealX();
+                    var my = e.pageY - _this.component.getRealY();
+
+                    var x = Math.floor(mx / _this.size);
+                    var y = Math.floor(my / _this.size);
+                    _this.setMapData(x, y, -1);
+                }
+        });
         return _this;
     }
 
+    //初始化地图数据
+
+
     _createClass(MapController, [{
+        key: "initMapData",
+        value: function initMapData() {
+            this.mapData = [];
+            for (var i = 0; i < this.width; i++) {
+                this.mapData[i] = [];
+                for (var j = 0; j < this.height; j++) {
+                    this.mapData[i][j] = 0;
+                }
+            }
+        }
+
+        //设置指定位置的地图数据
+
+    }, {
+        key: "setMapData",
+        value: function setMapData(x, y, value) {
+            this.mapData[x][y] = value;
+        }
+    }, {
         key: "draw",
         value: function draw(ctx) {
+            //绘制地图方格
             ctx.lineWidth = 1;
-            ctx.fillStyle = "#000";
-            for (var i = 0; i <= this.width; i++) {
-                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + i * this.size);
-                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + i * this.size);
+            ctx.strokeStyle = "#6a6a6a";
+            ctx.fillStyle = "#000000";
+            for (var x = 0; x <= this.width; x++) {
+                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + x * this.size);
+                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + x * this.size);
+
+                for (var y = 0; y <= this.height; y++) {
+                    ctx.moveTo(this.component.getRealX() + y * this.size, this.component.getRealY());
+                    ctx.lineTo(this.component.getRealX() + y * this.size, this.component.getRealY() + this.component.getHeight());
+
+                    //绘制障碍物
+                    if (this.mapData && this.mapData[x] && this.mapData[x][y] !== 0 && x < this.width && y < this.height) {
+                        ctx.rect(this.component.getRealX() + x * this.size, this.component.getRealY() + y * this.size, this.size, this.size);
+                        ctx.fill();
+                    }
+                }
             }
             ctx.stroke();
         }
