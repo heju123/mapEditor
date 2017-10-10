@@ -504,9 +504,12 @@ var MapController = function (_window$monk$Controll) {
 
         var _this = _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, component));
 
-        _this.width = data.width;
-        _this.height = data.height;
-        _this.size = data.size;
+        _this.width = parseInt(data.width, 10);
+        _this.height = parseInt(data.height, 10);
+        _this.size = parseInt(data.size, 10);
+
+        _this.startCoors = undefined; //多选开始坐标
+        _this.endCoors = undefined; //多选结束坐标
 
         _this.initMapData();
 
@@ -515,7 +518,7 @@ var MapController = function (_window$monk$Controll) {
             height: _this.height * _this.size
         });
 
-        _this.component.registerEvent("mouseup", function (e) {
+        _this.component.registerEvent("mousedown", function (e) {
             if (e.button === 2) //右键点击
                 {
                     //鼠标相对于面板的x,y值
@@ -524,7 +527,43 @@ var MapController = function (_window$monk$Controll) {
 
                     var x = Math.floor(mx / _this.size);
                     var y = Math.floor(my / _this.size);
-                    _this.setMapData(x, y, -1);
+                    _this.startCoors = { x: x, y: y };
+                }
+        });
+        _this.component.registerEvent("mousemove", function (e) {
+            if (_this.startCoors) //右键点击
+                {
+                    //鼠标相对于面板的x,y值
+                    var mx = e.pageX - _this.component.getRealX();
+                    var my = e.pageY - _this.component.getRealY();
+
+                    var x = Math.floor(mx / _this.size);
+                    var y = Math.floor(my / _this.size);
+
+                    _this.endCoors = { x: x, y: y };
+                }
+        });
+        _this.component.registerEvent("mouseup", function (e) {
+            if (e.button === 2) //右键点击
+                {
+                    if (_this.startCoors && _this.endCoors) //批量设置
+                        {
+                            var minX = Math.min(_this.startCoors.x, _this.endCoors.x);
+                            var maxX = Math.max(_this.startCoors.x, _this.endCoors.x);
+                            var minY = Math.min(_this.startCoors.y, _this.endCoors.y);
+                            var maxY = Math.max(_this.startCoors.y, _this.endCoors.y);
+                            _this.setMapDataBatch(minX, maxX, minY, maxY, _this.mapData[minX][minY] === 0 ? -1 : 0);
+                        } else {
+                        //鼠标相对于面板的x,y值
+                        var mx = e.pageX - _this.component.getRealX();
+                        var my = e.pageY - _this.component.getRealY();
+
+                        var x = Math.floor(mx / _this.size);
+                        var y = Math.floor(my / _this.size);
+                        _this.setMapData(x, y, _this.mapData[x][y] === 0 ? -1 : 0);
+                    }
+                    _this.startCoors = undefined;
+                    _this.endCoors = undefined;
                 }
         });
         return _this;
@@ -552,13 +591,26 @@ var MapController = function (_window$monk$Controll) {
         value: function setMapData(x, y, value) {
             this.mapData[x][y] = value;
         }
+        //批量设置指定位置的地图数据
+
+    }, {
+        key: "setMapDataBatch",
+        value: function setMapDataBatch(minX, maxX, minY, maxY, value) {
+            for (var x = minX; x <= maxX; x++) {
+                for (var y = minY; y <= maxY; y++) {
+                    this.setMapData(x, y, value);
+                }
+            }
+        }
     }, {
         key: "draw",
         value: function draw(ctx) {
             //绘制地图方格
             ctx.lineWidth = 1;
             ctx.strokeStyle = "#6a6a6a";
+            ctx.globalAlpha = 1;
             ctx.fillStyle = "#000000";
+            ctx.beginPath();
             for (var x = 0; x <= this.width; x++) {
                 ctx.moveTo(this.component.getRealX(), this.component.getRealY() + x * this.size);
                 ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + x * this.size);
@@ -575,6 +627,21 @@ var MapController = function (_window$monk$Controll) {
                 }
             }
             ctx.stroke();
+            ctx.closePath();
+
+            //绘制多选区域
+            if (this.startCoors && this.endCoors) {
+                ctx.beginPath();
+                ctx.fillStyle = "#337ab7";
+                ctx.globalAlpha = 0.6;
+                var minX = Math.min(this.startCoors.x, this.endCoors.x);
+                var maxX = Math.max(this.startCoors.x, this.endCoors.x);
+                var minY = Math.min(this.startCoors.y, this.endCoors.y);
+                var maxY = Math.max(this.startCoors.y, this.endCoors.y);
+                ctx.rect(this.component.getRealX() + minX * this.size, this.component.getRealY() + minY * this.size, maxX * this.size - minX * this.size + this.size, maxY * this.size - minY * this.size + this.size);
+                ctx.fill();
+                ctx.closePath();
+            }
         }
     }]);
 
