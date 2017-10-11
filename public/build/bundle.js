@@ -358,6 +358,22 @@ exports.default = {
                     }
                 }
             }]
+        }, {
+            id: "top_tool_terrainShowLabel",
+            type: "rect",
+            style: {
+                x: function x() {
+                    return this.parent.getWidth() - 180;
+                },
+                y: 0,
+                autoWidth: true,
+                autoLine: false,
+                height: "100%",
+                lineHeight: TOP_HEIGHT,
+                fontSize: "16px",
+                fontColor: "#666666"
+            },
+            active: false
         }]
     }, (0, _fileView2.default)(TOP_HEIGHT), (0, _mapView2.default)(TOP_HEIGHT),
     //编辑区域
@@ -466,19 +482,27 @@ var MainController = function (_window$monk$Controll) {
             newMapWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
                     var parent = _this2.component.getComponentById("edit_area");
-                    var mapRect = new window.monk.components.Rect(parent);
-                    mapRect.initCfg((0, _mapView2.default)(data));
-                    parent.appendChildren(mapRect);
+                    _this2.mapComponent = new window.monk.components.Rect(parent);
+                    _this2.mapComponent.initCfg((0, _mapView2.default)(data));
+                    parent.appendChildren(_this2.mapComponent);
                 }
             });
         }
     }, {
         key: "openSetTerrainDlg",
         value: function openSetTerrainDlg(e) {
+            var _this3 = this;
+
             var setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
             setTerrainWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
-                    console.log(data.terrain);
+                    if (data.terrain && _this3.mapComponent) {
+                        _this3.mapComponent.terrain = data.terrain;
+                        var terrainShowLabel = _this3.viewState.getComponentById("top_tool_terrainShowLabel");
+                        terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                        terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
+                        terrainShowLabel.active = true;
+                    }
                 }
             });
         }
@@ -557,6 +581,7 @@ var MapController = function (_window$monk$Controll) {
         _this.startCoors = undefined; //多选开始坐标
         _this.endCoors = undefined; //多选结束坐标
         _this.selectedCoors = undefined; //选中的坐标集合
+        _this.terrain = undefined; //当前指定的地形
 
         _this.initMapData();
 

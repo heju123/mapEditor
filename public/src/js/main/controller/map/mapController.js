@@ -9,6 +9,7 @@ export default class MapController extends window.monk.Controller {
         this.startCoors = undefined;//多选开始坐标
         this.endCoors = undefined;//多选结束坐标
         this.selectedCoors = undefined;//选中的坐标集合
+        this.terrain = undefined;//当前指定的地形
 
         this.initMapData();
 
@@ -77,23 +78,6 @@ export default class MapController extends window.monk.Controller {
                 }
                 this.startCoors = undefined;
                 this.endCoors = undefined;
-            }
-        });
-
-        this.component.registerEvent("keydown", (e)=>{
-            if (!this.selectedCoors)
-            {
-                return;
-            }
-            //设置地形编号
-            if (this.selectedCoors.x)
-            {
-                this.setMapData(this.selectedCoors.x, this.selectedCoors.y, "terrain", e.key);
-            }
-            else if (this.selectedCoors.minX)
-            {
-                this.setMapDataBatch(this.selectedCoors.minX, this.selectedCoors.maxX,
-                    this.selectedCoors.minY, this.selectedCoors.maxY, "terrain", e.key);
             }
         });
     }

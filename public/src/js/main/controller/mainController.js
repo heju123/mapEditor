@@ -42,9 +42,9 @@ export default class MainController extends window.monk.Controller{
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
-                let mapRect = new window.monk.components.Rect(parent);
-                mapRect.initCfg(mapView(data));
-                parent.appendChildren(mapRect);
+                this.mapComponent = new window.monk.components.Rect(parent);
+                this.mapComponent.initCfg(mapView(data));
+                parent.appendChildren(this.mapComponent);
             }
         });
     }
@@ -53,7 +53,14 @@ export default class MainController extends window.monk.Controller{
         let setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
         setTerrainWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                console.log(data.terrain);
+                if (data.terrain && this.mapComponent)
+                {
+                    this.mapComponent.terrain = data.terrain;
+                    let terrainShowLabel = this.viewState.getComponentById("top_tool_terrainShowLabel");
+                    terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                    terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
+                    terrainShowLabel.active = true;
+                }
             }
         });
     }

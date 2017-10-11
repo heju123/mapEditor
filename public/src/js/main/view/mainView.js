@@ -70,6 +70,23 @@ export default {
                             }
                         }
                     ]
+                },
+                {
+                    id : "top_tool_terrainShowLabel",
+                    type: "rect",
+                    style: {
+                        x: function(){
+                            return this.parent.getWidth() - 180
+                        },
+                        y: 0,
+                        autoWidth: true,
+                        autoLine : false,
+                        height: "100%",
+                        lineHeight : TOP_HEIGHT,
+                        fontSize : "16px",
+                        fontColor : "#666666"
+                    },
+                    active : false
                 }
             ]
         },
