@@ -50,5 +50,11 @@ export default class MainController extends window.monk.Controller{
     }
 
     openSetTerrainDlg(e){
+        let setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
+        setTerrainWindow.controller.center().openWindow({
+            okCallback : (data)=>{
+                console.log(data.terrain);
+            }
+        });
     }
 }

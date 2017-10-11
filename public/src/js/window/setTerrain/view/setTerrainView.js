@@ -1,4 +1,4 @@
-import NewMapController from "../controller/newMapController.js";
+import NewMapController from "../controller/setTerrainController.js";
 import window from "../../style/window.js";
 import {buttonStyle} from "../../../style/common.js";
 import {formInputStyle} from "../../../style/form.js";
@@ -41,90 +41,11 @@ let contentStyle = {
                             orientation : "horizontal"
                         }
                     },
-                    children : formInputStyle(undefined, "mapName", "地图名称：", {
+                    children : formInputStyle(undefined, "terrain", "设置地形：", {
                         formRowHeight : FORM_ROW_HEIGHT,
                         formLabelWidth : FORM_LABEL_WIDTH,
                         formInputPadding : FORM_INPUT_PADDING
                     })
-                },
-                {
-                    name : "input_row",
-                    type : "rect",
-                    style : {
-                        width : "100%",
-                        height : FORM_ROW_HEIGHT,
-                        layout : {
-                            type : "linearLayout",
-                            orientation : "horizontal"
-                        }
-                    },
-                    children : [
-                        {
-                            name : "input_50p",
-                            type : "rect",
-                            style : {
-                                width : "50%",
-                                height : "100%",
-                                layout : {
-                                    type : "linearLayout",
-                                    orientation : "horizontal"
-                                }
-                            },
-                            children : formInputStyle(undefined, "width", "宽：", {
-                                formRowHeight : FORM_ROW_HEIGHT,
-                                formLabelWidth : FORM_LABEL_WIDTH,
-                                formInputPadding : FORM_INPUT_PADDING
-                            })
-                        },
-                        {
-                            name : "input_50p",
-                            type : "rect",
-                            style : {
-                                width : "50%",
-                                height : "100%",
-                                layout : {
-                                    type : "linearLayout",
-                                    orientation : "horizontal"
-                                }
-                            },
-                            children : formInputStyle(undefined, "height", "高：", {
-                                formRowHeight : FORM_ROW_HEIGHT,
-                                formLabelWidth : FORM_LABEL_WIDTH,
-                                formInputPadding : FORM_INPUT_PADDING
-                            })
-                        }
-                    ]
-                },
-                {
-                    name : "input_row",
-                    type : "rect",
-                    style : {
-                        width : "100%",
-                        height : FORM_ROW_HEIGHT,
-                        layout : {
-                            type : "linearLayout",
-                            orientation : "horizontal"
-                        }
-                    },
-                    children : [
-                        {
-                            name : "input_50p",
-                            type : "rect",
-                            style : {
-                                width : "50%",
-                                height : "100%",
-                                layout : {
-                                    type : "linearLayout",
-                                    orientation : "horizontal"
-                                }
-                            },
-                            children : formInputStyle(undefined, "size", "格子大小：", {
-                                formRowHeight : FORM_ROW_HEIGHT,
-                                formLabelWidth : FORM_LABEL_WIDTH,
-                                formInputPadding : FORM_INPUT_PADDING
-                            })
-                        }
-                    ]
                 },
                 {
                     name: "input_row_blank",
@@ -188,9 +109,9 @@ let contentStyle = {
 };
 
 export default window(NewMapController, {
-    id : "new_map_window",
-    title : "新建地图",
-    width : 400,
-    height : 300,
+    id : "set_terrain_window",
+    title : "设置地形",
+    width : 300,
+    height : 200,
     contentStyle : contentStyle
 })

@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		1: 0
+/******/ 		2: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"setTerrainView","1":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -375,8 +375,14 @@ exports.default = {
         }
     }, function (get) {
         return new Promise(function (resolve, reject) {
-            __webpack_require__.e/* require.ensure */(0).then((function (require) {
+            __webpack_require__.e/* require.ensure */(1).then((function (require) {
                 get(__webpack_require__(9).default, resolve, reject);
+            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+        });
+    }, function (get) {
+        return new Promise(function (resolve, reject) {
+            __webpack_require__.e/* require.ensure */(0).then((function (require) {
+                get(__webpack_require__(10).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }]
@@ -468,7 +474,14 @@ var MainController = function (_window$monk$Controll) {
         }
     }, {
         key: "openSetTerrainDlg",
-        value: function openSetTerrainDlg(e) {}
+        value: function openSetTerrainDlg(e) {
+            var setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
+            setTerrainWindow.controller.center().openWindow({
+                okCallback: function okCallback(data) {
+                    console.log(data.terrain);
+                }
+            });
+        }
     }]);
 
     return MainController;

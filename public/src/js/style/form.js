@@ -1,5 +1,5 @@
 //表单输入框
-export let formInputStyle = function(id, title, opts){
+export let formInputStyle = function(id, name, title, opts){
     return [
         {
             name : "input_label",
@@ -24,7 +24,7 @@ export let formInputStyle = function(id, title, opts){
             children : [
                 {
                     id : id,
-                    name : "input",
+                    name : name || "input",
                     type : "input",
                     style : {
                         x : opts.formInputPadding,

@@ -1,4 +1,4 @@
-webpackJsonp([1],[
+webpackJsonp([0],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -8,7 +8,8 @@ webpackJsonp([1],[
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */
+/* 9 */,
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18,9 +19,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _newMapController = __webpack_require__(15);
+var _setTerrainController = __webpack_require__(16);
 
-var _newMapController2 = _interopRequireDefault(_newMapController);
+var _setTerrainController2 = _interopRequireDefault(_setTerrainController);
 
 var _window = __webpack_require__(12);
 
@@ -68,83 +69,11 @@ var contentStyle = {
                     orientation: "horizontal"
                 }
             },
-            children: (0, _form.formInputStyle)(undefined, "mapName", "地图名称：", {
+            children: (0, _form.formInputStyle)(undefined, "terrain", "设置地形：", {
                 formRowHeight: FORM_ROW_HEIGHT,
                 formLabelWidth: FORM_LABEL_WIDTH,
                 formInputPadding: FORM_INPUT_PADDING
             })
-        }, {
-            name: "input_row",
-            type: "rect",
-            style: {
-                width: "100%",
-                height: FORM_ROW_HEIGHT,
-                layout: {
-                    type: "linearLayout",
-                    orientation: "horizontal"
-                }
-            },
-            children: [{
-                name: "input_50p",
-                type: "rect",
-                style: {
-                    width: "50%",
-                    height: "100%",
-                    layout: {
-                        type: "linearLayout",
-                        orientation: "horizontal"
-                    }
-                },
-                children: (0, _form.formInputStyle)(undefined, "width", "宽：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
-            }, {
-                name: "input_50p",
-                type: "rect",
-                style: {
-                    width: "50%",
-                    height: "100%",
-                    layout: {
-                        type: "linearLayout",
-                        orientation: "horizontal"
-                    }
-                },
-                children: (0, _form.formInputStyle)(undefined, "height", "高：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
-            }]
-        }, {
-            name: "input_row",
-            type: "rect",
-            style: {
-                width: "100%",
-                height: FORM_ROW_HEIGHT,
-                layout: {
-                    type: "linearLayout",
-                    orientation: "horizontal"
-                }
-            },
-            children: [{
-                name: "input_50p",
-                type: "rect",
-                style: {
-                    width: "50%",
-                    height: "100%",
-                    layout: {
-                        type: "linearLayout",
-                        orientation: "horizontal"
-                    }
-                },
-                children: (0, _form.formInputStyle)(undefined, "size", "格子大小：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
-            }]
         }, {
             name: "input_row_blank",
             type: "rect",
@@ -199,16 +128,15 @@ var contentStyle = {
     }]
 };
 
-exports.default = (0, _window2.default)(_newMapController2.default, {
-    id: "new_map_window",
-    title: "新建地图",
-    width: 400,
-    height: 300,
+exports.default = (0, _window2.default)(_setTerrainController2.default, {
+    id: "set_terrain_window",
+    title: "设置地形",
+    width: 300,
+    height: 200,
     contentStyle: contentStyle
 });
 
 /***/ }),
-/* 10 */,
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -486,7 +414,8 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
 };
 
 /***/ }),
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -510,43 +439,24 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var NewMapController = function (_BaseWindowController) {
-    _inherits(NewMapController, _BaseWindowController);
+var SetTerrainController = function (_BaseWindowController) {
+    _inherits(SetTerrainController, _BaseWindowController);
 
-    function NewMapController(component) {
-        _classCallCheck(this, NewMapController);
+    function SetTerrainController(component) {
+        _classCallCheck(this, SetTerrainController);
 
-        var _this = _possibleConstructorReturn(this, (NewMapController.__proto__ || Object.getPrototypeOf(NewMapController)).call(this, component));
+        var _this = _possibleConstructorReturn(this, (SetTerrainController.__proto__ || Object.getPrototypeOf(SetTerrainController)).call(this, component));
 
         _this.registerEvent("$onViewLoaded", function () {});
         return _this;
     }
 
-    _createClass(NewMapController, [{
-        key: "clearForm",
-        value: function clearForm() {
-            var mapNameCom = this.component.getComponentByName("mapName");
-            var widthCom = this.component.getComponentByName("width");
-            var heightCom = this.component.getComponentByName("height");
-            var sizeCom = this.component.getComponentByName("size");
-
-            mapNameCom.setText("");
-            widthCom.setText("");
-            heightCom.setText("");
-            sizeCom.setText("");
-        }
-    }, {
+    _createClass(SetTerrainController, [{
         key: "onOk",
         value: function onOk() {
-            var mapNameCom = this.component.getComponentByName("mapName");
-            var widthCom = this.component.getComponentByName("width");
-            var heightCom = this.component.getComponentByName("height");
-            var sizeCom = this.component.getComponentByName("size");
+            var terrain = this.component.getComponentByName("terrain");
             this.closeWindow({
-                mapName: mapNameCom.getText(),
-                width: widthCom.getText(),
-                height: heightCom.getText(),
-                size: sizeCom.getText()
+                terrain: terrain.getText()
             });
         }
     }, {
@@ -556,11 +466,11 @@ var NewMapController = function (_BaseWindowController) {
         }
     }]);
 
-    return NewMapController;
+    return SetTerrainController;
 }(_baseWindowController2.default);
 
-exports.default = NewMapController;
+exports.default = SetTerrainController;
 
 /***/ })
 ]);
-//# sourceMappingURL=newMapView.chunk.js.map
+//# sourceMappingURL=setTerrainView.chunk.js.map
