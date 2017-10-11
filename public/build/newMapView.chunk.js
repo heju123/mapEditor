@@ -485,6 +485,41 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
     }];
 };
 
+var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(id, name, title, opts) {
+    return [{
+
+        type: "rect",
+        style: {
+            width: 40,
+            height: "100%"
+        },
+        children: [{
+            id: id,
+            name: name || "checkbox",
+            type: "checkbox",
+            style: {
+                x: function x() {
+                    return this.parent.getWidth() / 2 - opts.width / 2;
+                },
+                y: function y() {
+                    return this.parent.getHeight() / 2 - opts.height / 2;
+                },
+                width: opts.width,
+                height: opts.height,
+                lineWidth: opts.lineWidth
+            }
+        }]
+    }, {
+        type: "rect",
+        style: {
+            autoWidth: true,
+            height: "100%",
+            lineHeight: opts.formRowHeight
+        },
+        text: title
+    }];
+};
+
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {

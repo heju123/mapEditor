@@ -1,12 +1,17 @@
 import NewMapController from "../controller/setTerrainController.js";
 import window from "../../style/window.js";
 import {buttonStyle} from "../../../style/common.js";
-import {formInputStyle} from "../../../style/form.js";
+import {formInputStyle,formCheckboxStyle} from "../../../style/form.js";
 
 const FORM_ROW_HEIGHT = 60;
 const FORM_LABEL_WIDTH = 100;
 const FORM_INPUT_PADDING = 15;
 const FORM_BUTTON_HEIGHT = 30;
+
+const CHECKBOX_WIDTH = 20;
+const CHECKBOX_HEIGHT = 20;
+const CHECKBOX_LINEWIDTH = 3;
+
 let contentStyle = {
     type : "rect",
     style : {
@@ -45,6 +50,24 @@ let contentStyle = {
                         formRowHeight : FORM_ROW_HEIGHT,
                         formLabelWidth : FORM_LABEL_WIDTH,
                         formInputPadding : FORM_INPUT_PADDING
+                    })
+                },
+                {
+                    name : "input_row",
+                    type : "rect",
+                    style : {
+                        width : "100%",
+                        height : FORM_ROW_HEIGHT,
+                        layout : {
+                            type : "linearLayout",
+                            orientation : "horizontal"
+                        }
+                    },
+                    children : formCheckboxStyle(undefined, "setTerrainBlock", "设置地形为障碍物", {
+                        formRowHeight : FORM_ROW_HEIGHT,
+                        width : CHECKBOX_WIDTH,
+                        height : CHECKBOX_HEIGHT,
+                        lineWidth : CHECKBOX_LINEWIDTH
                     })
                 },
                 {
@@ -112,6 +135,6 @@ export default window(NewMapController, {
     id : "set_terrain_window",
     title : "设置地形",
     width : 300,
-    height : 200,
+    height : 250,
     contentStyle : contentStyle
 })

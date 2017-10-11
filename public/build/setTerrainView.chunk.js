@@ -37,6 +37,11 @@ var FORM_ROW_HEIGHT = 60;
 var FORM_LABEL_WIDTH = 100;
 var FORM_INPUT_PADDING = 15;
 var FORM_BUTTON_HEIGHT = 30;
+
+var CHECKBOX_WIDTH = 20;
+var CHECKBOX_HEIGHT = 20;
+var CHECKBOX_LINEWIDTH = 3;
+
 var contentStyle = {
     type: "rect",
     style: {
@@ -73,6 +78,23 @@ var contentStyle = {
                 formRowHeight: FORM_ROW_HEIGHT,
                 formLabelWidth: FORM_LABEL_WIDTH,
                 formInputPadding: FORM_INPUT_PADDING
+            })
+        }, {
+            name: "input_row",
+            type: "rect",
+            style: {
+                width: "100%",
+                height: FORM_ROW_HEIGHT,
+                layout: {
+                    type: "linearLayout",
+                    orientation: "horizontal"
+                }
+            },
+            children: (0, _form.formCheckboxStyle)(undefined, "setTerrainBlock", "设置地形为障碍物", {
+                formRowHeight: FORM_ROW_HEIGHT,
+                width: CHECKBOX_WIDTH,
+                height: CHECKBOX_HEIGHT,
+                lineWidth: CHECKBOX_LINEWIDTH
             })
         }, {
             name: "input_row_blank",
@@ -132,7 +154,7 @@ exports.default = (0, _window2.default)(_setTerrainController2.default, {
     id: "set_terrain_window",
     title: "设置地形",
     width: 300,
-    height: 200,
+    height: 250,
     contentStyle: contentStyle
 });
 
@@ -410,6 +432,41 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
                 borderRadius: 3
             }
         }]
+    }];
+};
+
+var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(id, name, title, opts) {
+    return [{
+
+        type: "rect",
+        style: {
+            width: 40,
+            height: "100%"
+        },
+        children: [{
+            id: id,
+            name: name || "checkbox",
+            type: "checkbox",
+            style: {
+                x: function x() {
+                    return this.parent.getWidth() / 2 - opts.width / 2;
+                },
+                y: function y() {
+                    return this.parent.getHeight() / 2 - opts.height / 2;
+                },
+                width: opts.width,
+                height: opts.height,
+                lineWidth: opts.lineWidth
+            }
+        }]
+    }, {
+        type: "rect",
+        style: {
+            autoWidth: true,
+            height: "100%",
+            lineHeight: opts.formRowHeight
+        },
+        text: title
     }];
 };
 

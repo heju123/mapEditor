@@ -650,18 +650,6 @@ var MapController = function (_window$monk$Controll) {
                     _this.endCoors = undefined;
                 }
         });
-
-        _this.component.registerEvent("keydown", function (e) {
-            if (!_this.selectedCoors) {
-                return;
-            }
-            //设置地形编号
-            if (_this.selectedCoors.x) {
-                _this.setMapData(_this.selectedCoors.x, _this.selectedCoors.y, "terrain", e.key);
-            } else if (_this.selectedCoors.minX) {
-                _this.setMapDataBatch(_this.selectedCoors.minX, _this.selectedCoors.maxX, _this.selectedCoors.minY, _this.selectedCoors.maxY, "terrain", e.key);
-            }
-        });
         return _this;
     }
 
