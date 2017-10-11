@@ -160,21 +160,17 @@ var navButtonStyle = exports.navButtonStyle = {
     style: {
         autoWidth: true,
         height: "100%",
-        backgroundColor: "#ddd",
         hover: {
-            backgroundColor: "#f1f1f1"
+            backgroundColor: "#bfbfbf"
         },
         active: {
             backgroundColor: "#FF8501",
             fontColor: "#ffffff"
+        },
+        focus: {
+            backgroundColor: "#f1f1f1"
         }
-    },
-    animation: {
-        backgroundColor: {
-            duration: "300ms",
-            easeType: "Linear",
-            easing: "ease"
-        }
+
     }
 };
 
@@ -291,6 +287,10 @@ var _fileView = __webpack_require__(7);
 
 var _fileView2 = _interopRequireDefault(_fileView);
 
+var _mapView = __webpack_require__(8);
+
+var _mapView2 = _interopRequireDefault(_mapView);
+
 var _nav = __webpack_require__(0);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -337,11 +337,29 @@ exports.default = {
                 text: "文件",
                 animation: _nav.navButtonStyle.animation,
                 events: {
-                    "click": "showFileView"
+                    "click": {
+                        callback: "showDropdownView",
+                        param: function param(self) {
+                            return [0, self];
+                        }
+                    }
+                }
+            }, {
+                type: "button",
+                style: _nav.navButtonStyle.style,
+                text: "地图",
+                animation: _nav.navButtonStyle.animation,
+                events: {
+                    "click": {
+                        callback: "showDropdownView",
+                        param: function param(self) {
+                            return [1, self];
+                        }
+                    }
                 }
             }]
         }]
-    }, (0, _fileView2.default)(TOP_HEIGHT),
+    }, (0, _fileView2.default)(TOP_HEIGHT), (0, _mapView2.default)(TOP_HEIGHT),
     //编辑区域
     {
         id: "edit_area",
@@ -358,7 +376,7 @@ exports.default = {
     }, function (get) {
         return new Promise(function (resolve, reject) {
             __webpack_require__.e/* require.ensure */(0).then((function (require) {
-                get(__webpack_require__(8).default, resolve, reject);
+                get(__webpack_require__(9).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }]
@@ -401,7 +419,9 @@ var MainController = function (_window$monk$Controll) {
         var _this = _possibleConstructorReturn(this, (MainController.__proto__ || Object.getPrototypeOf(MainController)).call(this, component));
 
         _this.registerEvent("$onViewLoaded", function () {
-            _this.fileView = _this.viewState.getComponentById("fileView");
+            _this.dropdownViews = [];
+            _this.dropdownViews.push(_this.viewState.getComponentById("dropdown_fileView"));
+            _this.dropdownViews.push(_this.viewState.getComponentById("dropdown_mapView"));
 
             var mainView = _this.viewState.getComponentById("mainView");
             mainView.registerEvent("click", _this.onClickRoot.bind(_this));
@@ -410,15 +430,25 @@ var MainController = function (_window$monk$Controll) {
     }
 
     _createClass(MainController, [{
-        key: "showFileView",
-        value: function showFileView(e) {
-            this.fileView.active = !this.fileView.active;
+        key: "hideAllDropdownViews",
+        value: function hideAllDropdownViews() {
+            this.dropdownViews.forEach(function (view) {
+                view.active = false;
+            });
+        }
+    }, {
+        key: "showDropdownView",
+        value: function showDropdownView(param, e) {
+            this.hideAllDropdownViews();
+            var x = param[1].getX() + param[1].parent.getX();
+            this.dropdownViews[param[0]].setX(x);
+            this.dropdownViews[param[0]].active = true;
             e.stopPropagation();
         }
     }, {
         key: "onClickRoot",
         value: function onClickRoot() {
-            this.fileView.active = false;
+            this.hideAllDropdownViews();
         }
     }, {
         key: "openNewMapDlg",
@@ -436,6 +466,9 @@ var MainController = function (_window$monk$Controll) {
                 }
             });
         }
+    }, {
+        key: "openSetTerrainDlg",
+        value: function openSetTerrainDlg(e) {}
     }]);
 
     return MainController;
@@ -510,6 +543,7 @@ var MapController = function (_window$monk$Controll) {
 
         _this.startCoors = undefined; //多选开始坐标
         _this.endCoors = undefined; //多选结束坐标
+        _this.selectedCoors = undefined; //选中的坐标集合
 
         _this.initMapData();
 
@@ -552,7 +586,14 @@ var MapController = function (_window$monk$Controll) {
                             var maxX = Math.max(_this.startCoors.x, _this.endCoors.x);
                             var minY = Math.min(_this.startCoors.y, _this.endCoors.y);
                             var maxY = Math.max(_this.startCoors.y, _this.endCoors.y);
-                            _this.setMapDataBatch(minX, maxX, minY, maxY, _this.mapData[minX][minY] === 0 ? -1 : 0);
+                            _this.setMapDataBatch(minX, maxX, minY, maxY, "block", !_this.mapData[minX][minY].block);
+
+                            _this.selectedCoors = {
+                                minX: minX,
+                                maxX: maxX,
+                                minY: minY,
+                                maxY: maxY
+                            };
                         } else {
                         //鼠标相对于面板的x,y值
                         var mx = e.pageX - _this.component.getRealX();
@@ -560,11 +601,28 @@ var MapController = function (_window$monk$Controll) {
 
                         var x = Math.floor(mx / _this.size);
                         var y = Math.floor(my / _this.size);
-                        _this.setMapData(x, y, _this.mapData[x][y] === 0 ? -1 : 0);
+                        _this.setMapData(x, y, "block", !_this.mapData[x][y].block);
+
+                        _this.selectedCoors = {
+                            x: x,
+                            y: y
+                        };
                     }
                     _this.startCoors = undefined;
                     _this.endCoors = undefined;
                 }
+        });
+
+        _this.component.registerEvent("keydown", function (e) {
+            if (!_this.selectedCoors) {
+                return;
+            }
+            //设置地形编号
+            if (_this.selectedCoors.x) {
+                _this.setMapData(_this.selectedCoors.x, _this.selectedCoors.y, "terrain", e.key);
+            } else if (_this.selectedCoors.minX) {
+                _this.setMapDataBatch(_this.selectedCoors.minX, _this.selectedCoors.maxX, _this.selectedCoors.minY, _this.selectedCoors.maxY, "terrain", e.key);
+            }
         });
         return _this;
     }
@@ -579,7 +637,10 @@ var MapController = function (_window$monk$Controll) {
             for (var i = 0; i < this.width; i++) {
                 this.mapData[i] = [];
                 for (var j = 0; j < this.height; j++) {
-                    this.mapData[i][j] = 0;
+                    this.mapData[i][j] = {
+                        block: false, //是否障碍物
+                        terrain: 0 //地形：无
+                    };
                 }
             }
         }
@@ -588,17 +649,17 @@ var MapController = function (_window$monk$Controll) {
 
     }, {
         key: "setMapData",
-        value: function setMapData(x, y, value) {
-            this.mapData[x][y] = value;
+        value: function setMapData(x, y, key, value) {
+            this.mapData[x][y][key] = value;
         }
         //批量设置指定位置的地图数据
 
     }, {
         key: "setMapDataBatch",
-        value: function setMapDataBatch(minX, maxX, minY, maxY, value) {
+        value: function setMapDataBatch(minX, maxX, minY, maxY, key, value) {
             for (var x = minX; x <= maxX; x++) {
                 for (var y = minY; y <= maxY; y++) {
-                    this.setMapData(x, y, value);
+                    this.setMapData(x, y, key, value);
                 }
             }
         }
@@ -620,7 +681,7 @@ var MapController = function (_window$monk$Controll) {
                     ctx.lineTo(this.component.getRealX() + y * this.size, this.component.getRealY() + this.component.getHeight());
 
                     //绘制障碍物
-                    if (this.mapData && this.mapData[x] && this.mapData[x][y] !== 0 && x < this.width && y < this.height) {
+                    if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block && x < this.width && y < this.height) {
                         ctx.rect(this.component.getRealX() + x * this.size, this.component.getRealY() + y * this.size, this.size, this.size);
                         ctx.fill();
                     }
@@ -665,7 +726,7 @@ var _nav = __webpack_require__(0);
 
 exports.default = function (TOP_HEIGHT) {
     return {
-        id: "fileView",
+        id: "dropdown_fileView",
         type: "rect",
         style: {
             x: 10,
@@ -698,6 +759,50 @@ exports.default = function (TOP_HEIGHT) {
             style: _nav.navItemStyle.style,
             text: "加载地图",
             animation: _nav.navItemStyle.animation
+        }]
+    };
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _nav = __webpack_require__(0);
+
+exports.default = function (TOP_HEIGHT) {
+    return {
+        id: "dropdown_mapView",
+        type: "rect",
+        style: {
+            x: 10,
+            y: TOP_HEIGHT,
+            width: 100,
+            autoHeight: true,
+            backgroundColor: "#DCDCDC",
+            borderWidth: 1,
+            borderColor: "#ABABAB",
+            layout: {
+                type: "linearLayout",
+                orientation: "vertical"
+            },
+            zIndex: 2
+        },
+        active: false,
+        children: [{
+            type: "button",
+            style: _nav.navItemStyle.style,
+            text: "设置地形",
+            animation: _nav.navItemStyle.animation,
+            events: {
+                "click": "openSetTerrainDlg"
+            }
         }]
     };
 };

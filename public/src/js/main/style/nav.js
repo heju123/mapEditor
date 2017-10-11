@@ -3,21 +3,17 @@ export let navButtonStyle = {
     style : {
         autoWidth : true,
         height : "100%",
-        backgroundColor : "#ddd",
         hover : {
-            backgroundColor : "#f1f1f1"
+            backgroundColor : "#bfbfbf"
         },
         active : {
             backgroundColor : "#FF8501",
             fontColor : "#ffffff"
+        },
+        focus : {
+            backgroundColor : "#f1f1f1"
         }
-    },
-    animation : {
-        backgroundColor : {
-            duration : "300ms",
-            easeType : "Linear",
-            easing : "ease"
-        }
+
     }
 };
 

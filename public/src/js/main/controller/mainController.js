@@ -8,20 +8,32 @@ export default class MainController extends window.monk.Controller{
         super(component);
 
         this.registerEvent("$onViewLoaded", ()=>{
-            this.fileView = this.viewState.getComponentById("fileView");
+            this.dropdownViews = [];
+            this.dropdownViews.push(this.viewState.getComponentById("dropdown_fileView"));
+            this.dropdownViews.push(this.viewState.getComponentById("dropdown_mapView"));
 
             let mainView = this.viewState.getComponentById("mainView");
             mainView.registerEvent("click", this.onClickRoot.bind(this));
         });
     }
 
-    showFileView(e){
-        this.fileView.active = !this.fileView.active;
+    hideAllDropdownViews()
+    {
+        this.dropdownViews.forEach((view)=>{
+            view.active = false;
+        });
+    }
+
+    showDropdownView(param, e){
+        this.hideAllDropdownViews();
+        let x = param[1].getX() + param[1].parent.getX();
+        this.dropdownViews[param[0]].setX(x);
+        this.dropdownViews[param[0]].active = true;
         e.stopPropagation();
     }
 
     onClickRoot(){
-        this.fileView.active = false;
+        this.hideAllDropdownViews();
     }
 
     openNewMapDlg(e){
@@ -35,5 +47,8 @@ export default class MainController extends window.monk.Controller{
                 parent.appendChildren(mapRect);
             }
         });
+    }
+
+    openSetTerrainDlg(e){
     }
 }

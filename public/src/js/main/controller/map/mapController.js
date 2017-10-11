@@ -8,6 +8,7 @@ export default class MapController extends window.monk.Controller {
 
         this.startCoors = undefined;//多选开始坐标
         this.endCoors = undefined;//多选结束坐标
+        this.selectedCoors = undefined;//选中的坐标集合
 
         this.initMapData();
 
@@ -50,7 +51,14 @@ export default class MapController extends window.monk.Controller {
                     let maxX = Math.max(this.startCoors.x, this.endCoors.x);
                     let minY = Math.min(this.startCoors.y, this.endCoors.y);
                     let maxY = Math.max(this.startCoors.y, this.endCoors.y);
-                    this.setMapDataBatch(minX, maxX, minY, maxY, this.mapData[minX][minY] === 0 ? -1 : 0);
+                    this.setMapDataBatch(minX, maxX, minY, maxY, "block", !this.mapData[minX][minY].block);
+
+                    this.selectedCoors = {
+                        minX : minX,
+                        maxX : maxX,
+                        minY : minY,
+                        maxY : maxY
+                    };
                 }
                 else
                 {
@@ -60,10 +68,32 @@ export default class MapController extends window.monk.Controller {
 
                     let x = Math.floor(mx / this.size);
                     let y = Math.floor(my / this.size);
-                    this.setMapData(x, y, this.mapData[x][y] === 0 ? -1 : 0);
+                    this.setMapData(x, y, "block", !this.mapData[x][y].block);
+
+                    this.selectedCoors = {
+                        x : x,
+                        y : y
+                    };
                 }
                 this.startCoors = undefined;
                 this.endCoors = undefined;
+            }
+        });
+
+        this.component.registerEvent("keydown", (e)=>{
+            if (!this.selectedCoors)
+            {
+                return;
+            }
+            //设置地形编号
+            if (this.selectedCoors.x)
+            {
+                this.setMapData(this.selectedCoors.x, this.selectedCoors.y, "terrain", e.key);
+            }
+            else if (this.selectedCoors.minX)
+            {
+                this.setMapDataBatch(this.selectedCoors.minX, this.selectedCoors.maxX,
+                    this.selectedCoors.minY, this.selectedCoors.maxY, "terrain", e.key);
             }
         });
     }
@@ -76,22 +106,25 @@ export default class MapController extends window.monk.Controller {
             this.mapData[i] = [];
             for (let j = 0; j < this.height; j++)
             {
-                this.mapData[i][j] = 0;
+                this.mapData[i][j] = {
+                    block : false,//是否障碍物
+                    terrain : 0//地形：无
+                };
             }
         }
     }
 
     //设置指定位置的地图数据
-    setMapData(x, y, value){
-        this.mapData[x][y] = value;
+    setMapData(x, y, key, value){
+        this.mapData[x][y][key] = value;
     }
     //批量设置指定位置的地图数据
-    setMapDataBatch(minX, maxX, minY, maxY, value){
+    setMapDataBatch(minX, maxX, minY, maxY, key, value){
         for (let x = minX; x <= maxX; x++)
         {
             for (let y = minY; y <= maxY; y++)
             {
-                this.setMapData(x, y, value);
+                this.setMapData(x, y, key, value);
             }
         }
     }
@@ -115,7 +148,7 @@ export default class MapController extends window.monk.Controller {
                 ctx.lineTo(this.component.getRealX() + (y * this.size), this.component.getRealY() + this.component.getHeight());
 
                 //绘制障碍物
-                if (this.mapData && this.mapData[x] && this.mapData[x][y] !== 0
+                if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block
                     && x < this.width && y < this.height)
                 {
                     ctx.rect(this.component.getRealX() + (x * this.size), this.component.getRealY() + (y * this.size),

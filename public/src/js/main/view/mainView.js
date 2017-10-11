@@ -1,5 +1,6 @@
 import MainController from "../controller/mainController.js";
 import fileView from "./dropdown/fileView.js";
+import mapView from "./dropdown/mapView.js";
 import {navButtonStyle} from "../style/nav.js";
 
 const TOP_HEIGHT = 30;
@@ -46,7 +47,26 @@ export default {
                             text : "文件",
                             animation : navButtonStyle.animation,
                             events : {
-                                "click" : "showFileView"
+                                "click" : {
+                                    callback : "showDropdownView",
+                                    param : (self)=>{
+                                        return [0, self];
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type : "button",
+                            style : navButtonStyle.style,
+                            text : "地图",
+                            animation : navButtonStyle.animation,
+                            events : {
+                                "click" : {
+                                    callback : "showDropdownView",
+                                    param : (self)=>{
+                                        return [1, self];
+                                    }
+                                }
                             }
                         }
                     ]
@@ -54,6 +74,7 @@ export default {
             ]
         },
         fileView(TOP_HEIGHT),
+        mapView(TOP_HEIGHT),
         //编辑区域
         {
             id : "edit_area",

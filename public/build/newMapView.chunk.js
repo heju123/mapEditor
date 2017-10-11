@@ -7,7 +7,8 @@ webpackJsonp([0],[
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17,17 +18,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _newMapController = __webpack_require__(9);
+var _newMapController = __webpack_require__(10);
 
 var _newMapController2 = _interopRequireDefault(_newMapController);
 
-var _window = __webpack_require__(11);
+var _window = __webpack_require__(12);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _common = __webpack_require__(12);
+var _common = __webpack_require__(13);
 
-var _form = __webpack_require__(13);
+var _form = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -207,7 +208,7 @@ exports.default = (0, _window2.default)(_newMapController2.default, {
 });
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -219,7 +220,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _baseWindowController = __webpack_require__(10);
+var _baseWindowController = __webpack_require__(11);
 
 var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
 
@@ -283,7 +284,7 @@ var NewMapController = function (_BaseWindowController) {
 exports.default = NewMapController;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -357,7 +358,7 @@ var BaseWindowController = function (_window$monk$Controll) {
 exports.default = BaseWindowController;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -464,7 +465,7 @@ exports.default = function (controller, opts) {
 };
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -508,7 +509,7 @@ var buttonStyle = exports.buttonStyle = function buttonStyle(text, opts) {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

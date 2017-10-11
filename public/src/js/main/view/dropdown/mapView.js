@@ -2,7 +2,7 @@ import {navItemStyle,navDivider} from "../../style/nav.js";
 
 export default (TOP_HEIGHT)=>{
     return {
-        id : "dropdown_fileView",
+        id : "dropdown_mapView",
         type: "rect",
         style: {
             x: 10,
@@ -23,21 +23,11 @@ export default (TOP_HEIGHT)=>{
             {
                 type : "button",
                 style : navItemStyle.style,
-                text : "新建地图",
+                text : "设置地形",
                 animation : navItemStyle.animation,
                 events : {
-                    "click" : "openNewMapDlg"
+                    "click" : "openSetTerrainDlg"
                 }
-            },
-            {
-                type: "rect",
-                style: navDivider.style
-            },
-            {
-                type : "button",
-                style : navItemStyle.style,
-                text : "加载地图",
-                animation : navItemStyle.animation
             }
         ]
     };
