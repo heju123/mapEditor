@@ -48,7 +48,6 @@ export let formInputStyle = function(id, name, title, opts){
 export let formCheckboxStyle = function(id, name, title, opts) {
     return [
         {
-
             type : "rect",
             style : {
                 width : 40,
@@ -80,7 +79,14 @@ export let formCheckboxStyle = function(id, name, title, opts) {
                 height : "100%",
                 lineHeight : opts.formRowHeight
             },
-            text : title
+            text : title,
+            events : {
+                "click" : {
+                    callback : function(){
+                        console.log(this.parent)
+                    },
+                }
+            }
         }
     ];
 };

@@ -437,7 +437,6 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
 
 var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(id, name, title, opts) {
     return [{
-
         type: "rect",
         style: {
             width: 40,
@@ -466,7 +465,14 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
             height: "100%",
             lineHeight: opts.formRowHeight
         },
-        text: title
+        text: title,
+        events: {
+            "click": {
+                callback: function callback() {
+                    console.log(this.parent);
+                }
+            }
+        }
     }];
 };
 
