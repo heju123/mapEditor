@@ -469,7 +469,10 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
         events: {
             "click": {
                 callback: function callback() {
-                    console.log(this.parent);
+                    var checkbox = this.parent.getComponentsByType("checkbox");
+                    if (checkbox && checkbox.length > 0) {
+                        checkbox[0].checked = !checkbox[0].checked;
+                    }
                 }
             }
         }
