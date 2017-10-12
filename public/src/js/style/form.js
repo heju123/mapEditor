@@ -68,6 +68,9 @@ export let formCheckboxStyle = function(id, name, title, opts) {
                         width : opts.width,
                         height : opts.height,
                         lineWidth : opts.lineWidth
+                    },
+                    events : {
+                        "click" : opts.onChecked
                     }
                 }
             ]
@@ -86,7 +89,7 @@ export let formCheckboxStyle = function(id, name, title, opts) {
                         let checkbox = this.parent.getComponentsByType("checkbox");
                         if (checkbox && checkbox.length > 0)
                         {
-                            checkbox[0].checked = !checkbox[0].checked;
+                            checkbox[0].triggerEvent("click");
                         }
                     },
                 }

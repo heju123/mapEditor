@@ -94,7 +94,8 @@ var contentStyle = {
                 formRowHeight: FORM_ROW_HEIGHT,
                 width: CHECKBOX_WIDTH,
                 height: CHECKBOX_HEIGHT,
-                lineWidth: CHECKBOX_LINEWIDTH
+                lineWidth: CHECKBOX_LINEWIDTH,
+                onChecked: "onCheckTerrainBlock"
             })
         }, {
             name: "input_row_blank",
@@ -456,6 +457,9 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
                 width: opts.width,
                 height: opts.height,
                 lineWidth: opts.lineWidth
+            },
+            events: {
+                "click": opts.onChecked
             }
         }]
     }, {
@@ -471,7 +475,7 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
                 callback: function callback() {
                     var checkbox = this.parent.getComponentsByType("checkbox");
                     if (checkbox && checkbox.length > 0) {
-                        checkbox[0].checked = !checkbox[0].checked;
+                        checkbox[0].triggerEvent("click");
                     }
                 }
             }
@@ -518,6 +522,17 @@ var SetTerrainController = function (_BaseWindowController) {
     }
 
     _createClass(SetTerrainController, [{
+        key: "onCheckTerrainBlock",
+        value: function onCheckTerrainBlock(e) {
+            var terrain = this.component.getComponentByName("terrain");
+            if (e.currentTarget.checked) {
+                terrain.text = undefined;
+                terrain.setStyle("readOnly", true);
+            } else {
+                terrain.setStyle("readOnly", false);
+            }
+        }
+    }, {
         key: "onOk",
         value: function onOk() {
             var terrain = this.component.getComponentByName("terrain");

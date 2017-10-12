@@ -8,6 +8,19 @@ export default class SetTerrainController extends BaseWindowController{
         });
     }
 
+    onCheckTerrainBlock(e){
+        let terrain = this.component.getComponentByName("terrain");
+        if (e.currentTarget.checked)
+        {
+            terrain.text = undefined;
+            terrain.setStyle("readOnly", true);
+        }
+        else
+        {
+            terrain.setStyle("readOnly", false);
+        }
+    }
+
     onOk(){
         let terrain = this.component.getComponentByName("terrain");
         this.closeWindow({

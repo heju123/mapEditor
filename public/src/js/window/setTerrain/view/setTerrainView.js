@@ -1,4 +1,4 @@
-import NewMapController from "../controller/setTerrainController.js";
+import SetTerrainController from "../controller/setTerrainController.js";
 import window from "../../style/window.js";
 import {buttonStyle} from "../../../style/common.js";
 import {formInputStyle,formCheckboxStyle} from "../../../style/form.js";
@@ -67,7 +67,8 @@ let contentStyle = {
                         formRowHeight : FORM_ROW_HEIGHT,
                         width : CHECKBOX_WIDTH,
                         height : CHECKBOX_HEIGHT,
-                        lineWidth : CHECKBOX_LINEWIDTH
+                        lineWidth : CHECKBOX_LINEWIDTH,
+                        onChecked : "onCheckTerrainBlock"
                     })
                 },
                 {
@@ -131,7 +132,7 @@ let contentStyle = {
     ]
 };
 
-export default window(NewMapController, {
+export default window(SetTerrainController, {
     id : "set_terrain_window",
     title : "设置地形",
     width : 300,
