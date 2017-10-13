@@ -88,7 +88,7 @@ export default class MainController extends window.monk.Controller{
             data = JSON.parse(data);
             if (data.code === 200)
             {
-                alert("保存成功！");
+                window.monk.commonUtil.popMessageTooltip("保存成功！");
             }
         });
     }
