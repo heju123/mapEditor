@@ -6,4 +6,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.post('/saveMap', function(req, res) {
+    console.log(req.body.mapData);
+    res.send({
+        code : 200
+    });
+});
+
 module.exports = router;

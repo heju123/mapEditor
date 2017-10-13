@@ -283,11 +283,11 @@ var _mainController = __webpack_require__(4);
 
 var _mainController2 = _interopRequireDefault(_mainController);
 
-var _fileView = __webpack_require__(7);
+var _fileView = __webpack_require__(8);
 
 var _fileView2 = _interopRequireDefault(_fileView);
 
-var _mapView = __webpack_require__(8);
+var _mapView = __webpack_require__(9);
 
 var _mapView2 = _interopRequireDefault(_mapView);
 
@@ -392,13 +392,13 @@ exports.default = {
     }, function (get) {
         return new Promise(function (resolve, reject) {
             __webpack_require__.e/* require.ensure */(1).then((function (require) {
-                get(__webpack_require__(9).default, resolve, reject);
+                get(__webpack_require__(10).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }, function (get) {
         return new Promise(function (resolve, reject) {
             __webpack_require__.e/* require.ensure */(0).then((function (require) {
-                get(__webpack_require__(10).default, resolve, reject);
+                get(__webpack_require__(11).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }]
@@ -420,6 +420,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _mapView = __webpack_require__(5);
 
 var _mapView2 = _interopRequireDefault(_mapView);
+
+var _config = __webpack_require__(7);
+
+var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -513,6 +517,18 @@ var MainController = function (_window$monk$Controll) {
                         terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
                         terrainShowLabel.active = true;
                     }
+                }
+            });
+        }
+    }, {
+        key: "saveMap",
+        value: function saveMap(e) {
+            window.monk.httpUtil.post(_config2.default.serverUrl + "/saveMap", {
+                mapData: this.mapComponent.controller.mapData
+            }).then(function (data) {
+                data = JSON.parse(data);
+                if (data.code === 200) {
+                    alert("保存成功！");
                 }
             });
         }
@@ -783,6 +799,20 @@ exports.default = MapController;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.default = {
+    serverUrl: "http://localhost:3000"
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _nav = __webpack_require__(0);
 
@@ -821,12 +851,23 @@ exports.default = function (TOP_HEIGHT) {
             style: _nav.navItemStyle.style,
             text: "加载地图",
             animation: _nav.navItemStyle.animation
+        }, {
+            type: "rect",
+            style: _nav.navDivider.style
+        }, {
+            type: "button",
+            style: _nav.navItemStyle.style,
+            text: "保存地图",
+            animation: _nav.navItemStyle.animation,
+            events: {
+                "click": "saveMap"
+            }
         }]
     };
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

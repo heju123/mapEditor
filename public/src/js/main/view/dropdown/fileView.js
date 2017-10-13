@@ -38,6 +38,19 @@ export default (TOP_HEIGHT)=>{
                 style : navItemStyle.style,
                 text : "加载地图",
                 animation : navItemStyle.animation
+            },
+            {
+                type: "rect",
+                style: navDivider.style
+            },
+            {
+                type : "button",
+                style : navItemStyle.style,
+                text : "保存地图",
+                animation : navItemStyle.animation,
+                events : {
+                    "click" : "saveMap"
+                }
             }
         ]
     };

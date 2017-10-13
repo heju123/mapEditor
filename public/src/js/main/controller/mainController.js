@@ -2,6 +2,7 @@
  * Created by heju on 2017/7/14.
  */
 import mapView from "../view/map/mapView.js";
+import config from "../../config.js";
 
 export default class MainController extends window.monk.Controller{
     constructor(component) {
@@ -76,6 +77,18 @@ export default class MainController extends window.monk.Controller{
                     terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
                     terrainShowLabel.active = true;
                 }
+            }
+        });
+    }
+
+    saveMap(e){
+        window.monk.httpUtil.post(config.serverUrl + "/saveMap", {
+            mapData : this.mapComponent.controller.mapData
+        }).then((data)=>{
+            data = JSON.parse(data);
+            if (data.code === 200)
+            {
+                alert("保存成功！");
             }
         });
     }
