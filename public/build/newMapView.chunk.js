@@ -479,7 +479,8 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
                 },
                 borderWidth: 1,
                 borderColor: "#dfdfdf",
-                borderRadius: 3
+                borderRadius: 3,
+                readOnly: opts.readOnly
             }
         }]
     }];
@@ -509,7 +510,8 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
             },
             events: {
                 "click": opts.onChecked
-            }
+            },
+            checked: opts.checked
         }]
     }, {
         type: "rect",

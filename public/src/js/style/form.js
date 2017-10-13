@@ -37,7 +37,8 @@ export let formInputStyle = function(id, name, title, opts){
                         },
                         borderWidth : 1,
                         borderColor : "#dfdfdf",
-                        borderRadius : 3
+                        borderRadius : 3,
+                        readOnly : opts.readOnly
                     }
                 }
             ]
@@ -71,7 +72,8 @@ export let formCheckboxStyle = function(id, name, title, opts) {
                     },
                     events : {
                         "click" : opts.onChecked
-                    }
+                    },
+                    checked : opts.checked
                 }
             ]
         },

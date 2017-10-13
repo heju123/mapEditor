@@ -77,7 +77,8 @@ var contentStyle = {
             children: (0, _form.formInputStyle)(undefined, "terrain", "设置地形：", {
                 formRowHeight: FORM_ROW_HEIGHT,
                 formLabelWidth: FORM_LABEL_WIDTH,
-                formInputPadding: FORM_INPUT_PADDING
+                formInputPadding: FORM_INPUT_PADDING,
+                readOnly: true
             })
         }, {
             name: "input_row",
@@ -95,7 +96,8 @@ var contentStyle = {
                 width: CHECKBOX_WIDTH,
                 height: CHECKBOX_HEIGHT,
                 lineWidth: CHECKBOX_LINEWIDTH,
-                onChecked: "onCheckTerrainBlock"
+                onChecked: "onCheckTerrainBlock",
+                checked: true
             })
         }, {
             name: "input_row_blank",
@@ -430,7 +432,8 @@ var formInputStyle = exports.formInputStyle = function formInputStyle(id, name, 
                 },
                 borderWidth: 1,
                 borderColor: "#dfdfdf",
-                borderRadius: 3
+                borderRadius: 3,
+                readOnly: opts.readOnly
             }
         }]
     }];
@@ -460,7 +463,8 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
             },
             events: {
                 "click": opts.onChecked
-            }
+            },
+            checked: opts.checked
         }]
     }, {
         type: "rect",
@@ -542,8 +546,10 @@ var SetTerrainController = function (_BaseWindowController) {
         key: "onOk",
         value: function onOk() {
             var terrain = this.component.getComponentByName("terrain");
+            var trrainBlock = this.component.getComponentByName("setTerrainBlock");
             this.closeWindow({
-                terrain: terrain.getText()
+                terrain: terrain.getText(),
+                trrainBlock: trrainBlock.checked
             });
         }
     }, {

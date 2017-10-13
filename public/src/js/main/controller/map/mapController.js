@@ -10,6 +10,7 @@ export default class MapController extends window.monk.Controller {
         this.endCoors = undefined;//多选结束坐标
         this.selectedCoors = undefined;//选中的坐标集合
         this.terrain = undefined;//当前指定的地形
+        this.isSetTerrain = false;//是否正在设置地形
 
         this.initMapData();
 
@@ -52,7 +53,7 @@ export default class MapController extends window.monk.Controller {
                     let maxX = Math.max(this.startCoors.x, this.endCoors.x);
                     let minY = Math.min(this.startCoors.y, this.endCoors.y);
                     let maxY = Math.max(this.startCoors.y, this.endCoors.y);
-                    if (this.terrain)
+                    if (this.isSetTerrain)
                     {
                         this.setMapDataBatch(minX, maxX, minY, maxY, "terrain", this.terrain);
                     }
@@ -76,7 +77,7 @@ export default class MapController extends window.monk.Controller {
 
                     let x = Math.floor(mx / this.size);
                     let y = Math.floor(my / this.size);
-                    if (this.terrain)
+                    if (this.isSetTerrain)
                     {
                         this.setMapData(x, y, "terrain", this.terrain);
                     }
@@ -133,19 +134,14 @@ export default class MapController extends window.monk.Controller {
         ctx.lineWidth = 1;
         ctx.strokeStyle="#6a6a6a";
         ctx.globalAlpha=1;
-        ctx.fillStyle="#000000";
-        ctx.beginPath();
+
         for (let x = 0; x <= this.width; x++)
         {
-            ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (x * this.size));
-            ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (x * this.size));
-
             for (let y = 0; y <= this.height; y++)
             {
-                ctx.moveTo(this.component.getRealX() + (y * this.size), this.component.getRealY());
-                ctx.lineTo(this.component.getRealX() + (y * this.size), this.component.getRealY() + this.component.getHeight());
-
                 //绘制障碍物
+                ctx.beginPath();
+                ctx.fillStyle="#000000";
                 if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block
                     && x < this.width && y < this.height)
                 {
@@ -153,10 +149,40 @@ export default class MapController extends window.monk.Controller {
                         this.size, this.size);
                     ctx.fill();
                 }
+                ctx.closePath();
+
+                //绘制地形
+                ctx.beginPath();
+                if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].terrain
+                    && this.mapData[x][y].terrain !== "0")
+                {
+                    let FONT_SIZE = 15;
+                    ctx.font = FONT_SIZE + "px Microsoft YaHei";
+                    ctx.fillStyle = "#ff0000";
+                    ctx.textBaseline="hanging";
+                    ctx.fillText(this.mapData[x][y].terrain,
+                        this.component.getRealX() + (x * this.size),
+                        this.component.getRealY() + (y * this.size) + (this.size / 2 - FONT_SIZE / 2));
+                }
+                ctx.closePath();
+            }
+        }
+
+        //画线
+        ctx.beginPath();
+        for (let x = 0; x <= this.width; x++)
+        {
+            for (let y = 0; y <= this.height; y++)
+            {
+                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (x * this.size));
+                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (x * this.size));
+                ctx.moveTo(this.component.getRealX() + (y * this.size), this.component.getRealY());
+                ctx.lineTo(this.component.getRealX() + (y * this.size), this.component.getRealY() + this.component.getHeight());
             }
         }
         ctx.stroke();
         ctx.closePath();
+
 
         //绘制多选区域
         if (this.startCoors && this.endCoors)

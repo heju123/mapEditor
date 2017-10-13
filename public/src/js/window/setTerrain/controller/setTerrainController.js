@@ -26,8 +26,10 @@ export default class SetTerrainController extends BaseWindowController{
 
     onOk(){
         let terrain = this.component.getComponentByName("terrain");
+        let trrainBlock = this.component.getComponentByName("setTerrainBlock");
         this.closeWindow({
-            terrain : terrain.getText()
+            terrain : terrain.getText(),
+            trrainBlock : trrainBlock.checked
         });
     }
 

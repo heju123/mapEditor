@@ -49,7 +49,8 @@ let contentStyle = {
                     children : formInputStyle(undefined, "terrain", "设置地形：", {
                         formRowHeight : FORM_ROW_HEIGHT,
                         formLabelWidth : FORM_LABEL_WIDTH,
-                        formInputPadding : FORM_INPUT_PADDING
+                        formInputPadding : FORM_INPUT_PADDING,
+                        readOnly : true
                     })
                 },
                 {
@@ -68,7 +69,8 @@ let contentStyle = {
                         width : CHECKBOX_WIDTH,
                         height : CHECKBOX_HEIGHT,
                         lineWidth : CHECKBOX_LINEWIDTH,
-                        onChecked : "onCheckTerrainBlock"
+                        onChecked : "onCheckTerrainBlock",
+                        checked : true
                     })
                 },
                 {

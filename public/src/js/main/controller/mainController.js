@@ -55,9 +55,17 @@ export default class MainController extends window.monk.Controller{
             okCallback : (data)=>{
                 if (this.mapComponent)
                 {
+                    if (data.trrainBlock)//选中“设置地形为障碍物”标识当前正在设置障碍物
+                    {
+                        this.mapComponent.controller.isSetTerrain = false;
+                    }
+                    else
+                    {
+                        this.mapComponent.controller.isSetTerrain = true;
+                    }
                     this.mapComponent.controller.terrain = data.terrain;
                     let terrainShowLabel = this.viewState.getComponentById("top_tool_terrainShowLabel");
-                    if (data.terrain)
+                    if (data.terrain && data.terrain !== "0")
                     {
                         terrainShowLabel.setText("当前设置地形：" + data.terrain);
                     }

@@ -497,9 +497,15 @@ var MainController = function (_window$monk$Controll) {
             setTerrainWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
                     if (_this3.mapComponent) {
+                        if (data.trrainBlock) //选中“设置地形为障碍物”标识当前正在设置障碍物
+                            {
+                                _this3.mapComponent.controller.isSetTerrain = false;
+                            } else {
+                            _this3.mapComponent.controller.isSetTerrain = true;
+                        }
                         _this3.mapComponent.controller.terrain = data.terrain;
                         var terrainShowLabel = _this3.viewState.getComponentById("top_tool_terrainShowLabel");
-                        if (data.terrain) {
+                        if (data.terrain && data.terrain !== "0") {
                             terrainShowLabel.setText("当前设置地形：" + data.terrain);
                         } else {
                             terrainShowLabel.setText("");
@@ -586,6 +592,7 @@ var MapController = function (_window$monk$Controll) {
         _this.endCoors = undefined; //多选结束坐标
         _this.selectedCoors = undefined; //选中的坐标集合
         _this.terrain = undefined; //当前指定的地形
+        _this.isSetTerrain = false; //是否正在设置地形
 
         _this.initMapData();
 
@@ -627,7 +634,7 @@ var MapController = function (_window$monk$Controll) {
                             var maxX = Math.max(_this.startCoors.x, _this.endCoors.x);
                             var minY = Math.min(_this.startCoors.y, _this.endCoors.y);
                             var maxY = Math.max(_this.startCoors.y, _this.endCoors.y);
-                            if (_this.terrain) {
+                            if (_this.isSetTerrain) {
                                 _this.setMapDataBatch(minX, maxX, minY, maxY, "terrain", _this.terrain);
                             } else {
                                 _this.setMapDataBatch(minX, maxX, minY, maxY, "block", !_this.mapData[minX][minY].block);
@@ -646,7 +653,7 @@ var MapController = function (_window$monk$Controll) {
 
                         var x = Math.floor(mx / _this.size);
                         var y = Math.floor(my / _this.size);
-                        if (_this.terrain) {
+                        if (_this.isSetTerrain) {
                             _this.setMapData(x, y, "terrain", _this.terrain);
                         } else {
                             _this.setMapData(x, y, "block", !_this.mapData[x][y].block);
@@ -707,21 +714,39 @@ var MapController = function (_window$monk$Controll) {
             ctx.lineWidth = 1;
             ctx.strokeStyle = "#6a6a6a";
             ctx.globalAlpha = 1;
-            ctx.fillStyle = "#000000";
-            ctx.beginPath();
+
             for (var x = 0; x <= this.width; x++) {
-                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + x * this.size);
-                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + x * this.size);
-
                 for (var y = 0; y <= this.height; y++) {
-                    ctx.moveTo(this.component.getRealX() + y * this.size, this.component.getRealY());
-                    ctx.lineTo(this.component.getRealX() + y * this.size, this.component.getRealY() + this.component.getHeight());
-
                     //绘制障碍物
+                    ctx.beginPath();
+                    ctx.fillStyle = "#000000";
                     if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block && x < this.width && y < this.height) {
                         ctx.rect(this.component.getRealX() + x * this.size, this.component.getRealY() + y * this.size, this.size, this.size);
                         ctx.fill();
                     }
+                    ctx.closePath();
+
+                    //绘制地形
+                    ctx.beginPath();
+                    if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].terrain && this.mapData[x][y].terrain !== "0") {
+                        var FONT_SIZE = 15;
+                        ctx.font = FONT_SIZE + "px Microsoft YaHei";
+                        ctx.fillStyle = "#ff0000";
+                        ctx.textBaseline = "hanging";
+                        ctx.fillText(this.mapData[x][y].terrain, this.component.getRealX() + x * this.size, this.component.getRealY() + y * this.size + (this.size / 2 - FONT_SIZE / 2));
+                    }
+                    ctx.closePath();
+                }
+            }
+
+            //画线
+            ctx.beginPath();
+            for (var _x = 0; _x <= this.width; _x++) {
+                for (var _y = 0; _y <= this.height; _y++) {
+                    ctx.moveTo(this.component.getRealX(), this.component.getRealY() + _x * this.size);
+                    ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + _x * this.size);
+                    ctx.moveTo(this.component.getRealX() + _y * this.size, this.component.getRealY());
+                    ctx.lineTo(this.component.getRealX() + _y * this.size, this.component.getRealY() + this.component.getHeight());
                 }
             }
             ctx.stroke();
