@@ -1,4 +1,5 @@
 import BaseWindowController from "../../baseWindowController.js";
+import skin from "../../../style/skin.js";
 
 export default class SetTerrainController extends BaseWindowController{
     constructor(component) {
@@ -14,10 +15,12 @@ export default class SetTerrainController extends BaseWindowController{
         {
             terrain.text = undefined;
             terrain.setStyle("readOnly", true);
+            terrain.setStyle("backgroundColor", skin.INPUT_READONLY_BG);
         }
         else
         {
             terrain.setStyle("readOnly", false);
+            terrain.setStyle("backgroundColor", undefined);
         }
     }
 

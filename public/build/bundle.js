@@ -496,10 +496,14 @@ var MainController = function (_window$monk$Controll) {
             var setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
             setTerrainWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
-                    if (data.terrain && _this3.mapComponent) {
-                        _this3.mapComponent.terrain = data.terrain;
+                    if (_this3.mapComponent) {
+                        _this3.mapComponent.controller.terrain = data.terrain;
                         var terrainShowLabel = _this3.viewState.getComponentById("top_tool_terrainShowLabel");
-                        terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                        if (data.terrain) {
+                            terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                        } else {
+                            terrainShowLabel.setText("");
+                        }
                         terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
                         terrainShowLabel.active = true;
                     }
@@ -603,17 +607,16 @@ var MapController = function (_window$monk$Controll) {
                 }
         });
         _this.component.registerEvent("mousemove", function (e) {
-            if (_this.startCoors) //右键点击
-                {
-                    //鼠标相对于面板的x,y值
-                    var mx = e.pageX - _this.component.getRealX();
-                    var my = e.pageY - _this.component.getRealY();
+            if (_this.startCoors) {
+                //鼠标相对于面板的x,y值
+                var mx = e.pageX - _this.component.getRealX();
+                var my = e.pageY - _this.component.getRealY();
 
-                    var x = Math.floor(mx / _this.size);
-                    var y = Math.floor(my / _this.size);
+                var x = Math.floor(mx / _this.size);
+                var y = Math.floor(my / _this.size);
 
-                    _this.endCoors = { x: x, y: y };
-                }
+                _this.endCoors = { x: x, y: y };
+            }
         });
         _this.component.registerEvent("mouseup", function (e) {
             if (e.button === 2) //右键点击
@@ -624,7 +627,11 @@ var MapController = function (_window$monk$Controll) {
                             var maxX = Math.max(_this.startCoors.x, _this.endCoors.x);
                             var minY = Math.min(_this.startCoors.y, _this.endCoors.y);
                             var maxY = Math.max(_this.startCoors.y, _this.endCoors.y);
-                            _this.setMapDataBatch(minX, maxX, minY, maxY, "block", !_this.mapData[minX][minY].block);
+                            if (_this.terrain) {
+                                _this.setMapDataBatch(minX, maxX, minY, maxY, "terrain", _this.terrain);
+                            } else {
+                                _this.setMapDataBatch(minX, maxX, minY, maxY, "block", !_this.mapData[minX][minY].block);
+                            }
 
                             _this.selectedCoors = {
                                 minX: minX,
@@ -639,7 +646,11 @@ var MapController = function (_window$monk$Controll) {
 
                         var x = Math.floor(mx / _this.size);
                         var y = Math.floor(my / _this.size);
-                        _this.setMapData(x, y, "block", !_this.mapData[x][y].block);
+                        if (_this.terrain) {
+                            _this.setMapData(x, y, "terrain", _this.terrain);
+                        } else {
+                            _this.setMapData(x, y, "block", !_this.mapData[x][y].block);
+                        }
 
                         _this.selectedCoors = {
                             x: x,

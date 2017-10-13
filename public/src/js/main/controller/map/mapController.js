@@ -31,7 +31,7 @@ export default class MapController extends window.monk.Controller {
             }
         });
         this.component.registerEvent("mousemove", (e)=>{
-            if (this.startCoors)//右键点击
+            if (this.startCoors)
             {
                 //鼠标相对于面板的x,y值
                 let mx = e.pageX - this.component.getRealX();
@@ -52,7 +52,14 @@ export default class MapController extends window.monk.Controller {
                     let maxX = Math.max(this.startCoors.x, this.endCoors.x);
                     let minY = Math.min(this.startCoors.y, this.endCoors.y);
                     let maxY = Math.max(this.startCoors.y, this.endCoors.y);
-                    this.setMapDataBatch(minX, maxX, minY, maxY, "block", !this.mapData[minX][minY].block);
+                    if (this.terrain)
+                    {
+                        this.setMapDataBatch(minX, maxX, minY, maxY, "terrain", this.terrain);
+                    }
+                    else
+                    {
+                        this.setMapDataBatch(minX, maxX, minY, maxY, "block", !this.mapData[minX][minY].block);
+                    }
 
                     this.selectedCoors = {
                         minX : minX,
@@ -69,7 +76,14 @@ export default class MapController extends window.monk.Controller {
 
                     let x = Math.floor(mx / this.size);
                     let y = Math.floor(my / this.size);
-                    this.setMapData(x, y, "block", !this.mapData[x][y].block);
+                    if (this.terrain)
+                    {
+                        this.setMapData(x, y, "terrain", this.terrain);
+                    }
+                    else
+                    {
+                        this.setMapData(x, y, "block", !this.mapData[x][y].block);
+                    }
 
                     this.selectedCoors = {
                         x : x,

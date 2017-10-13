@@ -501,6 +501,10 @@ var _baseWindowController = __webpack_require__(11);
 
 var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
 
+var _skin = __webpack_require__(17);
+
+var _skin2 = _interopRequireDefault(_skin);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -528,8 +532,10 @@ var SetTerrainController = function (_BaseWindowController) {
             if (e.currentTarget.checked) {
                 terrain.text = undefined;
                 terrain.setStyle("readOnly", true);
+                terrain.setStyle("backgroundColor", _skin2.default.INPUT_READONLY_BG);
             } else {
                 terrain.setStyle("readOnly", false);
+                terrain.setStyle("backgroundColor", undefined);
             }
         }
     }, {
@@ -551,6 +557,20 @@ var SetTerrainController = function (_BaseWindowController) {
 }(_baseWindowController2.default);
 
 exports.default = SetTerrainController;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    INPUT_READONLY_BG: "#eee"
+};
 
 /***/ })
 ]);

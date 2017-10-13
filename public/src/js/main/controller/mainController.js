@@ -53,11 +53,18 @@ export default class MainController extends window.monk.Controller{
         let setTerrainWindow = this.viewState.getComponentById("set_terrain_window");
         setTerrainWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                if (data.terrain && this.mapComponent)
+                if (this.mapComponent)
                 {
-                    this.mapComponent.terrain = data.terrain;
+                    this.mapComponent.controller.terrain = data.terrain;
                     let terrainShowLabel = this.viewState.getComponentById("top_tool_terrainShowLabel");
-                    terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                    if (data.terrain)
+                    {
+                        terrainShowLabel.setText("当前设置地形：" + data.terrain);
+                    }
+                    else
+                    {
+                        terrainShowLabel.setText("");
+                    }
                     terrainShowLabel.setX(terrainShowLabel.parent.getWidth() - terrainShowLabel.getWidth());
                     terrainShowLabel.active = true;
                 }
