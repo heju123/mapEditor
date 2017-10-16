@@ -524,7 +524,8 @@ var MainController = function (_window$monk$Controll) {
         key: "saveMap",
         value: function saveMap(e) {
             window.monk.httpUtil.post(_config2.default.serverUrl + "/saveMap", {
-                mapData: this.mapComponent.controller.mapData
+                mapName: this.mapComponent.controller.mapName,
+                mapData: JSON.stringify(this.mapComponent.controller.mapData)
             }).then(function (data) {
                 data = JSON.parse(data);
                 if (data.code === 200) {
@@ -600,6 +601,7 @@ var MapController = function (_window$monk$Controll) {
 
         var _this = _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, component));
 
+        _this.mapName = data.mapName;
         _this.width = parseInt(data.width, 10);
         _this.height = parseInt(data.height, 10);
         _this.size = parseInt(data.size, 10);

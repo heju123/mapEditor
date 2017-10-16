@@ -2,6 +2,7 @@ export default class MapController extends window.monk.Controller {
     constructor(component, data) {
         super(component);
 
+        this.mapName = data.mapName;
         this.width = parseInt(data.width, 10);
         this.height = parseInt(data.height, 10);
         this.size = parseInt(data.size, 10);

@@ -83,7 +83,8 @@ export default class MainController extends window.monk.Controller{
 
     saveMap(e){
         window.monk.httpUtil.post(config.serverUrl + "/saveMap", {
-            mapData : this.mapComponent.controller.mapData
+            mapName : this.mapComponent.controller.mapName,
+            mapData : JSON.stringify(this.mapComponent.controller.mapData)
         }).then((data)=>{
             data = JSON.parse(data);
             if (data.code === 200)
