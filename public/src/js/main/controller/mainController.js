@@ -93,4 +93,12 @@ export default class MainController extends window.monk.Controller{
             }
         });
     }
+
+    loadMap(){
+        let selectMapWindow = this.viewState.getComponentById("select_map_window");
+        selectMapWindow.controller.center().openWindow({
+            okCallback : (data)=>{
+            }
+        });
+    }
 }

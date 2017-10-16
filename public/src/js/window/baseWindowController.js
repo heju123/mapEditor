@@ -11,6 +11,11 @@ export default class BaseWindowController extends window.monk.Controller{
         this.component.setStyle("y", y);
         this.component.parent.setStyle("alpha", 0.4);
         this.component.setStyle("alpha", 1);
+
+        if (this.onOpen && typeof(this.onOpen) === "function")
+        {
+            this.onOpen.apply(this, []);
+        }
         return this;
     }
 

@@ -1,4 +1,4 @@
-webpackJsonp([2],[
+webpackJsonp([1],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -9,7 +9,9 @@ webpackJsonp([2],[
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19,9 +21,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _newMapController = __webpack_require__(17);
+var _selectMapController = __webpack_require__(20);
 
-var _newMapController2 = _interopRequireDefault(_newMapController);
+var _selectMapController2 = _interopRequireDefault(_selectMapController);
 
 var _window = __webpack_require__(14);
 
@@ -33,10 +35,9 @@ var _form = __webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FORM_ROW_HEIGHT = 60;
-var FORM_LABEL_WIDTH = 100;
-var FORM_INPUT_PADDING = 15;
+var FORM_BOTTOM_HEIGHT = 40;
 var FORM_BUTTON_HEIGHT = 30;
+
 var contentStyle = {
     type: "rect",
     style: {
@@ -52,99 +53,42 @@ var contentStyle = {
             x: 0,
             y: 0,
             width: "100%",
-            autoHeight: true,
+            height: "100%",
             layout: {
                 type: "linearLayout",
                 orientation: "vertical"
             }
         },
         children: [{
-            name: "input_row",
+            name: "file_list_outer",
             type: "rect",
             style: {
                 width: "100%",
-                height: FORM_ROW_HEIGHT,
-                layout: {
-                    type: "linearLayout",
-                    orientation: "horizontal"
-                }
-            },
-            children: (0, _form.formInputStyle)(undefined, "mapName", "地图名称：", {
-                formRowHeight: FORM_ROW_HEIGHT,
-                formLabelWidth: FORM_LABEL_WIDTH,
-                formInputPadding: FORM_INPUT_PADDING
-            })
-        }, {
-            name: "input_row",
-            type: "rect",
-            style: {
-                width: "100%",
-                height: FORM_ROW_HEIGHT,
-                layout: {
-                    type: "linearLayout",
-                    orientation: "horizontal"
+                height: function height() {
+                    return this.parent.getInnerHeight() - 20 - FORM_BOTTOM_HEIGHT;
                 }
             },
             children: [{
-                name: "input_50p",
+                name: "file_list",
                 type: "rect",
                 style: {
-                    width: "50%",
-                    height: "100%",
+                    x: 10,
+                    y: 10,
+                    width: function width() {
+                        return this.parent.getInnerWidth() - 20;
+                    },
+                    height: function height() {
+                        return this.parent.getInnerHeight() - 20;
+                    },
+                    backgroundColor: "#f4f4f4",
+                    borderColor: "#dfdfdf",
+                    borderWidth: 1,
+                    borderRadius: 5,
                     layout: {
                         type: "linearLayout",
                         orientation: "horizontal"
                     }
-                },
-                children: (0, _form.formInputStyle)(undefined, "width", "宽：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
-            }, {
-                name: "input_50p",
-                type: "rect",
-                style: {
-                    width: "50%",
-                    height: "100%",
-                    layout: {
-                        type: "linearLayout",
-                        orientation: "horizontal"
-                    }
-                },
-                children: (0, _form.formInputStyle)(undefined, "height", "高：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
-            }]
-        }, {
-            name: "input_row",
-            type: "rect",
-            style: {
-                width: "100%",
-                height: FORM_ROW_HEIGHT,
-                layout: {
-                    type: "linearLayout",
-                    orientation: "horizontal"
                 }
-            },
-            children: [{
-                name: "input_50p",
-                type: "rect",
-                style: {
-                    width: "50%",
-                    height: "100%",
-                    layout: {
-                        type: "linearLayout",
-                        orientation: "horizontal"
-                    }
-                },
-                children: (0, _form.formInputStyle)(undefined, "size", "格子大小：", {
-                    formRowHeight: FORM_ROW_HEIGHT,
-                    formLabelWidth: FORM_LABEL_WIDTH,
-                    formInputPadding: FORM_INPUT_PADDING
-                })
             }]
         }, {
             name: "input_row_blank",
@@ -163,7 +107,7 @@ var contentStyle = {
             type: "rect",
             style: {
                 width: "100%",
-                height: FORM_ROW_HEIGHT,
+                height: FORM_BOTTOM_HEIGHT,
                 layout: {
                     type: "linearLayout",
                     orientation: "horizontal",
@@ -179,14 +123,7 @@ var contentStyle = {
                 events: {
                     click: "onOk"
                 }
-            }), {
-                name: "button_div",
-                type: "rect",
-                style: {
-                    width: "20",
-                    height: FORM_ROW_HEIGHT
-                }
-            }, (0, _common.buttonStyle)("取消", {
+            }), (0, _common.buttonStyle)("取消", {
                 y: function y() {
                     return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
                 },
@@ -200,17 +137,15 @@ var contentStyle = {
     }]
 };
 
-exports.default = (0, _window2.default)(_newMapController2.default, {
-    id: "new_map_window",
-    title: "新建地图",
+exports.default = (0, _window2.default)(_selectMapController2.default, {
+    id: "select_map_window",
+    title: "选择地图",
     width: 400,
     height: 300,
     contentStyle: contentStyle
 });
 
 /***/ }),
-/* 11 */,
-/* 12 */,
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -541,7 +476,10 @@ var formCheckboxStyle = exports.formCheckboxStyle = function formCheckboxStyle(i
 };
 
 /***/ }),
-/* 17 */
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -557,6 +495,10 @@ var _baseWindowController = __webpack_require__(13);
 
 var _baseWindowController2 = _interopRequireDefault(_baseWindowController);
 
+var _config = __webpack_require__(1);
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -565,45 +507,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var NewMapController = function (_BaseWindowController) {
-    _inherits(NewMapController, _BaseWindowController);
+var SelectMapController = function (_BaseWindowController) {
+    _inherits(SelectMapController, _BaseWindowController);
 
-    function NewMapController(component) {
-        _classCallCheck(this, NewMapController);
+    function SelectMapController(component) {
+        _classCallCheck(this, SelectMapController);
 
-        var _this = _possibleConstructorReturn(this, (NewMapController.__proto__ || Object.getPrototypeOf(NewMapController)).call(this, component));
+        var _this = _possibleConstructorReturn(this, (SelectMapController.__proto__ || Object.getPrototypeOf(SelectMapController)).call(this, component));
 
-        _this.registerEvent("$onViewLoaded", function () {});
+        _this.registerEvent("$onViewLoaded", function () {
+            console.log("SelectMap");
+        });
         return _this;
     }
 
-    _createClass(NewMapController, [{
-        key: "clearForm",
-        value: function clearForm() {
-            var mapNameCom = this.component.getComponentByName("mapName");
-            var widthCom = this.component.getComponentByName("width");
-            var heightCom = this.component.getComponentByName("height");
-            var sizeCom = this.component.getComponentByName("size");
-
-            mapNameCom.setText("");
-            widthCom.setText("");
-            heightCom.setText("");
-            sizeCom.setText("");
+    _createClass(SelectMapController, [{
+        key: "onOpen",
+        value: function onOpen() {
+            //查询保存的地图列表
+            window.monk.httpUtil.get(_config2.default.serverUrl + "/mapList").then(function (data) {
+                data = JSON.parse(data);
+                if (data.code === 200) {
+                    console.log(data.list);
+                }
+            });
         }
     }, {
         key: "onOk",
-        value: function onOk() {
-            var mapNameCom = this.component.getComponentByName("mapName");
-            var widthCom = this.component.getComponentByName("width");
-            var heightCom = this.component.getComponentByName("height");
-            var sizeCom = this.component.getComponentByName("size");
-            this.closeWindow({
-                mapName: mapNameCom.getText(),
-                width: widthCom.getText(),
-                height: heightCom.getText(),
-                size: sizeCom.getText()
-            });
-        }
+        value: function onOk() {}
     }, {
         key: "onCancel",
         value: function onCancel() {
@@ -611,11 +542,11 @@ var NewMapController = function (_BaseWindowController) {
         }
     }]);
 
-    return NewMapController;
+    return SelectMapController;
 }(_baseWindowController2.default);
 
-exports.default = NewMapController;
+exports.default = SelectMapController;
 
 /***/ })
 ]);
-//# sourceMappingURL=newMapView.chunk.js.map
+//# sourceMappingURL=selectMapView.chunk.js.map

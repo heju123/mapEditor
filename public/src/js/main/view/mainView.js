@@ -119,6 +119,13 @@ export default {
                     get(require("../../window/setTerrain/view/setTerrainView.js").default, resolve, reject);
                 },'setTerrainView');
             });
+        },
+        (get) => {
+            return new Promise((resolve, reject)=>{
+                require.ensure([], require => {
+                    get(require("../../window/selectMap/view/selectMapView.js").default, resolve, reject);
+                },'selectMapView');
+            });
         }
     ]
 };

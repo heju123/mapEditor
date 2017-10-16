@@ -48,4 +48,11 @@ router.post('/saveMap', function(req, res) {
     });
 });
 
+router.get('/mapList', function(req, res) {
+    res.send({
+        code : 200,
+        list : [{aaa : 111}]
+    });
+});
+
 module.exports = router;

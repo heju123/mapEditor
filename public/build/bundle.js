@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		2: 0
+/******/ 		3: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"setTerrainView","1":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"setTerrainView","1":"selectMapView","2":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -142,7 +142,7 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -213,7 +213,21 @@ var navItemStyle = exports.navItemStyle = {
 "use strict";
 
 
-var _route = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = {
+    serverUrl: "http://localhost:3000"
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _route = __webpack_require__(3);
 
 var _route2 = _interopRequireDefault(_route);
 
@@ -239,7 +253,7 @@ var Main = function Main() {
 var main = new Main();
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -249,7 +263,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mainView = __webpack_require__(3);
+var _mainView = __webpack_require__(4);
 
 var _mainView2 = _interopRequireDefault(_mainView);
 
@@ -269,7 +283,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -279,7 +293,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mainController = __webpack_require__(4);
+var _mainController = __webpack_require__(5);
 
 var _mainController2 = _interopRequireDefault(_mainController);
 
@@ -391,7 +405,7 @@ exports.default = {
         }
     }, function (get) {
         return new Promise(function (resolve, reject) {
-            __webpack_require__.e/* require.ensure */(1).then((function (require) {
+            __webpack_require__.e/* require.ensure */(2).then((function (require) {
                 get(__webpack_require__(10).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
@@ -401,11 +415,17 @@ exports.default = {
                 get(__webpack_require__(11).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
+    }, function (get) {
+        return new Promise(function (resolve, reject) {
+            __webpack_require__.e/* require.ensure */(1).then((function (require) {
+                get(__webpack_require__(12).default, resolve, reject);
+            }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
+        });
     }]
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -417,11 +437,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _mapView = __webpack_require__(5);
+var _mapView = __webpack_require__(6);
 
 var _mapView2 = _interopRequireDefault(_mapView);
 
-var _config = __webpack_require__(7);
+var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -533,6 +553,14 @@ var MainController = function (_window$monk$Controll) {
                 }
             });
         }
+    }, {
+        key: "loadMap",
+        value: function loadMap() {
+            var selectMapWindow = this.viewState.getComponentById("select_map_window");
+            selectMapWindow.controller.center().openWindow({
+                okCallback: function okCallback(data) {}
+            });
+        }
     }]);
 
     return MainController;
@@ -541,7 +569,7 @@ var MainController = function (_window$monk$Controll) {
 exports.default = MainController;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -551,7 +579,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mapController = __webpack_require__(6);
+var _mapController = __webpack_require__(7);
 
 var _mapController2 = _interopRequireDefault(_mapController);
 
@@ -575,7 +603,7 @@ exports.default = function (data) {
 };
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -792,20 +820,6 @@ var MapController = function (_window$monk$Controll) {
 exports.default = MapController;
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    serverUrl: "http://localhost:3000"
-};
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -852,7 +866,10 @@ exports.default = function (TOP_HEIGHT) {
             type: "button",
             style: _nav.navItemStyle.style,
             text: "加载地图",
-            animation: _nav.navItemStyle.animation
+            animation: _nav.navItemStyle.animation,
+            events: {
+                "click": "loadMap"
+            }
         }, {
             type: "rect",
             style: _nav.navDivider.style
