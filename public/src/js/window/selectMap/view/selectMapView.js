@@ -59,7 +59,9 @@ let contentStyle = {
                                     type : "linearLayout",
                                     orientation : "horizontal"
                                 }
-                            }
+                            },
+                            children : [
+                            ]
                         }
                     ]
                 },

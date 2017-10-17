@@ -11,12 +11,15 @@ export default class SelectMapController extends BaseWindowController{
     }
 
     onOpen(){
-        //查询保存的地图列表
-        window.monk.httpUtil.get(config.serverUrl + "/mapList").then((data)=>{
+        this.getMapList();
+    }
+
+    getMapList(){
+        window.monk.httpUtil.get(config.serverUrl + "/getMapList").then((data)=>{
             data = JSON.parse(data);
             if (data.code === 200)
             {
-                console.log(data.list);
+                this.fileList = data.list;
             }
         });
     }

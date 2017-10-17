@@ -48,10 +48,14 @@ router.post('/saveMap', function(req, res) {
     });
 });
 
-router.get('/mapList', function(req, res) {
-    res.send({
-        code : 200,
-        list : [{aaa : 111}]
+router.get('/getMapList', function(req, res) {
+    fs.readdir(config.mapSaveDir,function(err, files){
+        if(!files)
+            return;
+        res.send({
+            code : 200,
+            list : files
+        });
     });
 });
 

@@ -88,7 +88,8 @@ var contentStyle = {
                         type: "linearLayout",
                         orientation: "horizontal"
                     }
-                }
+                },
+                children: []
             }]
         }, {
             name: "input_row_blank",
@@ -524,11 +525,17 @@ var SelectMapController = function (_BaseWindowController) {
     _createClass(SelectMapController, [{
         key: "onOpen",
         value: function onOpen() {
-            //查询保存的地图列表
-            window.monk.httpUtil.get(_config2.default.serverUrl + "/mapList").then(function (data) {
+            this.getMapList();
+        }
+    }, {
+        key: "getMapList",
+        value: function getMapList() {
+            var _this2 = this;
+
+            window.monk.httpUtil.get(_config2.default.serverUrl + "/getMapList").then(function (data) {
                 data = JSON.parse(data);
                 if (data.code === 200) {
-                    console.log(data.list);
+                    _this2.fileList = data.list;
                 }
             });
         }
