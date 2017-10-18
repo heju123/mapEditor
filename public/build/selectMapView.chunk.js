@@ -38,6 +38,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FORM_BOTTOM_HEIGHT = 40;
 var FORM_BUTTON_HEIGHT = 30;
 
+var FILE_LIST_ITEM_WIDTH = 60;
+var FILE_LIST_ITEM_HEIGHT = 60;
+
 var contentStyle = {
     type: "rect",
     style: {
@@ -89,7 +92,51 @@ var contentStyle = {
                         orientation: "horizontal"
                     }
                 },
-                children: []
+                children: [{
+                    name: "file_list_item_outer",
+                    type: "rect",
+                    style: {
+                        width: 80,
+                        height: 80
+                    },
+                    children: [{
+                        name: "file_list_item",
+                        type: "rect",
+                        style: {
+                            x: function x() {
+                                return this.parent.getWidth() / 2 - FILE_LIST_ITEM_WIDTH / 2;
+                            },
+                            y: function y() {
+                                return this.parent.getHeight() / 2 - FILE_LIST_ITEM_HEIGHT / 2;
+                            },
+                            width: FILE_LIST_ITEM_WIDTH,
+                            height: FILE_LIST_ITEM_HEIGHT,
+                            layout: {
+                                type: "linearLayout",
+                                orientation: "vertical"
+                            }
+                        },
+                        children: [{
+                            name: "file_list_item_img",
+                            type: "rect",
+                            style: {
+                                width: "100%",
+                                height: 40,
+                                backgroundImage: "/src/images/map.png"
+                            }
+                        }, {
+                            name: "file_list_item_text",
+                            type: "rect",
+                            style: {
+                                width: "100%",
+                                height: 20,
+                                lineHeight: 20,
+                                textAlign: "center"
+                            },
+                            text: "文件名称"
+                        }]
+                    }]
+                }]
             }]
         }, {
             name: "input_row_blank",
@@ -514,12 +561,7 @@ var SelectMapController = function (_BaseWindowController) {
     function SelectMapController(component) {
         _classCallCheck(this, SelectMapController);
 
-        var _this = _possibleConstructorReturn(this, (SelectMapController.__proto__ || Object.getPrototypeOf(SelectMapController)).call(this, component));
-
-        _this.registerEvent("$onViewLoaded", function () {
-            console.log("SelectMap");
-        });
-        return _this;
+        return _possibleConstructorReturn(this, (SelectMapController.__proto__ || Object.getPrototypeOf(SelectMapController)).call(this, component));
     }
 
     _createClass(SelectMapController, [{

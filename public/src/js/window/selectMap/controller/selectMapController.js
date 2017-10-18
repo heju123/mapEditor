@@ -4,10 +4,6 @@ import config from "../../../config.js";
 export default class SelectMapController extends BaseWindowController{
     constructor(component) {
         super(component);
-
-        this.registerEvent("$onViewLoaded", ()=>{
-           console.log("SelectMap");
-        });
     }
 
     onOpen(){
