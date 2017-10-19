@@ -114,16 +114,23 @@ var contentStyle = {
                             hover: function hover() {
                                 this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
                                 this.getComponentByName("file_list_item_text").setStyle("fontColor", "#1296DB");
-                                this.getComponentByName("file_list_item_img").setStyle("scale", "1.25,1.25");
+                                this.setStyle("scale", "1.25,1.25");
                             },
                             hoverout: function hoverout() {
                                 this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map.png");
                                 this.getComponentByName("file_list_item_text").setStyle("fontColor", "#333");
-                                this.getComponentByName("file_list_item_img").setStyle("scale", "1,1");
+                                this.setStyle("scale", "1,1");
                             },
                             layout: {
                                 type: "linearLayout",
                                 orientation: "vertical"
+                            }
+                        },
+                        animation: {
+                            scale: {
+                                duration: "200ms",
+                                easeType: "Linear",
+                                easing: "easeOut"
                             }
                         },
                         children: [{
