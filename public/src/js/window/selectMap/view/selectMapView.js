@@ -87,7 +87,7 @@ let contentStyle = {
                                                 hover : function(){
                                                     this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
                                                     this.getComponentByName("file_list_item_text").setStyle("fontColor", "#1296DB");
-                                                    this.setStyle("scale" , "1.05,1.05");
+                                                    this.setStyle("scale" , "1.1,1.1");
                                                 },
                                                 hoverout : function(){
                                                     this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map.png");
