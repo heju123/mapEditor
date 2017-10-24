@@ -19,6 +19,7 @@ export default class SelectMapController extends BaseWindowController{
                 this.fileList = data.list;
                 let item;
                 let parent = this.component.getComponentByName("file_list");
+                parent.removeAllChildren();
                 this.fileList.forEach((file)=>{
                     item = new window.monk.components.Rect(parent);
                     item.initCfg(fileListItemView(file));
@@ -26,6 +27,10 @@ export default class SelectMapController extends BaseWindowController{
                 });
             }
         });
+    }
+
+    onSelectedItem(name){
+        this.selectedItem = name;
     }
 
     onOk(){

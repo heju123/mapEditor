@@ -86,7 +86,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + ({"0":"setTerrainView","1":"selectMapView","2":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
+/******/ 		script.src = __webpack_require__.p + "" + ({"0":"selectMapView","1":"setTerrainView","2":"newMapView"}[chunkId]||chunkId) + ".chunk.js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
@@ -411,13 +411,13 @@ exports.default = {
         });
     }, function (get) {
         return new Promise(function (resolve, reject) {
-            __webpack_require__.e/* require.ensure */(0).then((function (require) {
+            __webpack_require__.e/* require.ensure */(1).then((function (require) {
                 get(__webpack_require__(11).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });
     }, function (get) {
         return new Promise(function (resolve, reject) {
-            __webpack_require__.e/* require.ensure */(1).then((function (require) {
+            __webpack_require__.e/* require.ensure */(0).then((function (require) {
                 get(__webpack_require__(12).default, resolve, reject);
             }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
         });

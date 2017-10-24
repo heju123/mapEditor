@@ -1,4 +1,4 @@
-webpackJsonp([1],[
+webpackJsonp([0],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -536,6 +536,7 @@ var SelectMapController = function (_BaseWindowController) {
                     _this2.fileList = data.list;
                     var item = void 0;
                     var parent = _this2.component.getComponentByName("file_list");
+                    parent.removeAllChildren();
                     _this2.fileList.forEach(function (file) {
                         item = new window.monk.components.Rect(parent);
                         item.initCfg((0, _fileListItemView2.default)(file));
@@ -543,6 +544,11 @@ var SelectMapController = function (_BaseWindowController) {
                     });
                 }
             });
+        }
+    }, {
+        key: "onSelectedItem",
+        value: function onSelectedItem(name) {
+            this.selectedItem = name;
         }
     }, {
         key: "onOk",
@@ -633,7 +639,15 @@ exports.default = function (name) {
                 },
                 text: name
             }]
-        }]
+        }],
+        events: {
+            "click": {
+                callback: "onSelectedItem",
+                param: function param() {
+                    return name;
+                }
+            }
+        }
     };
 };
 

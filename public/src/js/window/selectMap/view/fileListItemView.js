@@ -67,6 +67,14 @@ export default (name)=>{
                     }
                 ]
             }
-        ]
+        ],
+        events : {
+            "click" : {
+                callback : "onSelectedItem",
+                param : function(){
+                    return name;
+                }
+            }
+        }
     };
 }
