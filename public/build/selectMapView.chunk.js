@@ -38,9 +38,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FORM_BOTTOM_HEIGHT = 40;
 var FORM_BUTTON_HEIGHT = 30;
 
-var FILE_LIST_ITEM_WIDTH = 60;
-var FILE_LIST_ITEM_HEIGHT = 60;
-
 var contentStyle = {
     type: "rect",
     style: {
@@ -91,69 +88,7 @@ var contentStyle = {
                         type: "linearLayout",
                         orientation: "horizontal"
                     }
-                },
-                children: [{
-                    name: "file_list_item_outer",
-                    type: "rect",
-                    style: {
-                        width: 80,
-                        height: 80
-                    },
-                    children: [{
-                        name: "file_list_item",
-                        type: "rect",
-                        style: {
-                            x: function x() {
-                                return this.parent.getWidth() / 2 - FILE_LIST_ITEM_WIDTH / 2;
-                            },
-                            y: function y() {
-                                return this.parent.getHeight() / 2 - FILE_LIST_ITEM_HEIGHT / 2;
-                            },
-                            width: FILE_LIST_ITEM_WIDTH,
-                            height: FILE_LIST_ITEM_HEIGHT,
-                            hover: function hover() {
-                                this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
-                                this.getComponentByName("file_list_item_text").setStyle("fontColor", "#1296DB");
-                                this.setStyle("scale", "1.1,1.1");
-                            },
-                            hoverout: function hoverout() {
-                                this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map.png");
-                                this.getComponentByName("file_list_item_text").setStyle("fontColor", "#333");
-                                this.setStyle("scale", "1,1");
-                            },
-                            layout: {
-                                type: "linearLayout",
-                                orientation: "vertical"
-                            }
-                        },
-                        animation: {
-                            scale: {
-                                duration: "200ms",
-                                easeType: "Linear",
-                                easing: "easeOut"
-                            }
-                        },
-                        children: [{
-                            name: "file_list_item_img",
-                            type: "rect",
-                            style: {
-                                width: "100%",
-                                height: 40,
-                                backgroundImage: "/src/images/map.png"
-                            }
-                        }, {
-                            name: "file_list_item_text",
-                            type: "rect",
-                            style: {
-                                width: "100%",
-                                height: 20,
-                                lineHeight: 20,
-                                textAlign: "center"
-                            },
-                            text: "文件名称"
-                        }]
-                    }]
-                }]
+                }
             }]
         }, {
             name: "input_row_blank",
@@ -564,6 +499,10 @@ var _config = __webpack_require__(1);
 
 var _config2 = _interopRequireDefault(_config);
 
+var _fileListItemView = __webpack_require__(21);
+
+var _fileListItemView2 = _interopRequireDefault(_fileListItemView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -595,6 +534,13 @@ var SelectMapController = function (_BaseWindowController) {
                 data = JSON.parse(data);
                 if (data.code === 200) {
                     _this2.fileList = data.list;
+                    var item = void 0;
+                    var parent = _this2.component.getComponentByName("file_list");
+                    _this2.fileList.forEach(function (file) {
+                        item = new window.monk.components.Rect(parent);
+                        item.initCfg((0, _fileListItemView2.default)(file));
+                        parent.appendChildren(item);
+                    });
                 }
             });
         }
@@ -612,6 +558,84 @@ var SelectMapController = function (_BaseWindowController) {
 }(_baseWindowController2.default);
 
 exports.default = SelectMapController;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var FILE_LIST_ITEM_WIDTH = 60;
+var FILE_LIST_ITEM_HEIGHT = 60;
+
+exports.default = function (name) {
+    return {
+        name: "file_list_item_outer",
+        type: "rect",
+        style: {
+            width: 80,
+            height: 80
+        },
+        children: [{
+            name: "file_list_item",
+            type: "rect",
+            style: {
+                x: function x() {
+                    return this.parent.getWidth() / 2 - FILE_LIST_ITEM_WIDTH / 2;
+                },
+                y: function y() {
+                    return this.parent.getHeight() / 2 - FILE_LIST_ITEM_HEIGHT / 2;
+                },
+                width: FILE_LIST_ITEM_WIDTH,
+                height: FILE_LIST_ITEM_HEIGHT,
+                hover: function hover() {
+                    this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
+                    this.getComponentByName("file_list_item_text").setStyle("fontColor", "#337ab7");
+                    this.setStyle("scale", "1.1,1.1");
+                },
+                hoverout: function hoverout() {
+                    this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map.png");
+                    this.getComponentByName("file_list_item_text").setStyle("fontColor", "#333");
+                    this.setStyle("scale", "1,1");
+                },
+                layout: {
+                    type: "linearLayout",
+                    orientation: "vertical"
+                }
+            },
+            animation: {
+                scale: {
+                    duration: "200ms",
+                    easeType: "Linear",
+                    easing: "easeOut"
+                }
+            },
+            children: [{
+                name: "file_list_item_img",
+                type: "rect",
+                style: {
+                    width: "100%",
+                    height: 40,
+                    backgroundImage: "/src/images/map.png"
+                }
+            }, {
+                name: "file_list_item_text",
+                type: "rect",
+                style: {
+                    width: "100%",
+                    height: 20,
+                    lineHeight: 20,
+                    textAlign: "center"
+                },
+                text: name
+            }]
+        }]
+    };
+};
 
 /***/ })
 ]);
