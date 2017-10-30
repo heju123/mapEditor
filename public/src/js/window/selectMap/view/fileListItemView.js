@@ -22,6 +22,7 @@ export default (name)=>{
                     },
                     width : FILE_LIST_ITEM_WIDTH,
                     height : FILE_LIST_ITEM_HEIGHT,
+                    borderWidth : 1,
                     hover : function(){
                         this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
                         this.getComponentByName("file_list_item_text").setStyle("fontColor", "#337ab7");
@@ -65,16 +66,16 @@ export default (name)=>{
                         },
                         text : name
                     }
-                ]
-            }
-        ],
-        events : {
-            "click" : {
-                callback : "onSelectedItem",
-                param : function(){
-                    return name;
+                ],
+                events : {
+                    "click" : {
+                        callback : "onSelectedItem",
+                        param : function(){
+                            return this;
+                        }
+                    }
                 }
             }
-        }
+        ]
     };
 }

@@ -546,13 +546,31 @@ var SelectMapController = function (_BaseWindowController) {
             });
         }
     }, {
+        key: "setSelectedStyle",
+        value: function setSelectedStyle(item) {
+            item.setStyle("borderColor", "#3399FF");
+            item.setStyle("backgroundColor", "#53b8ff");
+        }
+    }, {
+        key: "removeSelectedStyle",
+        value: function removeSelectedStyle(item) {
+            item.removeStyle("borderColor");
+            item.removeStyle("backgroundColor");
+        }
+    }, {
         key: "onSelectedItem",
-        value: function onSelectedItem(name) {
-            this.selectedItem = name;
+        value: function onSelectedItem(item) {
+            if (this.selectedItem) {
+                this.removeSelectedStyle(this.selectedItem);
+            }
+            this.selectedItem = item;
+            this.setSelectedStyle(this.selectedItem);
         }
     }, {
         key: "onOk",
-        value: function onOk() {}
+        value: function onOk() {
+            if (this.selectedItem) {}
+        }
     }, {
         key: "onCancel",
         value: function onCancel() {
@@ -598,6 +616,7 @@ exports.default = function (name) {
                 },
                 width: FILE_LIST_ITEM_WIDTH,
                 height: FILE_LIST_ITEM_HEIGHT,
+                borderWidth: 1,
                 hover: function hover() {
                     this.getComponentByName("file_list_item_img").setStyle("backgroundImage", "/src/images/map_on.png");
                     this.getComponentByName("file_list_item_text").setStyle("fontColor", "#337ab7");
@@ -638,16 +657,16 @@ exports.default = function (name) {
                     textAlign: "center"
                 },
                 text: name
-            }]
-        }],
-        events: {
-            "click": {
-                callback: "onSelectedItem",
-                param: function param() {
-                    return name;
+            }],
+            events: {
+                "click": {
+                    callback: "onSelectedItem",
+                    param: function param() {
+                        return this;
+                    }
                 }
             }
-        }
+        }]
     };
 };
 

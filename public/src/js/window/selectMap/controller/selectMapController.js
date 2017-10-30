@@ -29,11 +29,28 @@ export default class SelectMapController extends BaseWindowController{
         });
     }
 
-    onSelectedItem(name){
-        this.selectedItem = name;
+    setSelectedStyle(item){
+        item.setStyle("borderColor", "#3399FF");
+        item.setStyle("backgroundColor", "#53b8ff");
+    }
+    removeSelectedStyle(item){
+        item.removeStyle("borderColor");
+        item.removeStyle("backgroundColor");
+    }
+
+    onSelectedItem(item){
+        if (this.selectedItem)
+        {
+            this.removeSelectedStyle(this.selectedItem);
+        }
+        this.selectedItem = item;
+        this.setSelectedStyle(this.selectedItem);
     }
 
     onOk(){
+        if (this.selectedItem)
+        {
+        }
     }
 
     onCancel(){

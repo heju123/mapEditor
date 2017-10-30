@@ -84,6 +84,9 @@ export default class MainController extends window.monk.Controller{
     saveMap(e){
         window.monk.httpUtil.post(config.serverUrl + "/saveMap", {
             mapName : this.mapComponent.controller.mapName,
+            width : this.mapComponent.controller.width,
+            height : this.mapComponent.controller.height,
+            size : this.mapComponent.controller.size,
             mapData : JSON.stringify(this.mapComponent.controller.mapData)
         }).then((data)=>{
             data = JSON.parse(data);
@@ -98,6 +101,10 @@ export default class MainController extends window.monk.Controller{
         let selectMapWindow = this.viewState.getComponentById("select_map_window");
         selectMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
+                let parent = this.component.getComponentById("edit_area");
+                this.mapComponent = new window.monk.components.Rect(parent);
+                this.mapComponent.initCfg(mapView(data));
+                parent.appendChildren(this.mapComponent);
             }
         });
     }

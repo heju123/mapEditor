@@ -545,6 +545,9 @@ var MainController = function (_window$monk$Controll) {
         value: function saveMap(e) {
             window.monk.httpUtil.post(_config2.default.serverUrl + "/saveMap", {
                 mapName: this.mapComponent.controller.mapName,
+                width: this.mapComponent.controller.width,
+                height: this.mapComponent.controller.height,
+                size: this.mapComponent.controller.size,
                 mapData: JSON.stringify(this.mapComponent.controller.mapData)
             }).then(function (data) {
                 data = JSON.parse(data);
@@ -556,9 +559,16 @@ var MainController = function (_window$monk$Controll) {
     }, {
         key: "loadMap",
         value: function loadMap() {
+            var _this4 = this;
+
             var selectMapWindow = this.viewState.getComponentById("select_map_window");
             selectMapWindow.controller.center().openWindow({
-                okCallback: function okCallback(data) {}
+                okCallback: function okCallback(data) {
+                    var parent = _this4.component.getComponentById("edit_area");
+                    _this4.mapComponent = new window.monk.components.Rect(parent);
+                    _this4.mapComponent.initCfg((0, _mapView2.default)(data));
+                    parent.appendChildren(_this4.mapComponent);
+                }
             });
         }
     }]);

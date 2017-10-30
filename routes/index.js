@@ -24,9 +24,33 @@ let writeFile = function(mapName, mapData){
     });
 };
 
+let readFile = function(mapName){
+    return new Promise(function(resolve, reject){
+        fs.readFile(config.mapSaveDir+'/'+mapName+'.map', 'utf-8', function(err,data){
+            if(err){
+                reject(err);
+            }else{
+                resolve(data);
+            }
+        });
+    });
+};
+
 router.post('/saveMap', function(req, res) {
     let mapName = req.body.mapName;
+    let width = req.body.width;
+    let height = req.body.height;
+    let size = req.body.size;
     let mapData = req.body.mapData;
+
+    let saveData = {
+        mapName : mapName,
+        width : width,
+        height : height,
+        size : size,
+        mapData : mapData
+    };
+    saveData = JSON.stringify(saveData);
 
     let exist = fs.existsSync(config.mapSaveDir);
     if (!exist)
@@ -35,12 +59,12 @@ router.post('/saveMap', function(req, res) {
             if (err) {
                 throw err;
             }
-            writeFile(mapName, mapData);
+            writeFile(mapName, saveData);
         });
     }
     else
     {
-        writeFile(mapName, mapData);
+        writeFile(mapName, saveData);
     }
 
     res.send({
@@ -56,6 +80,18 @@ router.get('/getMapList', function(req, res) {
             code : 200,
             list : files
         });
+    });
+});
+
+router.get('/getMapDetail', function(req, res) {
+    let fileName = req.query.fileName;
+    readFile(fileName).then(function(data){
+        res.send({
+            code : 200,
+            detail : data
+        });
+    }, function(err){
+        console.log(err);
     });
 });
 
