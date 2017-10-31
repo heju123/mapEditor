@@ -26,7 +26,7 @@ let writeFile = function(mapName, mapData){
 
 let readFile = function(mapName){
     return new Promise(function(resolve, reject){
-        fs.readFile(config.mapSaveDir+'/'+mapName+'.map', 'utf-8', function(err,data){
+        fs.readFile(config.mapSaveDir+'/'+mapName, 'utf-8', function(err,data){
             if(err){
                 reject(err);
             }else{

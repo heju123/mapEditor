@@ -559,15 +559,14 @@ var MainController = function (_window$monk$Controll) {
     }, {
         key: "loadMap",
         value: function loadMap() {
-            var _this4 = this;
-
             var selectMapWindow = this.viewState.getComponentById("select_map_window");
             selectMapWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
-                    var parent = _this4.component.getComponentById("edit_area");
-                    _this4.mapComponent = new window.monk.components.Rect(parent);
-                    _this4.mapComponent.initCfg((0, _mapView2.default)(data));
-                    parent.appendChildren(_this4.mapComponent);
+                    console.log(data);
+                    // let parent = this.component.getComponentById("edit_area");
+                    // this.mapComponent = new window.monk.components.Rect(parent);
+                    // this.mapComponent.initCfg(mapView(data));
+                    // parent.appendChildren(this.mapComponent);
                 }
             });
         }

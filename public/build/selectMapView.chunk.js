@@ -569,7 +569,21 @@ var SelectMapController = function (_BaseWindowController) {
     }, {
         key: "onOk",
         value: function onOk() {
-            if (this.selectedItem) {}
+            var _this3 = this;
+
+            if (this.selectedItem) {
+                var mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
+                window.monk.httpUtil.get(_config2.default.serverUrl + "/getMapDetail", {
+                    fileName: mapName
+                }).then(function (data) {
+                    data = JSON.parse(data);
+                    if (data.code === 200) {
+                        data.detail = JSON.parse(data.detail);
+                        data.detail.mapData = JSON.parse(data.detail.mapData);
+                        _this3.closeWindow(data.detail);
+                    }
+                });
+            }
         }
     }, {
         key: "onCancel",
@@ -654,7 +668,9 @@ exports.default = function (name) {
                     width: "100%",
                     height: 20,
                     lineHeight: 20,
-                    textAlign: "center"
+                    textAlign: "center",
+                    fontSize: 12,
+                    autoLine: false
                 },
                 text: name
             }],

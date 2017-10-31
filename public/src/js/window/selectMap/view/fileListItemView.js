@@ -62,7 +62,9 @@ export default (name)=>{
                             width: "100%",
                             height: 20,
                             lineHeight : 20,
-                            textAlign : "center"
+                            textAlign : "center",
+                            fontSize : 12,
+                            autoLine : false
                         },
                         text : name
                     }

@@ -50,6 +50,18 @@ export default class SelectMapController extends BaseWindowController{
     onOk(){
         if (this.selectedItem)
         {
+            let mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
+            window.monk.httpUtil.get(config.serverUrl + "/getMapDetail", {
+                fileName : mapName
+            }).then((data)=>{
+                data = JSON.parse(data);
+                if (data.code === 200)
+                {
+                    data.detail = JSON.parse(data.detail);
+                    data.detail.mapData = JSON.parse(data.detail.mapData);
+                    this.closeWindow(data.detail);
+                }
+            });
         }
     }
 
