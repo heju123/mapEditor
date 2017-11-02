@@ -13,7 +13,11 @@ export default class MapController extends window.monk.Controller {
         this.terrain = undefined;//当前指定的地形
         this.isSetTerrain = false;//是否正在设置地形
 
-        this.initMapData();
+        this.mapData = data.mapData;
+        if (!this.mapData)
+        {
+            this.initMapData();
+        }
 
         this.component.setStyle({
             width : this.width * this.size,

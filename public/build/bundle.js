@@ -559,14 +559,15 @@ var MainController = function (_window$monk$Controll) {
     }, {
         key: "loadMap",
         value: function loadMap() {
+            var _this4 = this;
+
             var selectMapWindow = this.viewState.getComponentById("select_map_window");
             selectMapWindow.controller.center().openWindow({
                 okCallback: function okCallback(data) {
-                    console.log(data);
-                    // let parent = this.component.getComponentById("edit_area");
-                    // this.mapComponent = new window.monk.components.Rect(parent);
-                    // this.mapComponent.initCfg(mapView(data));
-                    // parent.appendChildren(this.mapComponent);
+                    var parent = _this4.component.getComponentById("edit_area");
+                    _this4.mapComponent = new window.monk.components.Rect(parent);
+                    _this4.mapComponent.initCfg((0, _mapView2.default)(data));
+                    parent.appendChildren(_this4.mapComponent);
                 }
             });
         }
@@ -649,7 +650,10 @@ var MapController = function (_window$monk$Controll) {
         _this.terrain = undefined; //当前指定的地形
         _this.isSetTerrain = false; //是否正在设置地形
 
-        _this.initMapData();
+        _this.mapData = data.mapData;
+        if (!_this.mapData) {
+            _this.initMapData();
+        }
 
         _this.component.setStyle({
             width: _this.width * _this.size,

@@ -101,11 +101,10 @@ export default class MainController extends window.monk.Controller{
         let selectMapWindow = this.viewState.getComponentById("select_map_window");
         selectMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                console.log(data);
-                // let parent = this.component.getComponentById("edit_area");
-                // this.mapComponent = new window.monk.components.Rect(parent);
-                // this.mapComponent.initCfg(mapView(data));
-                // parent.appendChildren(this.mapComponent);
+                let parent = this.component.getComponentById("edit_area");
+                this.mapComponent = new window.monk.components.Rect(parent);
+                this.mapComponent.initCfg(mapView(data));
+                parent.appendChildren(this.mapComponent);
             }
         });
     }
