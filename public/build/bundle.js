@@ -774,8 +774,8 @@ var MapController = function (_window$monk$Controll) {
             ctx.strokeStyle = "#6a6a6a";
             ctx.globalAlpha = 1;
 
-            for (var x = 0; x <= this.width; x++) {
-                for (var y = 0; y <= this.height; y++) {
+            for (var y = 0; y <= this.width; y++) {
+                for (var x = 0; x <= this.height; x++) {
                     //绘制障碍物
                     ctx.beginPath();
                     ctx.fillStyle = "#000000";

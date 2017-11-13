@@ -140,9 +140,9 @@ export default class MapController extends window.monk.Controller {
         ctx.strokeStyle="#6a6a6a";
         ctx.globalAlpha=1;
 
-        for (let x = 0; x <= this.width; x++)
+        for (let y = 0; y <= this.width; y++)
         {
-            for (let y = 0; y <= this.height; y++)
+            for (let x = 0; x <= this.height; x++)
             {
                 //绘制障碍物
                 ctx.beginPath();
