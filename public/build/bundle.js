@@ -737,10 +737,10 @@ var MapController = function (_window$monk$Controll) {
         key: "initMapData",
         value: function initMapData() {
             this.mapData = [];
-            for (var i = 0; i < this.width; i++) {
-                this.mapData[i] = [];
-                for (var j = 0; j < this.height; j++) {
-                    this.mapData[i][j] = {
+            for (var x = 0; x < this.height; x++) {
+                this.mapData[x] = [];
+                for (var y = 0; y < this.width; y++) {
+                    this.mapData[x][y] = {
                         block: false, //是否障碍物
                         terrain: 0 //地形：无
                     };
@@ -779,7 +779,7 @@ var MapController = function (_window$monk$Controll) {
                     //绘制障碍物
                     ctx.beginPath();
                     ctx.fillStyle = "#000000";
-                    if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block && x < this.width && y < this.height) {
+                    if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block && y < this.width && x < this.height) {
                         ctx.rect(this.component.getRealX() + x * this.size, this.component.getRealY() + y * this.size, this.size, this.size);
                         ctx.fill();
                     }
@@ -800,8 +800,8 @@ var MapController = function (_window$monk$Controll) {
 
             //画线
             ctx.beginPath();
-            for (var _x = 0; _x <= this.width; _x++) {
-                for (var _y = 0; _y <= this.height; _y++) {
+            for (var _y = 0; _y <= this.width; _y++) {
+                for (var _x = 0; _x <= this.height; _x++) {
                     ctx.moveTo(this.component.getRealX(), this.component.getRealY() + _x * this.size);
                     ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + _x * this.size);
                     ctx.moveTo(this.component.getRealX() + _y * this.size, this.component.getRealY());

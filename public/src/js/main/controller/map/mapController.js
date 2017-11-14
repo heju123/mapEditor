@@ -105,12 +105,12 @@ export default class MapController extends window.monk.Controller {
     //初始化地图数据
     initMapData(){
         this.mapData = [];
-        for (let i = 0; i < this.width; i++)
+        for (let x = 0; x < this.height; x++)
         {
-            this.mapData[i] = [];
-            for (let j = 0; j < this.height; j++)
+            this.mapData[x] = [];
+            for (let y = 0; y < this.width; y++)
             {
-                this.mapData[i][j] = {
+                this.mapData[x][y] = {
                     block : false,//是否障碍物
                     terrain : 0//地形：无
                 };
@@ -148,7 +148,7 @@ export default class MapController extends window.monk.Controller {
                 ctx.beginPath();
                 ctx.fillStyle="#000000";
                 if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block
-                    && x < this.width && y < this.height)
+                    && y < this.width && x < this.height)
                 {
                     ctx.rect(this.component.getRealX() + (x * this.size), this.component.getRealY() + (y * this.size),
                         this.size, this.size);
@@ -175,9 +175,9 @@ export default class MapController extends window.monk.Controller {
 
         //画线
         ctx.beginPath();
-        for (let x = 0; x <= this.width; x++)
+        for (let y = 0; y <= this.width; y++)
         {
-            for (let y = 0; y <= this.height; y++)
+            for (let x = 0; x <= this.height; x++)
             {
                 ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (x * this.size));
                 ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (x * this.size));
