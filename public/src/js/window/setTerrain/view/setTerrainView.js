@@ -113,7 +113,7 @@ let contentStyle = {
                             name: "button_div",
                             type: "rect",
                             style: {
-                                width: "20",
+                                width: 20,
                                 height: FORM_ROW_HEIGHT
                             }
                         },

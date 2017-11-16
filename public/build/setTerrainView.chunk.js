@@ -137,7 +137,7 @@ var contentStyle = {
                 name: "button_div",
                 type: "rect",
                 style: {
-                    width: "20",
+                    width: 20,
                     height: FORM_ROW_HEIGHT
                 }
             }, (0, _common.buttonStyle)("取消", {
@@ -536,6 +536,19 @@ var SetTerrainController = function (_BaseWindowController) {
     }
 
     _createClass(SetTerrainController, [{
+        key: "onOpen",
+        value: function onOpen() {
+            var setTerrainBlock = this.component.getComponentByName("setTerrainBlock");
+            var terrain = this.component.getComponentByName("terrain");
+            if (setTerrainBlock.checked) {
+                terrain.setStyle("readOnly", true);
+                terrain.setStyle("backgroundColor", _skin2.default.INPUT_READONLY_BG);
+            } else {
+                terrain.setStyle("readOnly", false);
+                terrain.setStyle("backgroundColor", undefined);
+            }
+        }
+    }, {
         key: "onCheckTerrainBlock",
         value: function onCheckTerrainBlock(e) {
             var terrain = this.component.getComponentByName("terrain");
