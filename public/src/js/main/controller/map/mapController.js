@@ -60,11 +60,11 @@ export default class MapController extends window.monk.Controller {
                     let maxY = Math.max(this.startCoors.y, this.endCoors.y);
                     if (this.isSetTerrain)
                     {
-                        this.setMapDataBatch(minX, maxX, minY, maxY, "terrain", this.terrain);
+                        this.setMapDataBatch(minY, maxY, minX, maxX, "terrain", this.terrain);
                     }
                     else
                     {
-                        this.setMapDataBatch(minX, maxX, minY, maxY, "block", !this.mapData[minX][minY].block);
+                        this.setMapDataBatch(minY, maxY, minX, maxX, "block", !this.mapData[minY][minX].block);
                     }
 
                     this.selectedCoors = {
@@ -84,11 +84,11 @@ export default class MapController extends window.monk.Controller {
                     let y = Math.floor(my / this.size);
                     if (this.isSetTerrain)
                     {
-                        this.setMapData(x, y, "terrain", this.terrain);
+                        this.setMapData(y, x, "terrain", this.terrain);
                     }
                     else
                     {
-                        this.setMapData(x, y, "block", !this.mapData[x][y].block);
+                        this.setMapData(y, x, "block", !this.mapData[y][x].block);
                     }
 
                     this.selectedCoors = {
@@ -105,12 +105,12 @@ export default class MapController extends window.monk.Controller {
     //初始化地图数据
     initMapData(){
         this.mapData = [];
-        for (let x = 0; x < this.height; x++)
+        for (let row = 0; row < this.height; row++)
         {
-            this.mapData[x] = [];
-            for (let y = 0; y < this.width; y++)
+            this.mapData[row] = [];
+            for (let col = 0; col < this.width; col++)
             {
-                this.mapData[x][y] = {
+                this.mapData[row][col] = {
                     block : false,//是否障碍物
                     terrain : 0//地形：无
                 };
@@ -119,16 +119,16 @@ export default class MapController extends window.monk.Controller {
     }
 
     //设置指定位置的地图数据
-    setMapData(x, y, key, value){
-        this.mapData[x][y][key] = value;
+    setMapData(row, col, key, value){
+        this.mapData[row][col][key] = value;
     }
     //批量设置指定位置的地图数据
-    setMapDataBatch(minX, maxX, minY, maxY, key, value){
-        for (let x = minX; x <= maxX; x++)
+    setMapDataBatch(minRow, maxRow, minCol, maxCol, key, value){
+        for (let row = minRow; row <= maxRow; row++)
         {
-            for (let y = minY; y <= maxY; y++)
+            for (let col = minCol; col <= maxCol; col++)
             {
-                this.setMapData(x, y, key, value);
+                this.setMapData(row, col, key, value);
             }
         }
     }
@@ -140,17 +140,17 @@ export default class MapController extends window.monk.Controller {
         ctx.strokeStyle="#6a6a6a";
         ctx.globalAlpha=1;
 
-        for (let y = 0; y <= this.width; y++)
+        for (let row = 0; row <= this.height; row++)
         {
-            for (let x = 0; x <= this.height; x++)
+            for (let col = 0; col <= this.width; col++)
             {
                 //绘制障碍物
                 ctx.beginPath();
                 ctx.fillStyle="#000000";
-                if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].block
-                    && y < this.width && x < this.height)
+                if (this.mapData && this.mapData[row] && this.mapData[row][col] && this.mapData[row][col].block
+                    && row < this.height && col < this.width)
                 {
-                    ctx.rect(this.component.getRealX() + (x * this.size), this.component.getRealY() + (y * this.size),
+                    ctx.rect(this.component.getRealX() + (col * this.size), this.component.getRealY() + (row * this.size),
                         this.size, this.size);
                     ctx.fill();
                 }
@@ -158,16 +158,16 @@ export default class MapController extends window.monk.Controller {
 
                 //绘制地形
                 ctx.beginPath();
-                if (this.mapData && this.mapData[x] && this.mapData[x][y] && this.mapData[x][y].terrain
-                    && this.mapData[x][y].terrain !== "0")
+                if (this.mapData && this.mapData[row] && this.mapData[row][col] && this.mapData[row][col].terrain
+                    && this.mapData[row][col].terrain !== "0")
                 {
                     let FONT_SIZE = 15;
                     ctx.font = FONT_SIZE + "px Microsoft YaHei";
                     ctx.fillStyle = "#ff0000";
                     ctx.textBaseline="hanging";
-                    ctx.fillText(this.mapData[x][y].terrain,
-                        this.component.getRealX() + (x * this.size),
-                        this.component.getRealY() + (y * this.size) + (this.size / 2 - FONT_SIZE / 2));
+                    ctx.fillText(this.mapData[row][col].terrain,
+                        this.component.getRealX() + (col * this.size),
+                        this.component.getRealY() + (row * this.size) + (this.size / 2 - FONT_SIZE / 2));
                 }
                 ctx.closePath();
             }
@@ -175,14 +175,14 @@ export default class MapController extends window.monk.Controller {
 
         //画线
         ctx.beginPath();
-        for (let y = 0; y <= this.width; y++)
+        for (let row = 0; row <= this.height; row++)
         {
-            for (let x = 0; x <= this.height; x++)
+            for (let col = 0; col <= this.width; col++)
             {
-                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (x * this.size));
-                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (x * this.size));
-                ctx.moveTo(this.component.getRealX() + (y * this.size), this.component.getRealY());
-                ctx.lineTo(this.component.getRealX() + (y * this.size), this.component.getRealY() + this.component.getHeight());
+                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (col * this.size));
+                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (col * this.size));
+                ctx.moveTo(this.component.getRealX() + (row * this.size), this.component.getRealY());
+                ctx.lineTo(this.component.getRealX() + (row * this.size), this.component.getRealY() + this.component.getHeight());
             }
         }
         ctx.stroke();
