@@ -179,10 +179,10 @@ export default class MapController extends window.monk.Controller {
         {
             for (let col = 0; col <= this.width; col++)
             {
-                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (col * this.size));
-                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (col * this.size));
-                ctx.moveTo(this.component.getRealX() + (row * this.size), this.component.getRealY());
-                ctx.lineTo(this.component.getRealX() + (row * this.size), this.component.getRealY() + this.component.getHeight());
+                ctx.moveTo(this.component.getRealX(), this.component.getRealY() + (row * this.size));
+                ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + (row * this.size));
+                ctx.moveTo(this.component.getRealX() + (col * this.size), this.component.getRealY());
+                ctx.lineTo(this.component.getRealX() + (col * this.size), this.component.getRealY() + this.component.getHeight());
             }
         }
         ctx.stroke();

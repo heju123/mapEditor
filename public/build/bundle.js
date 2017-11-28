@@ -802,10 +802,10 @@ var MapController = function (_window$monk$Controll) {
             ctx.beginPath();
             for (var _row = 0; _row <= this.height; _row++) {
                 for (var _col = 0; _col <= this.width; _col++) {
-                    ctx.moveTo(this.component.getRealX(), this.component.getRealY() + _col * this.size);
-                    ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + _col * this.size);
-                    ctx.moveTo(this.component.getRealX() + _row * this.size, this.component.getRealY());
-                    ctx.lineTo(this.component.getRealX() + _row * this.size, this.component.getRealY() + this.component.getHeight());
+                    ctx.moveTo(this.component.getRealX(), this.component.getRealY() + _row * this.size);
+                    ctx.lineTo(this.component.getRealX() + this.component.getWidth(), this.component.getRealY() + _row * this.size);
+                    ctx.moveTo(this.component.getRealX() + _col * this.size, this.component.getRealY());
+                    ctx.lineTo(this.component.getRealX() + _col * this.size, this.component.getRealY() + this.component.getHeight());
                 }
             }
             ctx.stroke();
