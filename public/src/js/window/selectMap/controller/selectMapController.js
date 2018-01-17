@@ -12,7 +12,7 @@ export default class SelectMapController extends BaseWindowController{
     }
 
     getMapList(){
-        window.monk.httpUtil.get(config.serverUrl + "/getMapList").then((data)=>{
+        window.plutojs.utils.httpUtil.get(config.serverUrl + "/getMapList").then((data)=>{
             data = JSON.parse(data);
             if (data.code === 200)
             {
@@ -21,7 +21,7 @@ export default class SelectMapController extends BaseWindowController{
                 let parent = this.component.getComponentByName("file_list");
                 parent.removeAllChildren();
                 this.fileList.forEach((file)=>{
-                    item = new window.monk.components.Rect(parent);
+                    item = new window.plutojs.components.Rect(parent);
                     item.initCfg(fileListItemView(file));
                     parent.appendChildren(item);
                 });
@@ -51,7 +51,7 @@ export default class SelectMapController extends BaseWindowController{
         if (this.selectedItem)
         {
             let mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
-            window.monk.httpUtil.get(config.serverUrl + "/getMapDetail", {
+            window.plutojs.utils.httpUtil.get(config.serverUrl + "/getMapDetail", {
                 fileName : mapName
             }).then((data)=>{
                 data = JSON.parse(data);

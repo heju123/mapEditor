@@ -3,7 +3,7 @@ import window from "../../style/window.js";
 import {buttonStyle} from "../../../style/common.js";
 import {formInputStyle} from "../../../style/form.js";
 
-const FORM_ROW_HEIGHT = 60;
+const FORM_ROW_HEIGHT = 55;
 const FORM_LABEL_WIDTH = 100;
 const FORM_INPUT_PADDING = 15;
 const FORM_BUTTON_HEIGHT = 30;
@@ -26,7 +26,8 @@ let contentStyle = {
                 autoHeight : true,
                 layout : {
                     type : "linearLayout",
-                    orientation : "vertical"
+                    orientation : "vertical",
+                    contentAlign: "center"
                 }
             },
             children : [
@@ -143,20 +144,16 @@ let contentStyle = {
                     name: "input_row",
                     type: "rect",
                     style: {
-                        width: "100%",
+                        autoWidth : true,
                         height: FORM_ROW_HEIGHT,
                         layout : {
                             type : "linearLayout",
                             orientation : "horizontal",
-                            contentAlign : "center"
+                            contentAlign: "center"
                         }
                     },
                     children : [
                         buttonStyle("确定", {
-                            y : function(){
-                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
-                            },
-                            autoWidth : true,
                             height : FORM_BUTTON_HEIGHT,
                             events : {
                                 click : "onOk"
@@ -166,15 +163,11 @@ let contentStyle = {
                             name: "button_div",
                             type: "rect",
                             style: {
-                                width: "20",
+                                width: 20,
                                 height: FORM_ROW_HEIGHT
                             }
                         },
                         buttonStyle("取消", {
-                            y : function(){
-                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
-                            },
-                            autoWidth : true,
                             height : FORM_BUTTON_HEIGHT,
                             events : {
                                 click : "onCancel"

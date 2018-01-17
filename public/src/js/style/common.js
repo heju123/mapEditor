@@ -1,8 +1,14 @@
 //按钮
 export let buttonStyle = function(text, opts){
     let style = {};
-    style.x = opts.x;
-    style.y = opts.y;
+    if (opts.x)
+    {
+        style.x = opts.x;
+    }
+    if (opts.y)
+    {
+        style.y = opts.y;
+    }
     if (opts.width !== undefined)
     {
         style.width = opts.width;

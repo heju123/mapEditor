@@ -1,4 +1,4 @@
-export default class MapController extends window.monk.Controller {
+export default class MapController extends window.plutojs.Controller {
     constructor(component, data) {
         super(component);
 

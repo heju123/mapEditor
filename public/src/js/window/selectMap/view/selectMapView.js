@@ -25,7 +25,8 @@ let contentStyle = {
                 height : "100%",
                 layout : {
                     type : "linearLayout",
-                    orientation : "vertical"
+                    orientation : "vertical",
+                    contentAlign: "center"
                 }
             },
             children : [
@@ -80,7 +81,7 @@ let contentStyle = {
                     name: "input_row",
                     type: "rect",
                     style: {
-                        width: "100%",
+                        autoWidth : true,
                         height: FORM_BOTTOM_HEIGHT,
                         layout : {
                             type : "linearLayout",
@@ -90,19 +91,21 @@ let contentStyle = {
                     },
                     children : [
                         buttonStyle("确定", {
-                            y : function(){
-                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
-                            },
                             autoWidth : true,
                             height : FORM_BUTTON_HEIGHT,
                             events : {
                                 click : "onOk"
                             }
                         }),
+                        {
+                            name: "button_div",
+                            type: "rect",
+                            style: {
+                                width: 20,
+                                height: FORM_BUTTON_HEIGHT
+                            }
+                        },
                         buttonStyle("取消", {
-                            y : function(){
-                                return this.parent.getInnerHeight() / 2 - FORM_BUTTON_HEIGHT / 2;
-                            },
                             autoWidth : true,
                             height : FORM_BUTTON_HEIGHT,
                             events : {

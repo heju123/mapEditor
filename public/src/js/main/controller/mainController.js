@@ -4,7 +4,7 @@
 import mapView from "../view/map/mapView.js";
 import config from "../../config.js";
 
-export default class MainController extends window.monk.Controller{
+export default class MainController extends window.plutojs.Controller{
     constructor(component) {
         super(component);
 
@@ -43,7 +43,7 @@ export default class MainController extends window.monk.Controller{
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
-                this.mapComponent = new window.monk.components.Rect(parent);
+                this.mapComponent = new window.plutojs.components.Rect(parent);
                 this.mapComponent.initCfg(mapView(data));
                 parent.appendChildren(this.mapComponent);
             }
@@ -82,7 +82,7 @@ export default class MainController extends window.monk.Controller{
     }
 
     saveMap(e){
-        window.monk.httpUtil.post(config.serverUrl + "/saveMap", {
+        window.plutojs.utils.httpUtil.post(config.serverUrl + "/saveMap", {
             mapName : this.mapComponent.controller.mapName,
             width : this.mapComponent.controller.width,
             height : this.mapComponent.controller.height,
@@ -92,7 +92,7 @@ export default class MainController extends window.monk.Controller{
             data = JSON.parse(data);
             if (data.code === 200)
             {
-                window.monk.commonUtil.popMessageTooltip("保存成功！");
+                window.plutojs.utils.commonUtil.popMessageTooltip("保存成功！");
             }
         });
     }
@@ -102,7 +102,7 @@ export default class MainController extends window.monk.Controller{
         selectMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
-                this.mapComponent = new window.monk.components.Rect(parent);
+                this.mapComponent = new window.plutojs.components.Rect(parent);
                 this.mapComponent.initCfg(mapView(data));
                 parent.appendChildren(this.mapComponent);
             }

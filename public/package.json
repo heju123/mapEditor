@@ -9,6 +9,9 @@
   },
   "author": "HEJU",
   "license": "ISC",
+  "dependencies": {
+    "plutojs": "*"
+  },
   "devDependencies": {
     "babel-core": "*",
     "babel-loader": "*",

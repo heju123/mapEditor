@@ -1,4 +1,4 @@
-export default class BaseWindowController extends window.monk.Controller{
+export default class BaseWindowController extends window.plutojs.Controller{
     constructor(component) {
         super(component);
     }
