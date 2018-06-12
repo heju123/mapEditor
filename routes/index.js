@@ -3,11 +3,6 @@ var router = express.Router();
 var fs = require('fs');
 var config = require('../config.js');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.sendfile('public/dist/index.html');
-});
-
 let writeFile = function(mapName, mapData){
     // 打开文件
     fs.open(config.mapSaveDir+'/'+mapName+'.map', `w`, function(err, fd) {
