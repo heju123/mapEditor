@@ -22,7 +22,7 @@ export default class NewMapController extends BaseWindowController{
             sizeCom.setText("");
         }
         else
-        {console.log(form);
+        {
             mapNameCom.setText(form.mapName);
             widthCom.setText(form.width);
             heightCom.setText(form.height);
