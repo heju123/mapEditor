@@ -10,7 +10,7 @@
 
  # 安装项目依赖包
  RUN npm install
- RUN npm install -g forever
+ RUN npm install forever
 
  # 容器对外暴露的端口号
  EXPOSE 8000
