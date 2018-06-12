@@ -5,7 +5,7 @@ var config = require('../config.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    res.sendfile('public/dist/index.html');
 });
 
 let writeFile = function(mapName, mapData){
