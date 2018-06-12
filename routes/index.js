@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var config = require('../config.js');
+var path = require("path");
 
 let writeFile = function(mapName, mapData){
     // 打开文件
@@ -31,6 +32,19 @@ let readFile = function(mapName){
     });
 };
 
+// 递归创建目录 异步方法
+function mkdirs(dirname, callback) {
+    fs.exists(dirname, function (exists) {
+        if (exists) {
+            callback();
+        } else {
+            mkdirs(path.dirname(dirname), function () {
+                fs.mkdir(dirname, callback);
+            });
+        }
+    });
+}
+
 router.post('/saveMap', function(req, res) {
     let mapName = req.body.mapName;
     let width = req.body.width;
@@ -47,20 +61,9 @@ router.post('/saveMap', function(req, res) {
     };
     saveData = JSON.stringify(saveData);
 
-    let exist = fs.existsSync(config.mapSaveDir);
-    if (!exist)
-    {
-        fs.mkdir(config.mapSaveDir, function(err) {
-            if (err) {
-                throw err;
-            }
-            writeFile(mapName, saveData);
-        });
-    }
-    else
-    {
+    mkdirs(config.mapSaveDir, function(){
         writeFile(mapName, saveData);
-    }
+    });
 
     res.send({
         code : 200
