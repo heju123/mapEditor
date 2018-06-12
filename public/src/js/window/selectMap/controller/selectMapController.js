@@ -23,7 +23,7 @@ export default class SelectMapController extends BaseWindowController{
                 this.fileList.forEach((file)=>{
                     item = new window.plutojs.components.Rect(parent);
                     item.initCfg(fileListItemView(file));
-                    parent.appendChildren(item);
+                    parent.appendChild(item);
                 });
             }
         });

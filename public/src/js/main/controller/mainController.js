@@ -39,13 +39,17 @@ export default class MainController extends window.plutojs.Controller{
 
     openNewMapDlg(e){
         let newMapWindow = this.viewState.getComponentById("new_map_window");
-        newMapWindow.controller.clearForm();
+        newMapWindow.controller.resetForm();
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
                 let parent = this.component.getComponentById("edit_area");
+                if (this.mapComponent)
+                {
+                    parent.removeChild(this.mapComponent);
+                }
                 this.mapComponent = new window.plutojs.components.Rect(parent);
                 this.mapComponent.initCfg(mapView(data));
-                parent.appendChildren(this.mapComponent);
+                parent.appendChild(this.mapComponent);
             }
         });
     }
@@ -81,6 +85,30 @@ export default class MainController extends window.plutojs.Controller{
         });
     }
 
+    /** 重新设置当前地图 */
+    resetCurrentMap(){
+        let newMapWindow = this.viewState.getComponentById("new_map_window");
+        let form = {
+            mapName : this.mapComponent.controller.mapName,
+            width : this.mapComponent.controller.width,
+            height : this.mapComponent.controller.height,
+            size : this.mapComponent.controller.size
+        }
+        newMapWindow.controller.resetForm(form);
+        newMapWindow.controller.center().openWindow({
+            okCallback : (data)=>{
+                let parent = this.component.getComponentById("edit_area");
+                if (this.mapComponent)
+                {
+                    parent.removeChild(this.mapComponent);
+                }
+                this.mapComponent = new window.plutojs.components.Rect(parent);
+                this.mapComponent.initCfg(mapView(data));
+                parent.appendChild(this.mapComponent);
+            }
+        });
+    }
+
     saveMap(e){
         window.plutojs.utils.httpUtil.post(config.serverUrl + "/saveMap", {
             mapName : this.mapComponent.controller.mapName,
@@ -104,7 +132,7 @@ export default class MainController extends window.plutojs.Controller{
                 let parent = this.component.getComponentById("edit_area");
                 this.mapComponent = new window.plutojs.components.Rect(parent);
                 this.mapComponent.initCfg(mapView(data));
-                parent.appendChildren(this.mapComponent);
+                parent.appendChild(this.mapComponent);
             }
         });
     }

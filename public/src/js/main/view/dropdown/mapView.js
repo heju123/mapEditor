@@ -7,7 +7,7 @@ export default (TOP_HEIGHT)=>{
         style: {
             x: 10,
             y: TOP_HEIGHT,
-            width: 100,
+            width: 140,
             autoHeight : true,
             backgroundColor: "#DCDCDC",
             borderWidth : 1,
@@ -27,6 +27,15 @@ export default (TOP_HEIGHT)=>{
                 animation : navItemStyle.animation,
                 events : {
                     "click" : "openSetTerrainDlg"
+                }
+            },
+            {
+                type : "button",
+                style : navItemStyle.style,
+                text : "重新设置当前地图",
+                animation : navItemStyle.animation,
+                events : {
+                    "click" : "resetCurrentMap"
                 }
             }
         ]

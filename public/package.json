@@ -13,11 +13,11 @@
     "plutojs": "*"
   },
   "devDependencies": {
-    "babel-core": "*",
-    "babel-loader": "*",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
     "babel-preset-es2015": "*",
-    "clean-webpack-plugin": "*",
+    "clean-webpack-plugin": "^0.1.19",
     "uglify-js-plugin": "*",
-    "webpack": "*"
+    "webpack": "~3.10.0"
   }
 }
