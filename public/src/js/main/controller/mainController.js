@@ -118,9 +118,13 @@ export default class MainController extends window.plutojs.Controller{
             mapData : JSON.stringify(this.mapComponent.controller.mapData)
         }).then((data)=>{
             data = JSON.parse(data);
-            if (data.code === 200)
+            if (data.success === true)
             {
                 window.plutojs.utils.commonUtil.popMessageTooltip("保存成功！");
+            }
+            else
+            {
+                window.plutojs.utils.commonUtil.popMessageTooltip(data.message);
             }
         });
     }

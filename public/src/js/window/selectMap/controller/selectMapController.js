@@ -14,7 +14,7 @@ export default class SelectMapController extends BaseWindowController{
     getMapList(){
         window.plutojs.utils.httpUtil.get(config.serverUrl + "/getMapList").then((data)=>{
             data = JSON.parse(data);
-            if (data.code === 200)
+            if (data.success === true)
             {
                 this.fileList = data.list;
                 let item;
@@ -47,7 +47,7 @@ export default class SelectMapController extends BaseWindowController{
         this.setSelectedStyle(this.selectedItem);
     }
 
-    onOk(){
+    load(){
         if (this.selectedItem)
         {
             let mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
@@ -55,14 +55,43 @@ export default class SelectMapController extends BaseWindowController{
                 fileName : mapName
             }).then((data)=>{
                 data = JSON.parse(data);
-                if (data.code === 200)
+                if (data.success === true)
                 {
                     data.detail = JSON.parse(data.detail);
                     data.detail.mapData = JSON.parse(data.detail.mapData);
                     this.closeWindow(data.detail);
                 }
+                else
+                {
+                    window.plutojs.utils.commonUtil.popMessageTooltip(data.message);
+                }
             });
         }
+    }
+
+    download(){
+        let mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
+        window.location.href = config.serverUrl + "/download?mapName=" + mapName;
+    }
+
+    delete(){
+        window.plutojs.utils.commonUtil.popConfirm("是否确认要删除选中地图？").then(()=>{
+            let mapName = this.selectedItem.getComponentByName("file_list_item_text").getText();
+            window.plutojs.utils.httpUtil.post(config.serverUrl + "/delete", {
+                mapName : mapName
+            }).then((data)=>{
+                data = JSON.parse(data);
+                if (data.success === true)
+                {
+                    window.plutojs.utils.commonUtil.popMessageTooltip("删除成功！");
+                    this.getMapList();
+                }
+                else
+                {
+                    window.plutojs.utils.commonUtil.popMessageTooltip(data.message);
+                }
+            });
+        });
     }
 
     onCancel(){

@@ -36,7 +36,7 @@ export default (TOP_HEIGHT)=>{
             {
                 type : "button",
                 style : navItemStyle.style,
-                text : "加载地图",
+                text : "地图管理",
                 animation : navItemStyle.animation,
                 events : {
                     "click" : "loadMap"

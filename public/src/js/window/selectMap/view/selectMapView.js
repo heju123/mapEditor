@@ -90,11 +90,41 @@ let contentStyle = {
                         }
                     },
                     children : [
-                        buttonStyle("确定", {
+                        buttonStyle("加载", {
                             autoWidth : true,
                             height : FORM_BUTTON_HEIGHT,
                             events : {
-                                click : "onOk"
+                                click : "load"
+                            }
+                        }),
+                        {
+                            name: "button_div",
+                            type: "rect",
+                            style: {
+                                width: 20,
+                                height: FORM_BUTTON_HEIGHT
+                            }
+                        },
+                        buttonStyle("下载", {
+                            autoWidth : true,
+                            height : FORM_BUTTON_HEIGHT,
+                            events : {
+                                click : "download"
+                            }
+                        }),
+                        {
+                            name: "button_div",
+                            type: "rect",
+                            style: {
+                                width: 20,
+                                height: FORM_BUTTON_HEIGHT
+                            }
+                        },
+                        buttonStyle("删除", {
+                            autoWidth : true,
+                            height : FORM_BUTTON_HEIGHT,
+                            events : {
+                                click : "delete"
                             }
                         }),
                         {

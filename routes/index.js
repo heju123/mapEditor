@@ -5,17 +5,20 @@ var config = require('../config.js');
 var path = require("path");
 
 let writeFile = function(mapName, mapData){
-    // 打开文件
-    fs.open(config.mapSaveDir+'/'+mapName+'.map', `w`, function(err, fd) {
-        if (err) {
-            throw err;
-        }
-
-        fs.writeFile(config.mapSaveDir+'/'+mapName+'.map', mapData, function (err) {
+    return new Promise((resolve, reject)=>{
+        // 打开文件
+        fs.open(config.mapSaveDir+'/'+mapName+'.map', `w`, function(err, fd) {
             if (err) {
-                throw err;
+                reject(err);
             }
-            fs.close(fd);
+
+            fs.writeFile(config.mapSaveDir+'/'+mapName+'.map', mapData, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                fs.close(fd);
+                resolve();
+            });
         });
     });
 };
@@ -62,20 +65,35 @@ router.post('/saveMap', function(req, res) {
     saveData = JSON.stringify(saveData);
 
     mkdirs(config.mapSaveDir, function(){
-        writeFile(mapName, saveData);
-    });
-
-    res.send({
-        code : 200
+        writeFile(mapName, saveData).then(()=>{
+            res.send({
+                success : true
+            });
+        }, (err)=>{
+            res.send({
+                success : false,
+                message : err
+            });
+        });
     });
 });
 
+var getMapList = ()=>{
+    return new Promise((resolve, reject)=>{
+        fs.readdir(config.mapSaveDir,function(err, files){
+            if(!files)
+            {
+                reject();
+            }
+            resolve(files);
+        });
+    });
+};
+
 router.get('/getMapList', function(req, res) {
-    fs.readdir(config.mapSaveDir,function(err, files){
-        if(!files)
-            return;
+    getMapList().then((files)=>{
         res.send({
-            code : 200,
+            success : true,
             list : files
         });
     });
@@ -85,12 +103,46 @@ router.get('/getMapDetail', function(req, res) {
     let fileName = req.query.fileName;
     readFile(fileName).then(function(data){
         res.send({
-            code : 200,
+            success : true,
             detail : data
         });
     }, function(err){
-        console.log(err);
+        res.send({
+            success : false,
+            message : err
+        });
     });
+});
+
+router.get('/download', function(req, res) {
+    let mapName = req.query.mapName;
+
+    var readStream = fs.createReadStream(config.mapSaveDir + "/" + mapName);
+    res.writeHead(200, {
+        'Content-Type': 'application/force-download',
+        'Content-Disposition': 'attachment; filename=' + mapName
+    });
+    readStream.pipe(res);
+});
+
+router.post('/delete', function(req, res) {
+    let mapName = req.body.mapName;
+    let filePath = config.mapSaveDir + "/" + mapName;
+
+    if (fs.existsSync(filePath))
+    {
+        fs.unlinkSync(filePath);
+        res.send({
+            success : true
+        });
+    }
+    else
+    {
+        res.send({
+            success : false,
+            message : "文件不存在！"
+        });
+    }
 });
 
 module.exports = router;
