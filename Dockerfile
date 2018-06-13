@@ -16,4 +16,4 @@
  EXPOSE 8000
 
  # 容器启动时执行的命令，类似npm run start
- CMD forever -c 'node --harmony' bin/www
+ CMD forever -o out.log -e err.log bin/www
