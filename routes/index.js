@@ -4,15 +4,15 @@ var fs = require('fs');
 var config = require('../config.js');
 var path = require("path");
 
-let writeFile = function(mapName, mapData){
+let writeFile = function(basePath, mapName, mapData){
     return new Promise((resolve, reject)=>{
         // 打开文件
-        fs.open(config.mapSaveDir+'/'+mapName+'.map', `w`, function(err, fd) {
+        fs.open(basePath+'/'+mapName+'.map', `w`, function(err, fd) {
             if (err) {
                 reject(err);
             }
 
-            fs.writeFile(config.mapSaveDir+'/'+mapName+'.map', mapData, function (err) {
+            fs.writeFile(basePath+'/'+mapName, mapData, function (err) {
                 if (err) {
                     reject(err);
                 }
@@ -65,7 +65,7 @@ router.post('/saveMap', function(req, res) {
     saveData = JSON.stringify(saveData);
 
     mkdirs(config.mapSaveDir, function(){
-        writeFile(mapName, saveData).then(()=>{
+        writeFile(config.mapSaveDir, mapName+'.map', saveData).then(()=>{
             res.send({
                 success : true
             });
@@ -114,15 +114,47 @@ router.get('/getMapDetail', function(req, res) {
     });
 });
 
-router.get('/download', function(req, res) {
-    let mapName = req.query.mapName;
-
-    var readStream = fs.createReadStream(config.mapSaveDir + "/" + mapName);
+var downloadMap = function(basePath, mapName, res){
+    var readStream = fs.createReadStream(basePath + "/" + mapName);
     res.writeHead(200, {
         'Content-Type': 'application/force-download',
         'Content-Disposition': 'attachment; filename=' + mapName
     });
     readStream.pipe(res);
+};
+
+router.post('/exportCurrentMap', function(req, res) {
+    let mapName = req.body.mapName;
+    let width = req.body.width;
+    let height = req.body.height;
+    let size = req.body.size;
+    let mapData = req.body.mapData;
+
+    let saveData = {
+        mapName : mapName,
+        width : width,
+        height : height,
+        size : size,
+        mapData : mapData
+    };
+    saveData = JSON.stringify(saveData);
+
+    //先保存到临时文件夹然后再下载
+    mkdirs(config.tempDir, function(){
+        writeFile(config.tempDir, mapName+'.map', saveData).then(()=>{
+            downloadMap(config.tempDir, mapName+'.map', res);
+        }, (err)=>{
+            res.send({
+                success : false,
+                message : err
+            });
+        });
+    });
+});
+
+router.get('/download', function(req, res) {
+    let mapName = req.query.mapName;
+    downloadMap(config.mapSaveDir, mapName, res);
 });
 
 router.post('/delete', function(req, res) {

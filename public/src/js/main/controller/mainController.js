@@ -109,6 +109,36 @@ export default class MainController extends window.plutojs.Controller{
         });
     }
 
+    createInput(name, value){
+        let input = document.createElement("INPUT");
+        input.setAttribute("type", "text");
+        input.setAttribute("name", name);
+        input.setAttribute("value", value);
+        return input;
+    }
+
+    /** 导出当前地图 */
+    exportCurrentMap(){
+        let exportForm = document.createElement("FORM");
+        exportForm.style.display = "none";
+        exportForm.setAttribute("method", "post");
+        exportForm.setAttribute("accept-charset", "utf-8");
+        exportForm.setAttribute("action", "/exportCurrentMap");
+        let input = this.createInput("mapName", this.mapComponent.controller.mapName);
+        exportForm.appendChild(input);
+        input = this.createInput("width", this.mapComponent.controller.width);
+        exportForm.appendChild(input);
+        input = this.createInput("height", this.mapComponent.controller.height);
+        exportForm.appendChild(input);
+        input = this.createInput("size", this.mapComponent.controller.size);
+        exportForm.appendChild(input);
+        input = this.createInput("mapData", JSON.stringify(this.mapComponent.controller.mapData));
+        exportForm.appendChild(input);
+        document.body.appendChild(exportForm);
+        exportForm.submit();
+        document.body.removeChild(exportForm);
+    }
+
     saveMap(e){
         window.plutojs.utils.httpUtil.post(config.serverUrl + "/saveMap", {
             mapName : this.mapComponent.controller.mapName,

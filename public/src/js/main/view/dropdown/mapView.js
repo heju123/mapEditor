@@ -37,6 +37,15 @@ export default (TOP_HEIGHT)=>{
                 events : {
                     "click" : "resetCurrentMap"
                 }
+            },
+            {
+                type : "button",
+                style : navItemStyle.style,
+                text : "导出当前地图",
+                animation : navItemStyle.animation,
+                events : {
+                    "click" : "exportCurrentMap"
+                }
             }
         ]
     };
