@@ -22,7 +22,8 @@ let main = new Main();
 $("#fileSelectPop").children(".upload-btn").children(".btn").click(function(){
     let fileSelector = $("#fileSelector");
 
-    fileSelector.on('change', function () {
+    fileSelector.val("");
+    fileSelector.on("change", function () {
         let files = fileSelector[0].files;
         let mainCom = main.pluto.fps.viewState.rootComponent.getComponentById("mainView");
         mainCom.controller.importMap(files, mainCom.controller);
