@@ -24,7 +24,8 @@ $("#fileSelectPop").children(".upload-btn").children(".btn").click(function(){
 
     fileSelector.on('change', function () {
         let files = fileSelector[0].files;
-        main.pluto.fps.viewState.rootComponent.getComponentById("mainView").controller.importMap(files);
+        let mainCom = main.pluto.fps.viewState.rootComponent.getComponentById("mainView");
+        mainCom.controller.importMap(files, mainCom.controller);
         layer.closeAll();
     });
 

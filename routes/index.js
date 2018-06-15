@@ -7,7 +7,7 @@ var path = require("path");
 let writeFile = function(basePath, mapName, mapData){
     return new Promise((resolve, reject)=>{
         // 打开文件
-        fs.open(basePath+'/'+mapName+'.map', `w`, function(err, fd) {
+        fs.open(basePath+'/'+mapName, `w`, function(err, fd) {
             if (err) {
                 reject(err);
             }

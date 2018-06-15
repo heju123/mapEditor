@@ -128,8 +128,17 @@ export default class MainController extends window.plutojs.Controller{
         });
     }
 
-    importMap(files){
-        console.log(files);
+    importMap(files, controller){
+        let reader = new FileReader();
+        reader.readAsText(files[0]);//发起异步请求
+        reader.onload = function(){
+            let mapInfo = JSON.parse(this.result);
+            mapInfo.mapData = JSON.parse(mapInfo.mapData);
+            let parent = controller.component.getComponentById("edit_area");
+            controller.mapComponent = new window.plutojs.components.Rect(parent);
+            controller.mapComponent.initCfg(mapView(mapInfo));
+            parent.appendChild(controller.mapComponent);
+        }
     }
 
     /** 导出当前地图 */
