@@ -3,6 +3,7 @@
  */
 import "plutojs";
 import route from "./main/view/route.js";
+import "../style/style.less";
 
 class Main {
     constructor(){
@@ -10,10 +11,22 @@ class Main {
         mainBox.style.width = window.innerWidth + "px";
         mainBox.style.height = window.innerHeight + "px";
 
-        var monk = new window.plutojs.Main("mainBox");
+        this.pluto = new window.plutojs.Main("mainBox");
 
-        monk.run(route);
+        this.pluto.run(route);
     }
 }
 
 let main = new Main();
+
+$("#fileSelectPop").children(".upload-btn").children(".btn").click(function(){
+    let fileSelector = $("#fileSelector");
+
+    fileSelector.on('change', function () {
+        let files = fileSelector[0].files;
+        main.pluto.fps.viewState.rootComponent.getComponentById("mainView").controller.importMap(files);
+        layer.closeAll();
+    });
+
+    fileSelector.click();
+});

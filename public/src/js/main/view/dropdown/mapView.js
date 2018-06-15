@@ -41,6 +41,15 @@ export default (TOP_HEIGHT)=>{
             {
                 type : "button",
                 style : navItemStyle.style,
+                text : "导入地图",
+                animation : navItemStyle.animation,
+                events : {
+                    "click" : "openImportMapDlg"
+                }
+            },
+            {
+                type : "button",
+                style : navItemStyle.style,
                 text : "导出当前地图",
                 animation : navItemStyle.animation,
                 events : {

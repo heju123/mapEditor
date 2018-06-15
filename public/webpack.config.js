@@ -25,6 +25,16 @@ module.exports = function(env){
                     query: {
                         presets: ['es2015']
                     }
+                },
+                {
+                    test: /\.less$/,
+                    use: [{
+                        loader: "style-loader" // creates style nodes from JS strings
+                    }, {
+                        loader: "css-loader" // translates CSS into CommonJS
+                    }, {
+                        loader: "less-loader" // compiles Less to CSS
+                    }]
                 }
             ]
         },
@@ -64,7 +74,8 @@ module.exports = function(env){
     }));
 
     output.plugins.push(new copyWebpackPlugin([
-        { from: 'src/images', to: 'images' }
+        { from: 'src/images', to: 'images' },
+        { from: 'src/libs', to: 'libs' }
     ]));
 
     return output;

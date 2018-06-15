@@ -117,6 +117,21 @@ export default class MainController extends window.plutojs.Controller{
         return input;
     }
 
+    /** 导入地图 */
+    openImportMapDlg(){
+        layer.open({
+            type: 1,
+            title: "选择地图",
+            maxmin: true,
+            area: ["400px", "300px"],
+            content: $("#fileSelectPop")
+        });
+    }
+
+    importMap(files){
+        console.log(files);
+    }
+
     /** 导出当前地图 */
     exportCurrentMap(){
         let exportForm = document.createElement("FORM");
