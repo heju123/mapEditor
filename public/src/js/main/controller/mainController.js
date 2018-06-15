@@ -37,19 +37,23 @@ export default class MainController extends window.plutojs.Controller{
         this.hideAllDropdownViews();
     }
 
+    newMapCom(data){
+        let parent = this.component.getComponentById("edit_area");
+        if (this.mapComponent)
+        {
+            parent.removeChild(this.mapComponent);
+        }
+        this.mapComponent = new window.plutojs.components.Rect(parent);
+        this.mapComponent.initCfg(mapView(data));
+        parent.appendChild(this.mapComponent);
+    }
+
     openNewMapDlg(e){
         let newMapWindow = this.viewState.getComponentById("new_map_window");
         newMapWindow.controller.resetForm();
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                let parent = this.component.getComponentById("edit_area");
-                if (this.mapComponent)
-                {
-                    parent.removeChild(this.mapComponent);
-                }
-                this.mapComponent = new window.plutojs.components.Rect(parent);
-                this.mapComponent.initCfg(mapView(data));
-                parent.appendChild(this.mapComponent);
+                this.newMapCom(data);
             }
         });
     }
@@ -97,14 +101,7 @@ export default class MainController extends window.plutojs.Controller{
         newMapWindow.controller.resetForm(form);
         newMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                let parent = this.component.getComponentById("edit_area");
-                if (this.mapComponent)
-                {
-                    parent.removeChild(this.mapComponent);
-                }
-                this.mapComponent = new window.plutojs.components.Rect(parent);
-                this.mapComponent.initCfg(mapView(data));
-                parent.appendChild(this.mapComponent);
+                this.newMapCom(data);
             }
         });
     }
@@ -134,10 +131,7 @@ export default class MainController extends window.plutojs.Controller{
         reader.onload = function(){
             let mapInfo = JSON.parse(this.result);
             mapInfo.mapData = JSON.parse(mapInfo.mapData);
-            let parent = controller.component.getComponentById("edit_area");
-            controller.mapComponent = new window.plutojs.components.Rect(parent);
-            controller.mapComponent.initCfg(mapView(mapInfo));
-            parent.appendChild(controller.mapComponent);
+            controller.newMapCom(mapInfo);
         }
     }
 
@@ -187,10 +181,7 @@ export default class MainController extends window.plutojs.Controller{
         let selectMapWindow = this.viewState.getComponentById("select_map_window");
         selectMapWindow.controller.center().openWindow({
             okCallback : (data)=>{
-                let parent = this.component.getComponentById("edit_area");
-                this.mapComponent = new window.plutojs.components.Rect(parent);
-                this.mapComponent.initCfg(mapView(data));
-                parent.appendChild(this.mapComponent);
+                this.newMapCom(data);
             }
         });
     }
