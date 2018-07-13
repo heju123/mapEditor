@@ -70,12 +70,7 @@ export default (name)=>{
                     }
                 ],
                 events : {
-                    "click" : {
-                        callback : "onSelectedItem",
-                        param : function(){
-                            return this;
-                        }
-                    }
+                    "click" : "onSelectedItem(this)"
                 }
             }
         ]

@@ -47,12 +47,7 @@ export default {
                             text : "文件",
                             animation : navButtonStyle.animation,
                             events : {
-                                "click" : {
-                                    callback : "showDropdownView",
-                                    param : (self)=>{
-                                        return [0, self];
-                                    }
-                                }
+                                "click" : "showDropdownView(0, this)"
                             }
                         },
                         {
@@ -61,12 +56,7 @@ export default {
                             text : "地图",
                             animation : navButtonStyle.animation,
                             events : {
-                                "click" : {
-                                    callback : "showDropdownView",
-                                    param : (self)=>{
-                                        return [1, self];
-                                    }
-                                }
+                                "click" : "showDropdownView(1, this)"
                             }
                         }
                     ]

@@ -25,11 +25,11 @@ export default class MainController extends window.plutojs.Controller{
         });
     }
 
-    showDropdownView(param, e){
+    showDropdownView(index, navBtn, e){
         this.hideAllDropdownViews();
-        let x = param[1].getX() + param[1].parent.getX();
-        this.dropdownViews[param[0]].setX(x);
-        this.dropdownViews[param[0]].active = true;
+        let x = navBtn.getX() + navBtn.parent.getX();
+        this.dropdownViews[index].setX(x);
+        this.dropdownViews[index].active = true;
         e.stopPropagation();
     }
 

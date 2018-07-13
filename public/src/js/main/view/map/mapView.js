@@ -4,7 +4,7 @@ export default (data)=>{
     return {
         name : "mapCom",
         controller : MapController,
-        controllerParam : data,
+        controllerParam : [data],
         type : "rect",
         style : {
             x : 0,
